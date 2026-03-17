@@ -1,4 +1,4 @@
-# 🚀 Vanguards Game Hub
+# 🚀 Visual Game Hub
 
 Portal de jogos desenvolvido para o desafio de interatividade web.
 
