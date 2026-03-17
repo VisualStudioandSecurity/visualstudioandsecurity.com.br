@@ -2,53 +2,137 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Visual Studio Games</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kovaliosky | Dev & Trader</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        body { background: #000 !important; color: #fff; font-family: 'Orbitron', sans-serif; margin: 0; overflow: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap');
         
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            background: #000; color: #fff; font-family: 'Orbitron', sans-serif; 
+            height: 100vh; width: 100vw; overflow: hidden;
+        }
+
         /* ANIMAÇÃO CHROMA */
         @keyframes chroma {
             0% { color: #39FF14; text-shadow: 0 0 10px #39FF14; }
             50% { color: #00d4ff; text-shadow: 0 0 10px #00d4ff; }
             100% { color: #39FF14; text-shadow: 0 0 10px #39FF14; }
         }
-        .chroma { animation: chroma 3s infinite linear; }
+        .chroma { animation: chroma 4s infinite linear; }
 
-        /* TELAS */
-        .page { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; position: absolute; top: 0; left: 0; }
-        #login-page { z-index: 10; background: #000; }
-        #hub-page { z-index: 1; display: none; background: #050505; flex-direction: column; padding: 20px; }
+        .layer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
 
-        .box { background: #0a0a0a; padding: 40px; border: 1px solid #222; border-radius: 10px; text-align: center; width: 300px; }
-        input { width: 100%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #333; color: #fff; outline: none; }
-        .btn { width: 100%; padding: 15px; background: #39FF14; color: #000; border: none; font-weight: bold; cursor: pointer; font-family: 'Orbitron'; }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; width: 100%; max-width: 900px; margin-top: 50px; }
-        .card { background: #111; border: 1px solid #222; padding: 20px; text-align: center; border-radius: 5px; }
-        .btn-launch { background: transparent; border: 1px solid #39FF14; color: #39FF14; padding: 8px; width: 100%; cursor: pointer; font-family: 'Orbitron'; font-size: 0.7rem; margin-top: 10px; }
+        /* 1. LOGIN */
+        #login-screen { background: #000; z-index: 30; justify-content: center; }
+        .login-box { background: #0a0a0a; padding: 40px; border: 1px solid #222; border-radius: 12px; text-align: center; width: 320px; }
+
+        /* 2. HUB */
+        #hub-screen { background: #050505; z-index: 20; padding: 30px; justify-content: flex-start; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; width: 100%; max-width: 1100px; margin-top: 20px; }
+        .card { background: #111; border: 1px solid #222; padding: 20px; border-radius: 8px; text-align: center; transition: 0.3s; }
+        .card:hover { border-color: #39FF14; transform: translateY(-5px); }
+
+        /* 3. CURRÍCULO (PRO_PROFILE) */
+        #profile-screen { 
+            background: #080808; z-index: 10; padding: 40px; justify-content: flex-start;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .cv-container { 
+            max-width: 800px; width: 100%; background: #0c0c0c; border-left: 3px solid #39FF14; 
+            padding: 30px; margin-top: 20px; overflow-y: auto;
+        }
+        .skill-tag { display: inline-block; padding: 5px 10px; border: 1px solid #39FF14; color: #39FF14; font-size: 0.7rem; margin: 5px; border-radius: 3px; }
+
+        /* BOTÕES & INPUTS */
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: #39FF14; outline: none; font-family: 'Orbitron'; }
+        .btn-main { width: 100%; padding: 15px; background: #39FF14; color: #000; border: none; font-weight: bold; cursor: pointer; font-family: 'Orbitron'; }
+        .btn-nav { background: none; border: 1px solid #444; color: #888; padding: 8px 15px; cursor: pointer; font-family: 'Orbitron'; font-size: 0.7rem; margin-left: 10px; }
+        .btn-nav:hover { border-color: #39FF14; color: #fff; }
+
+        .slide-up { transform: translateY(-100%); }
     </style>
 </head>
 <body>
 
-    <div id="login-page" class="page">
-        <div class="box">
-            <h1 class="chroma" style="font-size: 1.1rem; margin-bottom: 20px;">VISUAL STUDIO GAMES</h1>
-            <input type="text" placeholder="ID">
-            <input type="password" placeholder="PASS">
-            <button class="btn" onclick="document.getElementById('login-page').style.display='none'; document.getElementById('hub-page').style.display='flex';">ENTER SYSTEM</button>
+    <div id="login-screen" class="layer">
+        <div class="login-box">
+            <h1 class="chroma" style="font-size: 1.1rem; margin-bottom: 25px;">Visual Studio Games</h1>
+            <input type="password" id="pass" placeholder="PASSWORD">
+            <button class="btn-main" onclick="unlock()">ENTER SYSTEM</button>
         </div>
     </div>
 
-    <div id="hub-page" class="page">
-        <h2 class="chroma" style="font-size: 1rem; border-bottom: 1px solid #222; width: 100%; padding-bottom: 15px; text-align: center;">VISUAL STUDIO GAMES</h2>
+    <div id="hub-screen" class="layer">
+        <div style="width:100%; max-width:1100px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #222; padding-bottom:15px;">
+            <h2 class="chroma" style="font-size: 0.9rem;">VANGUARDS_HUB</h2>
+            <div>
+                <button class="btn-nav" style="color: #39FF14; border-color: #39FF14;" onclick="openCV()">MY_PROFILE</button>
+                <button class="btn-nav" onclick="location.reload()">LOGOUT</button>
+            </div>
+        </div>
+
         <div class="grid">
-            <div class="card"><h3>SNAKE</h3><button class="btn-launch" onclick="window.location.href='./snake.html'">LAUNCH</button></div>
-            <div class="card"><h3>DRIFT</h3><button class="btn-launch" onclick="window.location.href='./carro.html'">LAUNCH</button></div>
-            <div class="card"><h3>MEME</h3><button class="btn-launch" onclick="window.location.href='./meme.html'">LAUNCH</button></div>
-            <div class="card"><h3>MEMORY</h3><button class="btn-launch" onclick="window.location.href='./memoria.html'">LAUNCH</button></div>
+            <div class="card"><div style="height:5px; background:#39FF14; margin-bottom:15px;"></div><h3>SNAKE</h3><button class="btn-nav" style="width:100%; margin:10px 0;" onclick="window.location.href='./snake.html'">LAUNCH</button></div>
+            <div class="card"><div style="height:5px; background:#d4008d; margin-bottom:15px;"></div><h3>DRIFT</h3><button class="btn-nav" style="width:100%; margin:10px 0;" onclick="window.location.href='./carro.html'">LAUNCH</button></div>
+            <div class="card"><div style="height:5px; background:#ff9900; margin-bottom:15px;"></div><h3>MEME</h3><button class="btn-nav" style="width:100%; margin:10px 0;" onclick="window.location.href='./meme.html'">LAUNCH</button></div>
+            
+            <div class="card" style="border: 1px solid #39FF14; background: rgba(57,255,20,0.05);">
+                <h3 style="color:#39FF14; font-size:0.8rem;">WORK_WITH_ME</h3>
+                <p style="font-size:0.6rem; color:#888; margin:10px 0;">Precisa de um site profissional ou sistema exclusivo?</p>
+                <button class="btn-main" style="font-size:0.6rem; padding:10px;" onclick="window.location.href='https://wa.me/SEUNUMERO'">HIRE_NOW</button>
+            </div>
         </div>
     </div>
 
+    <div id="profile-screen" class="layer">
+        <div style="width:100%; max-width:800px; display:flex; justify-content:space-between; align-items:center;">
+            <h2 class="chroma">Kovaliosky_Dev.txt</h2>
+            <button class="btn-nav" onclick="closeCV()">BACK_TO_HUB</button>
+        </div>
+
+        <div class="cv-container">
+            <p style="color:#39FF14; margin-bottom:10px;">> NAME: Guilherme Abadio Rodrigues da Silva</p>
+            <p style="color:#39FF14; margin-bottom:10px;">> AGE: 23_YEARS</p>
+            <p style="color:#39FF14; margin-bottom:10px;">> STATUS: PROFESSIONAL_DEVELOPER & TRADER</p>
+            <hr style="border:0; border-top:1px solid #222; margin:20px 0;">
+            
+            <h3 style="font-size:0.9rem; color:#fff; margin-bottom:15px;">TECHNICAL_STACK:</h3>
+            <span class="skill-tag">Javascript_ES6</span>
+            <span class="skill-tag">GDevelop_Engine</span>
+            <span class="skill-tag">HTML5_CSS3_NeonUI</span>
+            <span class="skill-tag">Trading_View_Scripts</span>
+            <span class="skill-tag">Logic_Systems</span>
+            
+            <h3 style="font-size:0.9rem; color:#fff; margin:25px 0 15px 0;">EXPERIENCE:</h3>
+            <p style="font-size:0.8rem; color:#888;">+ Independent Game Dev (GDevelop 2D Engines)<br>
+            + Professional Trader (Bitcoin Futures & Technical Analysis)<br>
+            + Software Architecture for Trading Strategies</p>
+            
+            <h3 style="font-size:0.9rem; color:#fff; margin:25px 0 15px 0;">CONTACT:</h3>
+            <p style="font-size:0.8rem; color:#39FF14; cursor:pointer;" onclick="window.location.href='mailto:SEUEMAIL@GMAIL.COM'">[ SEND_EMAIL ]</p>
+        </div>
+    </div>
+
+    <script>
+        function unlock() {
+            // A senha é '1234' para teste, você pode mudar
+            document.getElementById('login-screen').classList.add('slide-up');
+        }
+        function openCV() {
+            document.getElementById('hub-screen').style.transform = 'translateX(-100%)';
+            document.getElementById('profile-screen').style.transform = 'translateX(0)';
+            document.getElementById('profile-screen').style.zIndex = '50';
+        }
+        function closeCV() {
+            document.getElementById('hub-screen').style.transform = 'translateX(0)';
+            document.getElementById('profile-screen').style.transform = 'translateX(100%)';
+        }
+    </script>
 </body>
 </html>
