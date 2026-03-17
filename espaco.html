@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Vanguards | Visual Studio Games</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+        body { background: #050505; color: #ff3300; font-family: 'Orbitron'; margin: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
+        canvas { background: radial-gradient(circle, #0a0a0a, #000); border: 2px solid #222; box-shadow: 0 0 30px rgba(255, 51, 0, 0.2); border-radius: 10px; cursor: crosshair; }
+        .ui { position: absolute; top: 20px; width: 400px; display: flex; justify-content: space-between; pointer-events: none; }
+        #score { color: #39FF14; text-shadow: 0 0 10px #39FF14; font-size: 1.5rem; }
+        .btn-back { margin-top: 20px; background: transparent; border: 1px solid #ff3300; color: #ff3300; padding: 10px 20px; cursor: pointer; font-family: 'Orbitron'; transition: 0.3s; }
+        .btn-back:hover { background: #ff3300; color: black; box-shadow: 0 0 15px #ff3300; }
+    </style>
+</head>
+<body>
+    <div class="ui">
+        <span>KILLS: <span id="score">0</span></span>
+        <span>LEVEL 1</span>
+    </div>
+    <canvas id="gameCanvas" width="400" height="550"></canvas>
+    <button class="btn-back" onclick="window.location.href='index.html'">EXIT SYSTEM</button>
+
+<script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let score = 0;
+    let gameActive = true;
+
+    const player = { x: 200, y: 480, w: 40, h: 40, speed: 8 };
+    const bullets = [];
+    const enemies = [];
+    const particles = []; // Sistema de explosão sênior
+
+    // Teclas
+    const keys = {};
+    window.addEventListener("keydown", e => keys[e.code] = true);
+    window.addEventListener("keyup", e => keys[e.code] = false);
+
+    function createParticle(x, y, color) {
+        for(let i=0; i<8; i++) {
+            particles.push({
+                x, y,
+                vx: (Math.random() - 0.5) * 4,
+                vy: (Math.random() - 0.5) * 4,
+                life: 1.0,
+                color
+            });
+        }
+    }
+
+    function update() {
+        if (!gameActive) return;
+
+        // Movimento Player
+        if (keys["ArrowLeft"] && player.x > 0) player.x -= player.speed;
+        if (keys["ArrowRight"] && player.x < canvas.width - player.w) player.x += player.speed;
+
+        // Atirar (Limitador de FPS)
+        if (keys["Space"] && score % 2 === 0) {
+            if(bullets.length < 20) bullets.push({ x: player.x + player.w/2 - 2, y: player.y, speed: 10 });
+        }
+
+        // Mover Balas
+        bullets.forEach((b, i) => {
+            b.y -= b.speed;
+            if (b.y < 0) bullets.splice(i, 1);
+        });
+
+        // Gerar Inimigos
+        if (Math.random() < 0.03) {
+            enemies.push({ x: Math.random() * (canvas.width - 30), y: -30, w: 30, h: 30, speed: 2 + Math.random() * 2 });
+        }
+
+        // Mover Inimigos e Colisão
+        enemies.forEach((en, i) => {
+            en.y += en.speed;
+            
+            // Colisão com Player
+            if (en.x < player.x + player.w && en.x + en.w > player.x && en.y < player.y + player.h && en.y + en.h > player.y) {
+                gameActive = false;
+                alert("STATION DESTROYED! KILLS: " + score);
+                location.reload();
+            }
+
+            // Colisão Bala/Inimigo
+            bullets.forEach((b, bi) => {
+                if (b.x < en.x + en.w && b.x + 4 > en.x && b.y < en.y + en.h && b.y + 10 > en.y) {
+                    createParticle(en.x + en.w/2, en.y + en.h/2, "#ff3300");
+                    enemies.splice(i, 1);
+                    bullets.splice(bi, 1);
+                    score++;
+                    document.getElementById("score").innerText = score;
+                }
+            });
+
+            if (en.y > canvas.height) enemies.splice(i, 1);
+        });
+
+        // Partículas
+        particles.forEach((p, i) => {
+            p.x += p.vx; p.y += p.vy; p.life -= 0.02;
+            if(p.life <= 0) particles.splice(i, 1);
