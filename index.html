@@ -13,23 +13,38 @@
             -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
         }
         img { pointer-events: none; -webkit-user-drag: none; }
-        #splash-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000; color: #39FF14; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; cursor: pointer; transition: opacity 0.8s; }
-        .typewriter { font-family: 'JetBrains Mono', monospace; display: inline-block; overflow: hidden; white-space: nowrap; border-right: 3px solid #39FF14; animation: typing 2.5s steps(40, end); }
+        
+        #splash-screen { 
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+            background: #000; color: #39FF14; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; z-index: 10000; 
+            cursor: pointer; transition: opacity 0.8s; 
+        }
+        .typewriter { 
+            font-family: 'JetBrains Mono', monospace; display: inline-block; 
+            overflow: hidden; white-space: nowrap; border-right: 3px solid #39FF14; 
+            animation: typing 2.5s steps(40, end); 
+        }
         @keyframes typing { from { width: 0; } to { width: 100%; } }
+
         .screen { display: none; width: 100%; height: 100vh; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; position: absolute; }
         .chroma { color: #39FF14; text-shadow: 0 0 10px #39FF14; margin-bottom: 20px; font-size: 1.2rem; letter-spacing: 3px; }
+        
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; margin-top: 20px; }
         .card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 25px; border-radius: 12px; transition: 0.5s; position: relative; }
         .card:hover { border-color: #333; transform: translateY(-5px); }
+
         .btn-main { width: 100%; max-width: 280px; padding: 15px; background: #fff; color: #000; border: none; font-weight: bold; cursor: pointer; font-family: 'Orbitron'; text-transform: uppercase; margin-top: 15px; }
         .btn-main:hover { background: #39FF14; box-shadow: 0 0 20px #39FF14; }
+        
         .btn-nav { background: none; border: 1px solid #333; color: #888; padding: 12px; cursor: pointer; width: 100%; margin-top: 8px; font-size: 0.7rem; font-family: 'Orbitron'; transition: 0.3s; text-transform: uppercase; }
         .btn-nav:hover { border-color: #fff; color: #fff; }
+
         input { width: 100%; max-width: 250px; padding: 12px; background: #111; border: 1px solid #333; color: #fff; text-align: center; margin-bottom: 15px; font-family: 'Orbitron'; outline: none; }
         #t-box { font-family:'JetBrains Mono'; font-size:0.6rem; color:#888; text-align:left; height:70px; transition: 0.3s; }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <div id="splash-screen" onclick="hideSplash()">
         <p class="typewriter">> INITIALIZING_SECURE_VANGUARD_BOOT...</p>
@@ -42,4 +57,99 @@
         <button class="btn-main" onclick="unlock()">DECRYPT & ENTER</button>
     </div>
 
-    <div id="hub-screen
+    <div id="hub-screen" class="screen">
+        <h2 class="chroma">VANGUARD_CORE_HUB</h2>
+        <div class="grid">
+            <div id="card-security" class="card" style="border-color: #ff3131;">
+                <h3 style="color:#ff3131; font-size:0.75rem; margin-bottom: 10px;">SECURITY_SHIELD</h3>
+                <div id="security-status" style="font-family:'JetBrains Mono'; font-size:0.6rem; color:#ff3131; text-align:left; height:75px; border-left: 2px solid #ff3131; padding-left: 10px; margin-bottom: 15px; transition: 0.5s;">> SYSTEM_IDLE...</div>
+                <button id="btn-scan" class="btn-nav" style="color:#ff3131; border-color: #ff3131;" onclick="runScan()">RUN_SECURE_SCAN</button>
+            </div>
+            
+            <div class="card" style="border-color: #00d4ff;">
+                <h3 style="color:#00d4ff; font-size:0.75rem; margin-bottom: 15px;">BUSINESS_SOLUTIONS</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <button class="btn-nav" onclick="window.location.href='exemplo1.html'">NEON</button>
+                    <button class="btn-nav" onclick="window.location.href='exemplo2.html'">CLEAN</button>
+                    <button class="btn-nav" onclick="window.location.href='exemplo3.html'">APPLE</button>
+                    <button class="btn-nav" onclick="window.location.href='exemplo4.html'">CRYPTO</button>
+                    <button class="btn-nav" onclick="window.location.href='exemplo5.html'">AGENCY</button>
+                    <button class="btn-nav" style="border-color:#28a745; color:#28a745;" onclick="window.location.href='exemplo6.html'">PAYMENT</button>
+                </div>
+            </div>
+
+            <div class="card" style="border-color: #f1c40f;">
+                <h3 style="color:#f1c40f; font-size:0.75rem; margin-bottom: 10px;">CLIENT_FEEDBACK</h3>
+                <div id="t-box"><span style="color:#f1c40f;">[LOG_01]:</span> "Segurança impecável e design acima da média."<br><br>- CEO, Nexus Digital</div>
+                <button class="btn-nav" style="color:#f1c40f; border-color: #f1c40f;" onclick="nextT()">NEXT_LOG</button>
+            </div>
+        </div>
+        <button class="btn-main" style="margin-top: 40px;" onclick="window.location.href='https://wa.me/5569992636349'">INICIAR PROJETO</button>
+    </div>
+
+    <script>
+        /* PROTOCOLO_PROTECAO_VANGUARD */
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 67 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) return false;
+        };
+
+        function hideSplash() {
+            const s = document.getElementById('splash-screen');
+            if (!s || s.style.display === 'none') return;
+            s.style.opacity = '0';
+            setTimeout(() => {
+                s.style.display = 'none';
+                document.getElementById('login-screen').style.display = 'flex';
+            }, 700);
+        }
+
+        // Timer de segurança: Força a saída da splash após 4s idependente de erro
+        window.onload = () => { setTimeout(hideSplash, 4000); };
+
+        function unlock() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('hub-screen').style.display = 'flex';
+        }
+
+        function runScan() {
+            const st = document.getElementById('security-status');
+            const card = document.getElementById('card-security');
+            const btn = document.getElementById('btn-scan');
+            const logs = ["> INITIALIZING...", "> BYPASS_BLOCKED", "> ENCRYPTING...", "> SQL_SHIELD_ON", "> 100% SECURE"];
+            let i = 0; st.innerHTML = "";
+            const int = setInterval(() => {
+                if(i < logs.length) { 
+                    st.innerHTML += logs[i] + "<br>"; 
+                    i++; 
+                } else { 
+                    clearInterval(int);
+                    st.style.color = "#39FF14"; 
+                    st.style.borderColor = "#39FF14";
+                    card.style.borderColor = "#39FF14";
+                    btn.style.color = "#39FF14";
+                    btn.style.borderColor = "#39FF14";
+                    st.style.textShadow = "0 0 10px #39FF14";
+                }
+            }, 600);
+        }
+
+        let c = 0;
+        const tt = [
+            {l: "[LOG_01]:", t: "Segurança impecável e design acima da média.", n: "- CEO, Nexus Digital"},
+            {l: "[LOG_02]:", t: "O sistema de pagamento reduziu perdas drasticamente.", n: "- Founder, Blue Whale Trading"},
+            {l: "[LOG_03]:", t: "Entrega técnica de altíssimo nível. Recomendo.", n: "- CTO, Vanguards Tech"}
+        ];
+        function nextT() {
+            c = (c + 1) % tt.length;
+            const box = document.getElementById('t-box');
+            box.style.opacity = '0';
+            setTimeout(() => {
+                box.innerHTML = `<span style="color:#f1c40f;">${tt[c].l}</span> "${tt[c].t}"<br><br>${tt[c].n}`;
+                box.style.opacity = '1';
+            }, 300);
+        }
+
+        document.getElementById('passInput').addEventListener('keypress', (e) => { if(e.key==='Enter') unlock(); });
+    </script>
+</body>
+</html>
