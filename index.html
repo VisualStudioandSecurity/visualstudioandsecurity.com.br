@@ -44,14 +44,14 @@
         input { width: 100%; max-width: 250px; padding: 12px; background: #111; border: 1px solid #333; color: #fff; text-align: center; margin-bottom: 10px; font-family: 'Orbitron'; outline: none; }
     </style>
 </head>
-<body onload="bootSystem()">
+<body>
 
     <div id="splash-screen">
         <p class="typewriter">> INITIALIZING_SECURE_VANGUARD_BOOT...</p>
         <p style="font-size: 0.6rem; color: #666; margin-top: 10px;">AUTH: KOVALIOSKY_DEV // ENCRYPTION: AES-256</p>
     </div>
 
-    <div id="login-screen" class="screen" style="display: flex;">
+    <div id="login-screen" class="screen">
         <h1 class="chroma">SYSTEM ACCESS</h1>
         <input type="password" id="passInput" placeholder="PASSWORD">
         <button type="button" class="btn-main" onclick="unlock()">DECRYPT & ENTER</button>
@@ -75,6 +75,7 @@
                 <h3>SOFTWARE</h3>
                 <button class="btn-nav" onclick="window.location.href='snake.html'">SNAKE_GAME</button>
                 <button class="btn-nav" onclick="window.location.href='carro.html'">DRIFT_SIM</button>
+                <button class="btn-nav" onclick="window.location.href='memoria.html'">MEMORY_OS</button>
             </div>
             
             <div class="card" style="border-color: #00d4ff;">
@@ -90,7 +91,7 @@
 
             <div class="card" style="border: 1px solid; animation: chroma 3s infinite linear;">
                 <h3 style="font-size: 0.7rem;">HIRE_ENGINEER</h3>
-                <button class="btn-main" style="font-size:0.55rem; padding: 10px;" onclick="window.location.href='https://wa.me/5569992636349'">WHATSAPP_DIRECT</button>
+                <button class="btn-main" style="font-size:0.55rem; padding: 10px; max-width: 100%;" onclick="window.location.href='https://wa.me/5569992636349'">WHATSAPP_DIRECT</button>
             </div>
         </div>
         
@@ -98,20 +99,34 @@
     </div>
 
     <script>
-        function bootSystem() {
+        // Função de Boot disparada assim que o script carrega
+        function startBoot() {
+            const splash = document.getElementById('splash-screen');
+            const login = document.getElementById('login-screen');
+
+            // Garante estado inicial
+            if(login) login.style.display = 'none';
+
             setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                splash.style.opacity = '0';
-                setTimeout(() => splash.style.display = 'none', 800);
-            }, 3000);
+                if(splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => {
+                        splash.style.display = 'none';
+                        if(login) login.style.display = 'flex';
+                    }, 800);
+                }
+            }, 3000); 
         }
+
+        // Execução imediata para evitar travamentos
+        startBoot();
 
         function unlock() {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('hub-screen').style.display = 'flex';
         }
 
-        // LÓGICA DE SEGURANÇA (DEMONSTRAÇÃO DE PROGRAMAÇÃO)
+        // Demonstração de Programação de Segurança
         function runSecurityScan() {
             const statusDiv = document.getElementById('security-status');
             const logs = [
@@ -125,7 +140,18 @@
             
             let i = 0;
             statusDiv.innerHTML = "";
-            statusDiv.style.color = "#39FF14"; // Muda para verde durante o scan
+            statusDiv.style.color = "#39FF14"; 
             const interval = setInterval(() => {
                 if(i < logs.length) {
-                    statusDiv.innerHTML += logs[i] +
+                    statusDiv.innerHTML += logs[i] + "<br>";
+                    i++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 600);
+        }
+
+        document.getElementById('passInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') unlock(); });
+    </script>
+</body>
+</html>
