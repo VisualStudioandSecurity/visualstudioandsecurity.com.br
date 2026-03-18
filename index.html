@@ -8,88 +8,47 @@
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;700&display=swap');
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; overflow: hidden; height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        body { 
+            background: #000; color: #fff; font-family: 'Orbitron', sans-serif; 
+            overflow: hidden; height: 100vh; width: 100vw; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+        }
 
         /* TELA DE ENTRADA */
         #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 999; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #39FF14; }
 
-        /* HEADER */
+        /* TITULO PRINCIPAL */
         .chroma { color: #39FF14; text-shadow: 0 0 15px #39FF14; margin-bottom: 40px; letter-spacing: 5px; font-size: 1.5rem; text-align: center; }
 
-        /* GRID ORGANIZADA (RESOLVE O PROBLEMA DA IMAGEM) */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 90%; max-width: 900px; z-index: 10; }
+        /* GRID DE CARDS */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; width: 90%; max-width: 850px; z-index: 10; }
         
-        .card { background: #050505; border: 1px solid #1a1a1a; padding: 30px; border-radius: 15px; text-align: center; transition: 0.3s; }
-        .card:hover { border-color: #333; transform: translateY(-5px); }
+        /* CARD BASE (VERMELHO INICIAL) */
+        .card { 
+            background: #050505; border: 1px solid #1a1a1a; padding: 35px; 
+            border-radius: 15px; text-align: center; transition: all 0.5s ease; 
+        }
+        
+        /* ESTILO ESPECÍFICO DO SCAN */
+        #card-scan { border-color: #ff3131; }
+        #status-text { color: #ff3131; font-family: 'JetBrains Mono'; font-size: 0.65rem; margin-bottom: 20px; min-height: 40px; }
         
         /* BOTÕES */
-        button { background: none; border: 1px solid #333; color: #888; padding: 12px; width: 100%; cursor: pointer; font-family: 'Orbitron'; font-size: 0.6rem; margin-top: 10px; transition: 0.3s; text-transform: uppercase; }
-        button:hover { border-color: #fff; color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.1); }
-        
-        .contact-btn { background: #39FF14; color: #000; font-weight: bold; margin-top: 40px; width: 280px; border: none; padding: 15px; font-size: 0.8rem; }
-        .contact-btn:hover { background: #fff; box-shadow: 0 0 20px #39FF14; }
-
-        /* MENU INFERIOR (SOBRE / FAQ) */
-        .footer-nav { position: absolute; bottom: 30px; display: flex; gap: 40px; font-size: 0.65rem; color: #444; letter-spacing: 2px; }
-        .footer-nav span { cursor: pointer; transition: 0.3s; }
-        .footer-nav span:hover { color: #39FF14; }
-
-        /* MODAIS (JANELAS) */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #0a0a0a; border: 1px solid #39FF14; padding: 40px; max-width: 500px; border-radius: 10px; position: relative; }
-        .close { position: absolute; top: 15px; right: 20px; color: #ff3131; cursor: pointer; font-size: 0.7rem; }
-    </style>
-</head>
-<body oncontextmenu="return false;">
-
-    <div id="splash" onclick="this.style.display='none'">
-        <p style="font-family: 'JetBrains Mono';">> ACCESSING_VANGUARD_HUB... [CLICK]</p>
-    </div>
-
-    <h1 class="chroma">VANGUARD_CORE_HUB</h1>
-    
-    <div class="grid">
-        <div class="card" style="border-color: #ff3131;">
-            <h3 style="color:#ff3131; font-size:0.75rem; margin-bottom: 15px;">SECURITY_SHIELD</h3>
-            <div id="status" style="margin-bottom:20px; font-size:0.6rem; color:#ff3131; font-family:'JetBrains Mono';">> SYSTEM_ACTIVE<br>> 100% SECURE</div>
-            <button style="color:#ff3131; border-color:#ff3131;" onclick="alert('Sistema já está blindado.')">RE-SCAN</button>
-        </div>
-
-        <div class="card" style="border-color: #00d4ff;">
-            <h3 style="color:#00d4ff; font-size:0.75rem; margin-bottom: 15px;">SOLUTIONS_CORE</h3>
-            <button onclick="location.href='exemplo4.html'">CRYPTO_DASHBOARD</button>
-            <button style="border-color:#28a745; color:#28a745;" onclick="location.href='exemplo6.html'">PAYMENT_SYSTEM</button>
-        </div>
-    </div>
-
-    <button class="contact-btn" onclick="location.href='https://wa.me/5569992636349'">INICIAR PROJETO</button>
-
-    <div class="footer-nav">
-        <span onclick="openModal('sobre')">SOBRE NÓS</span>
-        <span onclick="openModal('faq')">F.A.Q</span>
-    </div>
-
-    <div id="modal" class="modal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close" onclick="closeModal()">[ FECHAR ]</span>
-            <div id="modal-text" style="font-family:'JetBrains Mono'; font-size:0.75rem; color:#888; line-height:1.6;"></div>
-        </div>
-    </div>
-
-    <script>
-        const info = {
-            sobre: "<h3 style='color:#39FF14; margin-bottom:15px;'>VANGUARDS VISUAL</h3>Somos uma célula de tecnologia liderada por Kovaliosky. Focamos em desenvolvimento de alta complexidade, sistemas financeiros e design de interface futurista.",
-            faq: "<h3 style='color:#39FF14; margin-bottom:15px;'>SYSTEM_INTEL</h3><b>> SEGURANÇA:</b> Usamos defesa ativa contra plágio.<br><br><b>> PAGAMENTOS:</b> Aceitamos Fiat e Cripto (USDT/BTC).<br><br><b>> PRAZOS:</b> Projetos exclusivos de 7 a 20 dias."
-        };
-
-        function openModal(key) {
-            document.getElementById('modal-text').innerHTML = info[key];
-            document.getElementById('modal').style.display = 'flex';
+        button { 
+            background: none; border: 1px solid #333; color: #888; padding: 12px; 
+            width: 100%; cursor: pointer; font-family: 'Orbitron'; font-size: 0.6rem; 
+            margin-top: 10px; transition: 0.3s; text-transform: uppercase; 
         }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        button:hover { border-color: #fff; color: #fff; }
 
-        // Proteção Anti-F12
-        document.onkeydown = function(e) { if(e.keyCode == 123) return false; };
-    </script>
-</body>
-</html>
+        #btn-scan { color: #ff3131; border-color: #ff3131; }
+        
+        /* BOTÃO WHATSAPP */
+        .contact-btn { 
+            background: #39FF14; color: #000; font-weight: bold; margin-top: 50px; 
+            width: 300px; border: none; padding: 18px; font-size: 0.8rem; letter-spacing: 2px;
+        }
+        .contact-btn:hover { background: #fff; box-shadow: 0 0 25px #39FF14; }
+
+        /* FOOTER NAV */
+        .footer-nav { position: absolute; bottom: 30px; display: flex; gap
