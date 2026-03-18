@@ -3,119 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kovaliosky | Vanguard Core</title>
+    <title>Kovaliosky | Vanguard Core Hub</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;700&display=swap');
         
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
-        body { background: #000; color: #fff; font-family: 'Orbitron', sans-serif; overflow: hidden; height: 100vh; width: 100vw; display: flex; align-items: center; justify-content: center; }
-
-        /* LOGS DE FUNDO (NOVO) */
-        #bg-logs {
-            position: fixed; top: 10px; left: 10px; width: 300px; height: 400px;
-            font-family: 'JetBrains Mono'; font-size: 0.45rem; color: rgba(57, 255, 20, 0.15);
-            pointer-events: none; overflow: hidden; z-index: 1; line-height: 1.2;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #000; color: #fff; font-family: 'Orbitron', sans-serif; 
+            overflow: hidden; height: 100vh; width: 100vw; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
         }
 
-        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #39FF14; transition: 0.5s; }
-        #hub-screen { display: none; width: 90%; max-width: 1000px; flex-direction: column; align-items: center; z-index: 10; position: relative; }
+        /* SPLASH SCREEN (SIMULAÇÃO DE BOOT) */
+        #splash { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; color: #39FF14; transition: 0.5s; }
+
+        /* HUB CONTENT */
+        #hub-screen { display: none; width: 100%; max-width: 1000px; flex-direction: column; align-items: center; justify-content: center; z-index: 10; padding: 20px; text-align: center; }
+        .chroma { color: #39FF14; text-shadow: 0 0 15px #39FF14; margin-bottom: 25px; letter-spacing: 5px; font-size: 1.4rem; }
+
+        /* GRID PRINCIPAL (EM LINHA CONFORME A FOTO) */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; text-align: left; }
+        .card { background: rgba(5, 5, 5, 0.8); border: 1px solid #1a1a1a; padding: 25px; border-radius: 15px; transition: 0.4s; }
         
-        .chroma { color: #39FF14; text-shadow: 0 0 20px #39FF14; margin-bottom: 50px; letter-spacing: 8px; font-size: 1.8rem; }
+        /* STATUS VERDE JÁ ATIVO (EDITADO) */
+        .status-green { color: #39FF14; border-color: #39FF14 !important; text-shadow: 0 0 10px #39FF14; box-shadow: 0 0 15px rgba(57, 255, 20, 0.2); }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; }
-        .card { background: rgba(0, 0, 0, 0.9); border: 1px solid #1a1a1a; padding: 40px; border-radius: 10px; transition: 0.4s; text-align: center; backdrop-filter: blur(5px); }
-        
-        .card-sec { border-color: #ff3131; }
-        .card-sol { border-color: #39FF14; }
+        /* TEXTOS PROFISSIONAIS */
+        .label { font-family: 'JetBrains Mono'; font-size: 0.5rem; color: #444; text-transform: uppercase; margin-bottom: 5px; display: block; }
+        .main-text { font-family: 'JetBrains Mono'; font-size: 0.65rem; color: #888; line-height: 1.5; margin-bottom: 15px; }
 
-        .btn-inner { background: none; border: 1px solid #333; color: #666; padding: 15px; width: 100%; margin-top: 15px; font-family: 'Orbitron'; font-size: 0.65rem; transition: 0.3s; cursor: pointer; text-transform: uppercase; }
-        .btn-inner:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,0.05); }
-        
-        .btn-pix { border-color: #39FF14; color: #39FF14; box-shadow: inset 0 0 10px rgba(57, 255, 20, 0.1); font-weight: bold; }
-        .btn-pix:hover { background: #39FF14; color: #000; box-shadow: 0 0 20px #39FF14; }
-
-        .main-action { background: #39FF14; color: #000; font-weight: bold; margin-top: 60px; width: 380px; border: none; padding: 22px; font-size: 0.9rem; letter-spacing: 3px; box-shadow: 0 0 25px #39FF14; transition: 0.3s; cursor: pointer; }
-        .main-action:hover { background: #fff; transform: scale(1.05); }
-
-        .footer { position: absolute; bottom: 30px; display: flex; gap: 40px; color: #222; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; }
-    </style>
-</head>
-<body oncontextmenu="return false;">
-
-    <div id="bg-logs"></div>
-
-    <div id="splash" onclick="unlock()">
-        <p style="font-family: 'JetBrains Mono';">> INITIALIZING_VANGUARD_CORE...</p>
-        <p style="font-size: 0.4rem; color: #111; margin-top: 10px;">AUTH_REQ: KOVALIOSKY_SESSION</p>
-    </div>
-
-    <div id="hub-screen">
-        <h1 class="chroma">VANGUARD_CORE_HUB</h1>
-        
-        <div class="grid">
-            <div class="card card-sec">
-                <p style="color: #ff3131; font-size: 0.6rem; margin-bottom: 25px; letter-spacing: 2px;">SECURITY_SHIELD</p>
-                <p style="color: #ff3131; font-family: 'JetBrains Mono'; font-size: 0.5rem;">> STATUS: PROTECTED</p>
-                <button class="btn-inner" style="border-color: #ff3131; color: #ff3131; margin-top: 40px;">RUN_SCAN</button>
-            </div>
-
-            <div class="card card-sol">
-                <p style="color: #39FF14; font-size: 0.6rem; margin-bottom: 25px; letter-spacing: 2px;">SOLUTIONS</p>
-                <button class="btn-inner btn-pix" onclick="copiarPix()">APOIE VIA PIX (COPIAR)</button>
-                <button class="btn-inner" onclick="location.href='https://wa.me/5569992636349'">CLEAN_UI_DESIGN</button>
-            </div>
-        </div>
-
-        <button class="main-action" onclick="location.href='https://wa.me/5569992636349'">CONTRATAR AGORA</button>
-
-        <div class="footer">
-            <span>GUILHERME KOVALIOSKY</span>
-            <span>SENIOR SOFTWARE ENGINEER</span>
-        </div>
-    </div>
-
-    <script>
-        // Função de Desbloqueio
-        function unlock() {
-            document.getElementById('splash').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('splash').style.display = 'none';
-                document.getElementById('hub-screen').style.display = 'flex';
-                iniciarLogs();
-            }, 500);
+        /* BOTÕES DE SOLUÇÕES (MANTIDOS DESATIVADOS CONFORME A FOTO) */
+        .sol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;}
+        button { 
+            background: none; border: 1px solid #333; color: #666; padding: 10px; 
+            width: 100%; cursor: pointer; font-family: 'Orbitron'; font-size: 0.5rem; 
+            transition: 0.3s; text-transform: uppercase; 
         }
+        button:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,0.05); }
 
-        // Função de Copiar Pix
-        function copiarPix() {
-            const pix = "10267545266";
-            navigator.clipboard.writeText(pix).then(() => {
-                alert("Chave Pix Copiada: " + pix + "\nAguardando confirmação de rede...");
-            });
-        }
-
-        // Sistema de Logs Infinitos
-        function iniciarLogs() {
-            const container = document.getElementById('bg-logs');
-            const frases = [
-                "RECEIVING_ENCRYPTED_PACKET...", "AUTH_SUCCESS: GUILHERME_K", "BYPASSING_FIREWALL_v4.2...",
-                "PIX_GATEWAY_ACTIVE", "SCANNING_VULNERABILITIES...", "DEPLOYING_UI_MODULES",
-                "CLEAN_UX_ACTIVE", "VANGUARD_PROTOCOL_READY", "IP_TRACED: 192.168.0.1",
-                "ENCRYPTING_DATABASE...", "PAYMENT_SIGNAL_FOUND", "UPLOADING_PROTOCOLS..."
-            ];
-
-            setInterval(() => {
-                const log = document.createElement('div');
-                log.innerText = `[${new Date().toLocaleTimeString()}] ${frases[Math.floor(Math.random() * frases.length)]}`;
-                container.appendChild(log);
-                if (container.children.length > 30) container.removeChild(container.firstChild);
-                container.scrollTop = container.scrollHeight;
-            }, 800);
-        }
-
-        // Segurança Ant-Inspector
-        document.onkeydown = function(e) {
-            if(event.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) return false;
-        };
-    </script>
-</body>
-</html>
+        /* BOTÃO PRINCIPAL (WHATSAPP - BARRA VERDE SÓLIDA) */
+        .contact-btn { background: #39FF14; color: #000; font-weight: bold; margin-top: 30px; width: 320px; border: none;
