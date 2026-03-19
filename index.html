@@ -34,30 +34,27 @@
                     <p class="text-[10px] text-gray-500 uppercase mb-2">BTC/USDT LIVE</p>
                     <span id="btc-price" class="text-3xl font-bold text-[#00ff00]">CONECTANDO...</span>
                 </div>
-                <div class="mt-8 text-[10px] text-gray-400">LEAD ENGINEER: GUILHERME KOVALIOSKY</div>
+                <div class="mt-8 text-[10px] text-gray-400 uppercase">Lead Engineer: Guilherme Kovaliosky</div>
             </div>
 
             <div class="border-neon p-8 rounded-3xl bg-black">
                 <h2 class="text-xl font-bold mb-8 uppercase">Active_Solutions_v1</h2>
 
-                <div class="grid grid-cols-2 gap-4 mb-8">
-                    <a href="https://github.com/VisualStudioandSecurity?tab=repositories" target="_blank" class="block p-4 border border-[#00ff00]/40 text-[#00ff00] text-center text-[10px] font-bold hover:bg-[#00ff00] hover:text-black transition-all">
-                        REPOS: <span id="repo-count">0</span>
-                    </a>
-                    <a href="https://github.com/VisualStudioandSecurity/Short-Sniper" target="_blank" class="block p-4 border border-white/20 text-center text-[10px] font-bold hover:border-[#00ff00] hover:text-[#00ff00] transition-all">
-                        SHORT_SNIPER
+                <div class="mb-8">
+                    <a href="https://github.com/VisualStudioandSecurity?tab=repositories" target="_blank" class="block w-full p-6 border border-[#00ff00]/40 text-[#00ff00] text-center text-lg font-bold hover:bg-[#00ff00] hover:text-black transition-all uppercase">
+                        REPOS_ATIVOS: <span id="repo-count">0</span>
                     </a>
                 </div>
 
-                <a href="https://github.com/VisualStudioandSecurity" target="_blank" class="block w-full text-center border border-[#00ff00] text-[#00ff00] py-4 text-[11px] font-black hover:bg-[#00ff00] hover:text-black transition-all">
-                    ABRIR GITHUB_
+                <a href="https://github.com/VisualStudioandSecurity" target="_blank" class="block w-full text-center border border-[#00ff00] text-[#00ff00] py-6 text-[12px] font-black hover:bg-[#00ff00] hover:text-black transition-all tracking-[0.3em] uppercase">
+                    ABRIR TERMINAL_GITHUB
                 </a>
             </div>
         </div>
     </div>
 
     <script>
-        // Motor do Bitcoin
+        // Motor do Bitcoin (Binance WebSocket)
         const btcDisplay = document.getElementById('btc-price');
         const btcWs = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker');
         btcWs.onmessage = (event) => {
@@ -65,13 +62,15 @@
             btcDisplay.innerText = '$' + parseFloat(data.c).toLocaleString();
         };
 
-        // Motor do GitHub
+        // Motor do GitHub (VisualStudioandSecurity)
         async function fetchGithub() {
             try {
                 const res = await fetch('https://api.github.com/users/VisualStudioandSecurity');
                 const data = await res.json();
                 document.getElementById('repo-count').innerText = data.public_repos || '0';
-            } catch (err) { document.getElementById('repo-count').innerText = 'OFF'; }
+            } catch (err) {
+                document.getElementById('repo-count').innerText = 'ERR';
+            }
         }
         fetchGithub();
     </script>
