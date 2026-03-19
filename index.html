@@ -18,6 +18,7 @@
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
         }
 
+        /* ANIMAÇÃO RGB NO TÍTULO */
         .color-shift {
             animation: colorChange 8s infinite linear;
         }
@@ -49,64 +50,57 @@
             }
         }
 
+        /* BOTÕES DO MENU MINIMALISTA */
         .nav-btn {
             border: 1px solid rgba(255,255,255,0.1);
             color: #fff;
             transition: all 0.3s ease;
             cursor: pointer;
+            text-align: center;
         }
 
             .nav-btn:hover {
                 border-color: #00ff00;
                 color: #00ff00;
                 box-shadow: 0 0 10px rgba(0,255,0,0.3);
+                transform: translateY(-1px);
             }
     </style>
 </head>
-<body class="p-4 md:p-12 min-h-screen flex items-center justify-center">
+<body class="p-4 md:p-12 flex items-center justify-center min-h-screen">
 
-    <div class="flex flex-wrap justify-center gap-2 mb-12 border-t border-b border-white/10 py-6">
-        <a href="exemplo1.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_01</a>
-        <a href="exemplo2.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_02</a>
-        <a href="exemplo3.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_03</a>
-        <a href="exemplo4.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_04</a>
-        <a href="exemplo5.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_05</a>
-        <a href="exemplo6.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_06</a>
-        <a href="https://github.com/VisualStudioandSecurity/visualgamehub.io/blob/main/README.md" target="_blank" class="nav-btn px-4 py-1 text-[9px] font-bold border-blue-500 text-blue-400">FICHA</a>
-        <a href="https://wa.me/5569992636349" target="_blank" class="nav-btn px-4 py-1 text-[9px] font-bold border-purple-500 text-purple-400">WHATSAPP</a>
-    </div>
-    <script>
-        // SCRIPT BITCOIN - WebSocket Binance
-        function startBTC() {
-            const btcDisplay = document.getElementById('btc-price');
-            const btcWs = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker');
+    <div class="max-w-5xl w-full">
+        <h1 class="text-center text-3xl md:text-5xl font-black color-shift mb-8 tracking-[0.2em]">VisualStudioAndSecurity</h1>
 
-            btcWs.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                if (data.c) {
-                    btcDisplay.innerText = '$' + parseFloat(data.c).toLocaleString(undefined, { minimumFractionDigits: 2 });
-                }
-            };
+        <div class="flex flex-wrap justify-center gap-2 mb-16 border-t border-b border-white/10 py-6">
+            <a href="exemplo1.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_01</a>
+            <a href="exemplo2.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_02</a>
+            <a href="exemplo3.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_03</a>
+            <a href="exemplo4.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_04</a>
+            <a href="exemplo5.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_05</a>
+            <a href="exemplo6.html" class="nav-btn px-3 py-1 text-[9px] font-bold">LP_06</a>
+            <a href="https://github.com/VisualStudioandSecurity/visualgamehub.io/blob/main/README.md" target="_blank" class="nav-btn px-4 py-1 text-[9px] font-bold border-blue-500 text-blue-400 hover:border-blue-500">FICHA</a>
+            <a href="https://wa.me/5599999999999" target="_blank" class="nav-btn px-4 py-1 text-[9px] font-bold border-purple-500 text-purple-400 hover:border-purple-500">WHATSAPP</a>
+        </div>
 
-            btcWs.onerror = () => { btcDisplay.innerText = "ERRO_CONEXÃO"; };
-        }
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="border-neon p-8 rounded-3xl bg-black/80">
+                <h2 class="text-xl font-bold text-[#00ff00] mb-6 uppercase tracking-widest">Security_Shield</h2>
+                <div class="bg-[#00ff00]/5 border border-[#00ff00]/20 p-6 rounded-xl mb-12">
+                    <p class="text-[10px] text-gray-500 uppercase mb-2">BTC/USDT LIVE MARKET</p>
+                    <span id="btc-price" class="text-3xl font-mono font-bold text-[#00ff00]">CONECTANDO...</span>
+                </div>
+                <div class="border-t border-white/10 pt-6">
+                    <p class="text-[10px] text-gray-400 uppercase">Lead Engineer:</p>
+                    <p class="text-sm font-bold tracking-widest uppercase">Guilherme Kovaliosky</p>
+                </div>
+            </div>
 
-        // SCRIPT GITHUB
-        async function fetchGithub() {
-            try {
-                const res = await fetch('https://api.github.com/users/VisualStudioandSecurity');
-                const data = await res.json();
-                document.getElementById('repo-count').innerText = data.public_repos || '0';
-            } catch (err) {
-                document.getElementById('repo-count').innerText = 'OFF';
-            }
-        }
-
-        // INICIALIZAÇÃO
-        window.onload = () => {
-            startBTC();
-            fetchGithub();
-        };
-    </script>
-</body>
-</html>
+            <div class="border-neon p-8 rounded-3xl bg-black/80">
+                <h2 class="text-xl font-bold mb-8 uppercase tracking-widest">Active_Solutions_v1</h2>
+                <div class="mb-8">
+                    <a href="https://github.com/VisualStudioandSecurity" target="_blank" class="block w-full p-6 border border-[#00ff00]/40 text-[#00ff00] text-center text-lg font-bold hover:bg-[#00ff00] hover:text-black transition-all">
+                        REPOS_ATIVOS: <span id="repo-count">0</span>
+                    </a>
+                </div>
+                <a href="
