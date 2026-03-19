@@ -3,125 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kovaliosky | Vanguard Core Hub</title>
+    <title>Kv's Enterprise | Visual Studio Games</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;700&display=swap');
-        
-        /* Reset e Base */
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
-        body { 
-            background: #000; color: #fff; font-family: 'Orbitron', sans-serif; 
-            overflow: hidden; height: 100vh; width: 100vw; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        /* Container Principal - CARGA IMEDIATA */
-        #hub-screen { display: flex; width: 100%; max-width: 1000px; flex-direction: column; align-items: center; z-index: 10; padding: 20px; }
-        
-        .chroma { 
-            color: #39FF14; text-shadow: 0 0 15px #39FF14; 
-            margin-bottom: 30px; letter-spacing: 5px; font-size: 1.4rem; text-align: center; 
+        .neon-glow {
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
         }
 
-        /* Grid de Cards conforme sua imagem */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
-        .card { background: rgba(5, 5, 5, 0.8); border: 1px solid #1a1a1a; padding: 25px; border-radius: 15px; text-align: left; }
-        .status-green { border-color: #39FF14 !important; box-shadow: 0 0 15px rgba(57, 255, 20, 0.1); }
-
-        .label { font-family: 'JetBrains Mono'; font-size: 0.5rem; color: #444; text-transform: uppercase; margin-bottom: 5px; display: block; }
-        .sol-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        
-        button { 
-            background: none; border: 1px solid #333; color: #fff; padding: 10px; 
-            width: 100%; cursor: pointer; font-family: 'Orbitron'; font-size: 0.5rem; 
-            transition: 0.3s; text-transform: uppercase; 
+        .border-neon {
+            border: 1px solid #00ff00;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
         }
-        button:hover { border-color: #39FF14; color: #39FF14; background: rgba(57, 255, 20, 0.05); }
 
-        .main-btn { background: #39FF14; color: #000; font-weight: bold; margin-top: 40px; width: 350px; border: none; padding: 18px; font-size: 0.8rem; letter-spacing: 2px; cursor: pointer; }
-        .main-btn:hover { background: #fff; box-shadow: 0 0 25px #39FF14; }
-
-        .footer-nav { margin-top: 30px; display: flex; gap: 25px; font-size: 0.6rem; color: #333; }
-        .footer-nav span { cursor: pointer; transition: 0.3s; }
-        .footer-nav span:hover { color: #39FF14; }
-
-        /* Estilo do Modal (Oculto por padrão) */
-        #vanguard-modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.95); z-index: 100; align-items: center; justify-content: center; 
-            backdrop-filter: blur(8px);
+        .btn-neon {
+            background-color: #00ff00;
+            color: #000;
+            font-weight: 900;
+            transition: 0.3s;
         }
+
+            .btn-neon:hover {
+                box-shadow: 0 0 30px #00ff00;
+                transform: scale(1.05);
+            }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body class="p-4 md:p-10">
 
-    <div id="hub-screen">
-        <h1 class="chroma">VANGUARD_CORE_HUB</h1>
-        
-        <div class="grid">
-            <div class="card status-green">
-                <span class="label">Cybersecurity_Module</span>
-                <h3 style="color:#39FF14; font-size:0.7rem; margin-bottom:10px;">SECURITY_SHIELD</h3>
-                <p style="color:#39FF14; font-family:'JetBrains Mono'; font-size:0.55rem;">
-                    > SHIELD_ACTIVE_100%<br>> SYSTEM_SECURE_BY_VANGUARD
-                </p>
-                <button style="border-color:#39FF14; color:#39FF14; margin-top:15px;">SYSTEM_PROTECTED</button>
-                
-                <div style="margin-top:30px;">
-                    <span class="label">Lead_Engineer</span>
-                    <p style="font-size:0.55rem; color:#fff;">GUILHERME KOVALIOSKY<br>Senior Dev | Cyber Specialist</p>
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-center text-3xl md:text-5xl font-black neon-glow mb-12 tracking-widest uppercase">VANGUARD_CORE_HUB</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <div class="border-neon p-8 rounded-2xl bg-black/50 relative overflow-hidden">
+                <div class="text-[10px] text-[#00ff00] mb-4 tracking-[0.3em]">CYBERSECURITY_MODULE</div>
+                <h2 class="text-2xl font-bold text-[#00ff00] mb-2">SECURITY_SHIELD</h2>
+
+                <div class="my-6 p-4 border border-[#00ff00]/30 rounded bg-[#00ff00]/5">
+                    <p class="text-[10px] text-gray-500 mb-1 uppercase">Live Market: BTC/USDT</p>
+                    <span id="btc-price" class="text-2xl font-mono text-[#00ff00]">CONECTANDO...</span>
+                </div>
+
+                <div class="text-[10px] space-y-1 text-gray-400 mt-10">
+                    <p>> SHIELD_ACTIVE_100%</p>
+                    <p>> SYSTEM_SECURE_BY_KV_ENTERPRISE</p>
+                </div>
+                <div class="mt-6 border-t border-[#00ff00]/20 pt-4">
+                    <p class="text-[10px] text-gray-500">LEAD_ENGINEER</p>
+                    <p class="font-bold text-sm tracking-widest uppercase">GUILHERME KOVALIOSKY</p>
+                    <p class="text-[10px] text-[#00ff00]">Senior Dev | Trader</p>
                 </div>
             </div>
 
-            <div class="card">
-                <span class="label">Strategic_Deployments</span>
-                <h3 style="font-size:0.7rem; margin-bottom:10px;">ACTIVE_SOLUTIONS_V1</h3>
-                <div class="sol-grid">
-                    <button onclick="location.href='exemplo1.html'">Neon_Noir</button>
-                    <button onclick="location.href='exemplo2.html'">Clean_UX</button>
-                    <button onclick="location.href='exemplo3.html'">Apple_Core</button>
-                    <button onclick="location.href='exemplo4.html'">Crypto_Dash</button>
-                    <button onclick="location.href='exemplo5.html'">Agency_Web</button>
-                    <button style="border-color:#39FF14; color:#39FF14;" onclick="copiarPix()">Payment_Gate</button>
+            <div class="border-neon p-8 rounded-2xl bg-black/50">
+                <div class="text-[10px] text-gray-500 mb-4 tracking-[0.3em]">STRATEGIC_DEPLOYMENTS</div>
+                <h2 class="text-2xl font-bold mb-6">ACTIVE_SOLUTIONS_V1</h2>
+
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div class="p-3 border border-white/10 text-[10px] text-center hover:border-[#00ff00] cursor-pointer">NEON_NOIR</div>
+                    <div class="p-3 border border-white/10 text-[10px] text-center hover:border-[#00ff00] cursor-pointer">CLEAN_UX</div>
+                    <div id="git-status-card" class="p-3 border border-[#00ff00]/50 text-[10px] text-center text-[#00ff00]">
+                        <span id="repo-count">GIT: SYNCING...</span>
+                    </div>
+                    <div class="p-3 border border-white/10 text-[10px] text-center hover:border-[#00ff00] cursor-pointer">SHORT_SNIPER</div>
+                </div>
+
+                <div class="space-y-2">
+                    <a href="https://github.com/kventerprise" target="_blank" class="block w-full text-center border border-[#00ff00] py-3 text-[10px] text-[#00ff00] hover:bg-[#00ff00] hover:text-black transition-all">ABRIR GITHUB_</a>
                 </div>
             </div>
         </div>
 
-        <button class="main-btn" onclick="location.href='https://wa.me/5569992636349'">CONTRATAR ESPECIALISTA</button>
-        
-        <div class="footer-nav">
-            <span onclick="abrirModal('sobre')">SOBRE NÓS</span> 
-            <span onclick="abrirModal('faq')">F.A.Q</span> 
-            <span onclick="abrirModal('detalhes')">DETALHES TÉCNICOS</span>
-        </div>
-    </div>
-
-    <div id="vanguard-modal" onclick="fecharModal()">
-        <div style="background:#050505; border:1px solid #39FF14; padding:35px; width:90%; max-width:500px; border-radius:10px; position:relative;" onclick="event.stopPropagation()">
-            <h2 id="modal-titulo" style="color:#39FF14; font-size:0.8rem; margin-bottom:15px; font-family:'Orbitron';"></h2>
-            <p id="modal-texto" style="color:#888; font-family:'JetBrains Mono'; font-size:0.65rem; line-height:1.6;"></p>
+        <div class="mt-12 text-center">
+            <button class="btn-neon px-12 py-5 text-sm tracking-[0.5em] uppercase">CONTRATAR ESPECIALISTA</button>
         </div>
     </div>
 
     <script>
-        const info = {
-            sobre: "VANGUARD VISUAL: Engenharia de software liderada por Guilherme Kovaliosky.",
-            faq: "Contato via botão 'Contratar'. Pagamento via Pix disponível no Hub.",
-            detalhes: "Stack: JS Sênior, Ofuscação de código e Proteção Anti-F12."
+        // WebSocket do Bitcoin
+        const btcPrice = document.getElementById('btc-price');
+        const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker');
+        ws.onmessage = (e) => {
+            const data = JSON.parse(e.data);
+            btcPrice.innerText = '$' + parseFloat(data.c).toLocaleString();
         };
 
-        function abrirModal(tipo) {
-            document.getElementById('modal-titulo').innerText = tipo.toUpperCase() + "_DATA";
-            document.getElementById('modal-texto').innerText = info[tipo];
-            document.getElementById('vanguard-modal').style.display = 'flex';
+        // API do GitHub
+        async function loadGit() {
+            try {
+                const res = await fetch('https://api.github.com/users/kventerprise');
+                const data = await res.json();
+                document.getElementById('repo-count').innerText = `REPOS: ${data.public_repos}`;
+            } catch (e) { console.log("Git error"); }
         }
-
-        function fecharModal() { document.getElementById('vanguard-modal').style.display = 'none'; }
-
-        function copiarPix() {
-            const chave = "10267545266";
-            navigator.clipboard.writeText(chave).then(() => { alert("Chave Pix Copiada!"); });
-        }
+        loadGit();
     </script>
 </body>
 </html>
