@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cyber Defense - VS Games</title>
+    <style>
+        body { background: #000; color: #f00; text-align: center; font-family: sans-serif; }
+        #game-box { width: 100%; height: 400px; position: relative; cursor: crosshair; overflow: hidden; background: #050a05; border-top: 2px solid #f00; }
+        .threat { width: 40px; height: 40px; background: red; position: absolute; border-radius: 5px; color: white; font-weight: bold; line-height: 40px; }
+    </style>
+</head>
+<body>
+    <h1>CYBER DEFENSE AGGRESSIVE</h1>
+    <p>DELETE OS VÍRUS ANTES QUE ELES SE ESPALHEM!</p>
+    <div id="game-box"></div>
+    <script>
+        const box = document.getElementById('game-box');
+        function spawn() {
+            const t = document.createElement('div');
+            t.className = 'threat'; t.innerText = '!!!';
+            t.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+            t.style.top = Math.random() * 350 + 'px';
+            t.onclick = () => { t.remove(); };
+            box.appendChild(t);
+            setTimeout(() => { if(t) t.remove(); }, 1500);
+        }
+        setInterval(spawn, 800);
+    </script>
+</body>
+</html>
