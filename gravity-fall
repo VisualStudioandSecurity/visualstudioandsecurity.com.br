@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gravity Fall</title>
+    <style>
+        body { background: #1a1a1a; color: #ff79c6; text-align: center; }
+        canvas { background: #282a36; border: 3px solid #bd93f9; }
+    </style>
+</head>
+<body>
+    <h1>GRAVITY FALL</h1>
+    <canvas id="fall" width="300" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById("fall");
+        const ctx = canvas.getContext("2d");
+        let pX = 140;
+        function draw() {
+            ctx.clearRect(0,0,300,400);
+            ctx.fillStyle = "#ffb86c"; ctx.fillRect(pX, 50, 20, 20);
+            requestAnimationFrame(draw);
+        }
+        window.onkeydown = e => {
+            if(e.key === "ArrowLeft") pX -= 10;
+            if(e.key === "ArrowRight") pX += 10;
+        };
+        draw();
+    </script>
+</body>
+</html>
