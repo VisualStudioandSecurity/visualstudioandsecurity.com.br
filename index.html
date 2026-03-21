@@ -41,7 +41,6 @@
         h1 { color: var(--text-accent); margin-bottom: 5px; font-size: 2.5rem; }
         .subtitle { color: #8b949e; margin-bottom: 30px; font-size: 1.1rem; }
 
-        /* Estilização do Bloco AdSense */
         .ads-container {
             margin: 20px 0;
             padding: 10px;
@@ -49,12 +48,26 @@
             border-radius: 8px;
             border: 1px dashed #484f58;
             min-height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .bio { line-height: 1.6; margin: 25px 0; }
+
+        /* Galeria de Jogos */
+        .game-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .game-card {
+            background: #21262d;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .game-card h3 { color: var(--text-accent); margin: 10px 0; font-size: 1.1rem; }
 
         .btn-group {
             display: flex;
@@ -70,13 +83,11 @@
             text-decoration: none;
             border-radius: 6px;
             font-weight: bold;
-            transition: transform 0.2s, background 0.2s;
+            transition: 0.2s;
             cursor: pointer;
             border: none;
             font-size: 1rem;
         }
-
-        .btn:active { transform: scale(0.95); }
 
         .btn-github { background-color: var(--btn-green); }
         .btn-github:hover { background-color: #2ea043; }
@@ -84,7 +95,6 @@
         .btn-pix { background-color: var(--btn-pix); color: #0d1117; }
         .btn-pix:hover { background-color: #45d6c6; }
 
-        /* Seção de Apoio / Doação */
         .support-section {
             margin-top: 40px;
             padding-top: 20px;
@@ -97,10 +107,7 @@
             border-radius: 8px;
             display: inline-block;
             margin: 15px 0;
-            box-shadow: 0 0 10px rgba(88, 166, 255, 0.3);
         }
-
-        .pix-text { font-size: 0.85rem; color: #8b949e; }
     </style>
 </head>
 <body>
@@ -116,19 +123,29 @@
                  data-ad-slot="5775198406"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
 
         <div class="bio">
             <p>Olá, eu sou <strong>Guilherme Silva</strong> (Kovaliosky DeV).</p>
-            <p>Especialista em Python, GDevelop e automação de sistemas para o mercado financeiro.</p>
+            <p>Especialista em Python, GDevelop e automação de sistemas.</p>
+        </div>
+
+        <h2 style="color: var(--text-accent); font-size: 1.5rem;">Meus Jogos (Arcade)</h2>
+        <div class="game-gallery">
+            <div class="game-card">
+                <h3>Neon Snaker</h3>
+                <p style="font-size: 0.8rem; color: #8b949e;">Um clássico reimaginado em 2D.</p>
+            </div>
+            <div class="game-card">
+                <h3>Pedro Raccoon</h3>
+                <p style="font-size: 0.8rem; color: #8b949e;">Aventura arcade rítmica.</p>
+            </div>
         </div>
 
         <div class="btn-group">
-            <a href="https://github.com/VisualStudioandSecurity" class="btn btn-github" target="_blank">Ver Projetos GitHub</a>
-            <button class="btn btn-pix" onclick="copyPix()">Copiar Chave PIX</button>
+            <a href="https://github.com/VisualStudioandSecurity" class="btn btn-github" target="_blank">Projetos GitHub</a>
+            <button class="btn btn-pix" onclick="copyPix()">Chave PIX (CPF)</button>
         </div>
 
         <div class="support-section">
@@ -136,7 +153,7 @@
             <div class="qr-code">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=10267545266" alt="QR Code PIX">
             </div>
-            <p class="pix-text">Sua contribuição ajuda a manter os servidores e ferramentas de Trading ativos.</p>
+            <p style="font-size: 0.85rem; color: #8b949e;">Sua contribuição ajuda a manter as ferramentas ativas.</p>
         </div>
     </div>
 
@@ -144,7 +161,7 @@
         function copyPix() {
             const pixKey = "10267545266";
             navigator.clipboard.writeText(pixKey).then(() => {
-                alert("Chave PIX (CPF) copiada para a área de transferência! Obrigado pelo apoio.");
+                alert("Chave PIX copiada! Obrigado pelo apoio.");
             });
         }
     </script>
