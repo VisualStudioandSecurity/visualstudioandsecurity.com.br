@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Breakout - VS Games</title>
+    <style>
+        body { background: #0d1117; color: #58a6ff; text-align: center; }
+        canvas { background: #161b22; border: 1px solid #30363d; }
+    </style>
+</head>
+<body>
+    <h1>BREAKOUT</h1>
+    <canvas id="b" width="400" height="300"></canvas>
+    <script>
+        const c = document.getElementById("b"), ctx = c.getContext("2d");
+        let x = 200, y = 150, dx = 2, dy = 2, px = 160;
+        function draw() {
+            ctx.clearRect(0,0,400,300);
+            ctx.fillStyle = "#58a6ff"; ctx.beginPath(); ctx.arc(x,y,8,0,7); ctx.fill();
+            ctx.fillStyle = "#238636"; ctx.fillRect(px, 280, 80, 10);
+            if(x+dx > 390 || x+dx < 10) dx = -dx;
+            if(y+dy < 10) dy = -dy;
+            else if(y+dy > 270) { if(x > px && x < px+80) dy = -dy; else {x=200; y=150;} }
+            x+=dx; y+=dy; requestAnimationFrame(draw);
+        }
+        document.onmousemove = (e) => { px = e.clientX - c.offsetLeft - 40; };
+        draw();
+    </script>
+</body>
+</html>
