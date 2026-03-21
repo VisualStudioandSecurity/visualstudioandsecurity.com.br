@@ -6,140 +6,81 @@
     <title>Visual Studio Games | Guilherme Silva</title>
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 filter=%22drop-shadow(0 0 10px %2300f2ff)%22>🔒</text></svg>">
-
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4389870681468404" crossorigin="anonymous"></script>
 
     <style>
-        :root { 
-            --bg: #0d1117; --card: #161b22; --accent: #58a6ff; 
-            --green: #238636; --gray: #8b949e; --neon: #00f2ff;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: var(--bg);
-            color: white;
-            text-align: center;
-            padding: 50px 20px;
-            margin: 0;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background: var(--card);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid #30363d;
-        }
-
-        h1 { color: var(--accent); text-transform: uppercase; }
-        h2 { color: var(--neon); font-size: 1.2rem; margin-top: 30px; }
-        p { color: var(--gray); line-height: 1.6; max-width: 700px; margin: 0 auto 15px auto; }
-
-        .btn-group { margin: 25px 0; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-
-        .btn {
-            display: inline-block; padding: 10px 20px; color: white; text-decoration: none;
-            border-radius: 6px; font-weight: bold; cursor: pointer; border: none;
-        }
-
-        .btn-github { background-color: var(--green); }
+        :root { --bg: #0d1117; --card: #161b22; --accent: #58a6ff; --neon: #00f2ff; --gray: #8b949e; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: white; text-align: center; margin: 0; padding: 50px 20px; }
+        .container { max-width: 900px; margin: auto; background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid #30363d; }
+        .btn-group { margin: 25px 0; display: flex; justify-content: center; gap: 15px; }
+        .btn { padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; border: none; transition: 0.3s; }
         .btn-pix { background-color: #32bcad; color: #0d1117; }
-
-        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
-        .game-card { background: #21262d; border-radius: 10px; overflow: hidden; border: 1px solid #30363d; }
-        .game-card img { width: 100%; height: auto; }
-
-        .section-box { margin-top: 40px; padding: 20px; border-top: 1px solid #30363d; }
-
-        /* RODAPÉ CENTRALIZADO */
-        footer { 
-            margin-top: 60px; 
-            padding: 40px 20px; 
-            border-top: 1px solid #30363d;
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centraliza tudo no rodapé */
-        }
+        .btn-github { background-color: #238636; color: white; }
         
-        .system-log { 
-            margin-bottom: 20px; padding: 15px; background: #000;
-            border: 1px solid var(--neon); border-radius: 5px; font-family: monospace;
-        }
-
-        .copyright-text {
-            color: var(--gray);
-            margin: 10px 0;
-            text-align: center; /* Garante a centralização do texto */
-            width: 100%;
-        }
+        /* Galeria Corrigida */
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        .game-card { background: #21262d; border-radius: 10px; border: 1px solid #30363d; overflow: hidden; }
+        .game-card img { width: 100%; height: 180px; object-fit: cover; background: #000; display: block; }
+        
+        footer { margin-top: 60px; padding: 40px 0; border-top: 1px solid #30363d; display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .system-log { border: 1px solid var(--neon); padding: 10px 20px; font-family: monospace; border-radius: 5px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Visual Studio Games</h1>
-        <p>Hub de Desenvolvimento e Cyber Security.</p>
-
-        <div class="section-box">
+        
+        <div style="margin-top:40px;">
             <h2>[01] SOBRE O AUTOR</h2>
-            <p>Guilherme Silva (Kovaliosky DeV). Especialista em Python e Segurança Digital.</p>
+            <p>Especialista em Python e Cyber Security. Hub focado em automação e jogos autorais.</p>
             <div class="btn-group">
-                <a href="https://github.com/VisualStudioandSecurity" class="btn btn-github" target="_blank">GitHub</a>
-                <button id="pixBtn" class="btn btn-pix" onclick="copyPix()">Apoiar via PIX</button>
+                <a href="https://github.com/VisualStudioAndSecurity" class="btn btn-github" target="_blank">Ver Repositórios</a>
+                <button onclick="copyPix()" class="btn btn-pix">Apoiar via PIX</button>
             </div>
         </div>
 
-        <div class="section-box">
+        <div style="margin-top:40px;">
             <h2>[02] PROJETOS</h2>
             <div class="gallery">
                 <div class="game-card">
-                    <img src="thumb_neon_snaker.jpg" alt="Neon Snaker">
+                    <img src="./thumb_neon_snaker.jpg" alt="Neon Snaker">
                     <div style="padding:15px;"><h3>Neon Snaker</h3></div>
                 </div>
                 <div class="game-card">
-                    <img src="thumb_cyber_defense.jpg" alt="Cyber Defense">
+                    <img src="./thumb_cyber_defense.jpg" alt="Cyber Defense">
                     <div style="padding:15px;"><h3>Cyber Defense</h3></div>
                 </div>
             </div>
         </div>
-
-        <div class="section-box">
-            <h2>[03] PRIVACIDADE</h2>
-            <p style="font-size: 0.85rem;">Utilizamos cookies para anúncios via Google AdSense.</p>
-        </div>
     </div>
 
     <footer>
-        <div class="system-log">
-            <span style="color: var(--neon); font-weight: bold;">[SYSTEM_LOG]:</span> 8145 VISITAS_REAIS
-        </div>
-        
-        <div class="copyright-text">
-            &copy; 2026 Guilherme Silva | Visual Studio Games
-        </div>
-        
-        <div style="font-size: 0.7rem; color: #484f58; letter-spacing: 1px; margin-top: 10px;">
-            <span>STATUS: ENCRYPTED</span> | <span>FIREWALL: ACTIVE</span>
-        </div>
+        <div class="system-log">[SYSTEM_LOG]: 8145 VISITAS_REAIS</div>
+        <div style="color: var(--gray); text-align: center;">&copy; 2026 Guilherme Silva | Visual Studio Games</div>
+        <div style="font-size: 0.7rem; color: #484f58; margin-top:10px;">STATUS: ENCRYPTED | FIREWALL: ENABLED</div>
     </footer>
 
     <script>
-        // FUNÇÃO PIX REVISADA
         function copyPix() {
             const pixKey = "10267545266";
             
-            // Tenta o método moderno
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(pixKey).then(() => {
-                    alert("Chave PIX copiada!");
-                }).catch(() => {
-                    fallbackCopy(pixKey);
-                });
-            } else {
-                fallbackCopy(pixKey);
+            // Método definitivo para navegadores e mobile
+            const textArea = document.createElement("textarea");
+            textArea.value = pixKey;
+            document.body.appendChild(textArea);
+            textArea.select();
+            textArea.setSelectionRange(0, 99999); // Para mobile
+            
+            try {
+                document.execCommand('copy');
+                alert("Chave PIX copiada com sucesso! Valeu pelo café.");
+            } catch (err) {
+                alert("Erro ao copiar. Chave: " + pixKey);
             }
+            
+            document.body.removeChild(textArea);
         }
-
-        // Método de cópia para navegadores/ambientes restritos
+    </script>
+</body>
+</html>
