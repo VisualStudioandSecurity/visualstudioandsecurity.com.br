@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Breakout - VS Games</title>
+    <style>
+        body { 
+            background: #0d1117; color: #58a6ff; text-align: center; 
+            margin: 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;
+        }
+        canvas { 
+            background: #161b22; border: 2px solid var(--neon, #00f2ff); 
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2); 
+            max-width: 95%; height: auto; touch-action: none; /* Impede o scroll ao jogar */
+        }
+        h1 { font-family: sans-serif; letter-spacing: 5px; font-size: 1.5rem; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>BREAKOUT</h1>
+    <canvas id="b" width="400" height="300"></canvas>
+
+    <script>
+        const c = document.getElementById("b"), ctx = c.getContext("2d");
+        let x = 200, y = 150, dx = 3, dy = -3, px = 160;
+        const paddleWidth = 80;
+
+        function draw() {
+            ctx.clearRect(0,0,400,300);
+            
+            // Bola Neon
+            ctx.fillStyle = "#58a6ff"; ctx.beginPath(); ctx.arc(x,y,8,0,Math.PI*2); ctx.fill();
+            
+            // Palheta
+            ctx.fillStyle = "#238636"; ctx.fillRect(px, 280, paddleWidth, 10);
+            
+            // Colisões Laterais
+            if(x+dx > 390 || x+dx < 10) dx = -dx;
+            if(y+dy < 10) dy = -dy;
+            else if(y+dy > 275) { 
+                if(x > px && x < px + paddleWidth) {
+                    dy = -dy;
+                } else {
+                    // Reset do Jogo
+                    x=200; y=150; dy=-3;
+                } 
+            }
+            
+            x+=dx; y+=dy; 
+            requestAnimationFrame(draw);
+        }
+
+        // CONTROLE PARA PC (MOUSE)
+        document.onmousemove = (e) => { 
+            let rect = c.getBoundingClientRect();
+            px = (e.clientX - rect.left) * (c.width / rect.width) - (paddleWidth / 2); 
+        };
+
+        // CONTROLE PARA MOBILE (TOQUE) - ADICIONADO AQUI!
+        c.addEventListener("touchmove", (e) => {
+            e.preventDefault(); // Impede de puxar a página pra baixo
+            let touch = e.touches[0];
+            let rect = c.getBoundingClientRect();
+            px = (touch.clientX - rect.left) * (c.width / rect.width) - (paddleWidth / 2);
+        }, { passive: false });
+
+        draw();
+    </script>
+
+    <script>
+    (function() {
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile) {
+            let viewport = document.querySelector('meta[name="viewport"]');
+            if (!viewport) {
+                viewport = document.createElement('meta');
+                viewport.name = "viewport";
+                document.getElementsByTagName('head')[0].appendChild(viewport);
+            }
+            viewport.content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+            
+            document.addEventListener('touchstart', function requestFullScreen() {
+                const docEl = document.documentElement;
+                const request = docEl.requestFullscreen || docEl.webkitRequestFullScreen || docEl.mozRequestFullScreen || docEl.msRequestFullscreen;
+                if(request) request.call(docEl);
+                document.removeEventListener('touchstart', requestFullScreen);
+            });
+        }
+    })();
+    </script>
+</body>
+</html>
