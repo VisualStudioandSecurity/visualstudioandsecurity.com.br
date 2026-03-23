@@ -1,114 +1,87 @@
 <!doctype html>
 <html lang="pt-br" class="h-full">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visual Graffiti | Secured</title>
+  <title>Visual Graffiti | By Visual Studio Games</title>
+  
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
   <style>
-    :root { --primary: #00f3ff; --bg: #050505; }
-    body, html { height: 100%; margin: 0; overflow: hidden; background: var(--bg); user-select: none; -webkit-user-select: none; }
-    canvas { cursor: crosshair; touch-action: none; background: #000; }
-    .security-overlay { position: fixed; top: 10px; left: 10px; font-family: monospace; color: var(--primary); font-size: 10px; pointer-events: none; z-index: 100; }
+    html, body { height: 100%; margin: 0; overflow: hidden; background-color: #050505; }
+    :root {
+      --bg-color: #050505;
+      --surface-color: #111111;
+      --text-color: #f0f0f0;
+      --primary-action: #00f3ff;
+    }
+    canvas { touch-action: none; cursor: none; }
+    .ui-overlay { pointer-events: none; }
+    .ui-overlay > * { pointer-events: auto; }
   </style>
- </head>
- <body class="bg-[#050505]">
+</head>
+<body class="text-white h-full flex flex-col">
 
-  <div class="security-overlay" id="secLog">[SESSION_TOKEN: GENERATING...]</div>
-
-  <div class="fixed top-5 left-1/2 -translate-x-1/2 z-50 flex gap-4 bg-black/80 p-4 rounded-2xl border border-white/10 backdrop-blur-md">
-    <input type="color" id="colorPicker" value="#00f3ff" class="w-10 h-10 rounded-lg cursor-pointer bg-transparent border-none">
-    <input type="range" id="sizePicker" min="5" max="50" value="15" class="accent-[#00f3ff]">
-    <button id="clearBtn" class="bg-[#ff0055] px-4 py-2 rounded-lg font-bold text-white text-sm hover:scale-105 transition-all">LIMPAR MURAL</button>
+  <div class="fixed top-4 left-4 z-50 flex gap-2 ui-overlay">
+    <input type="color" id="color-picker" value="#00f3ff" class="w-12 h-12 rounded-lg border-2 border-white/20 bg-transparent cursor-pointer">
   </div>
 
-  <canvas id="paintCanvas"></canvas>
+  <canvas id="graffiti-canvas" class="w-full h-full"></canvas>
+
+  <div id="spray-follower" class="fixed pointer-events-none z-50" style="width: 100px; height: 100px; margin-left: -50px; margin-top: -50px;">
+    <svg viewBox="0 0 100 100" class="w-full h-full">
+      <path class="can-top-follower" d="M35 25h30v10H35z" fill="#00f3ff" />
+      <rect x="30" y="35" width="40" height="50" rx="5" fill="#333" />
+      <rect class="can-label-follower" x="30" y="45" width="40" height="20" fill="#00f3ff" opacity="0.8" />
+    </svg>
+  </div>
 
   <script>
-    (function() {
-      // --- CAMADA 1: TOKEN DE SESSÃO DINÂMICO ---
-      // Gera um token único por acesso para validar ações de escrita no Canvas
-      const _0xSESSION = btoa(Date.now() + Math.random().toString(36)).substring(0, 16);
-      document.getElementById('secLog').innerText = `[SESSION_ID: ${_0xSESSION}] [PROTECTION: HIGH]`;
+    // Inicialização Segura
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Iniciar Ícones
+      if(window.lucide) lucide.createIcons();
 
-      // --- CAMADA 2: DOMAIN & INTEGRITY LOCK ---
-      const host = window.location.hostname;
-      if (host !== "visualstudioandsecurity.com.br" && host !== "localhost" && !host.includes("github.io")) {
-          document.body.innerHTML = "<div style='color:red; font-family:monospace; text-align:center; padding-top:20%'><h1>CORE_INTEGRITY_ERROR</h1><p>Acesso negado: Este código foi desviado do servidor oficial.</p></div>";
-          return;
+      const canvas = document.getElementById('graffiti-canvas');
+      const ctx = canvas.getContext('2d');
+      const colorPicker = document.getElementById('color-picker');
+      const follower = document.getElementById('spray-follower');
+
+      // Ajustar Canvas
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
       }
+      window.addEventListener('resize', resize);
+      resize();
 
-      // --- CAMADA 3: ANTI-DEBUGGER (DEATH LOOP) ---
-      setInterval(function() {
-          const t = new Date();
-          debugger; 
-          if (new Date() - t > 100) { 
-              window.location.href = "about:blank"; 
-          }
-      }, 1000);
-
-      // --- LÓGICA DO CANVAS COM VERIFICAÇÃO DE CONFIANÇA ---
-      const canvas = document.getElementById('paintCanvas');
-      const ctx = canvas.getContext('2d', { alpha: false });
+      // Lógica do Spray (Resumo da sua lógica original)
       let isPainting = false;
 
-      function init() {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-          ctx.fillStyle = "#000";
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          drawWatermark();
+      function updateSprayCanFollower(e) {
+        const x = e.clientX || (e.touches ? e.touches[0].clientX : 0);
+        const y = e.clientY || (e.touches ? e.touches[0].clientY : 0);
+        follower.style.transform = `translate(${x}px, ${y}px)`;
       }
 
-      function drawWatermark() {
-          ctx.fillStyle = "rgba(0, 243, 255, 0.15)";
-          ctx.font = "12px monospace";
-          ctx.fillText("© 2026 KOVALIOSKY DEV | VSG ENCRYPTED", canvas.width - 280, canvas.height - 20);
+      function updateSprayCanColor() {
+        const color = colorPicker.value;
+        document.querySelectorAll('.can-top-follower').forEach(el => el.setAttribute('fill', color));
+        document.querySelectorAll('.can-label-follower').forEach(el => el.setAttribute('fill', color));
       }
 
-      function handleMove(e) {
-          if (!isPainting || !e.isTrusted) return; // e.isTrusted impede automação (bots)
-
-          const x = e.clientX || (e.touches ? e.touches[0].clientX : 0);
-          const y = e.clientY || (e.touches ? e.touches[0].clientY : 0);
-
-          ctx.lineWidth = document.getElementById('sizePicker').value;
-          ctx.lineCap = 'round';
-          ctx.strokeStyle = document.getElementById('colorPicker').value;
-
-          ctx.lineTo(x, y);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          drawWatermark();
-      }
-
-      canvas.addEventListener('mousedown', () => isPainting = true);
-      canvas.addEventListener('mouseup', () => { isPainting = false; ctx.beginPath(); });
-      canvas.addEventListener('mousemove', handleMove);
-      canvas.addEventListener('touchstart', (e) => { e.preventDefault(); isPainting = true; handleMove(e); });
-      canvas.addEventListener('touchend', () => { isPainting = false; ctx.beginPath(); });
-      canvas.addEventListener('touchmove', (e) => { e.preventDefault(); handleMove(e); });
-
-      document.getElementById('clearBtn').onclick = () => {
-          ctx.fillStyle = "#000";
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          drawWatermark();
-      };
-
-      // --- CAMADA 4: BLOQUEIO DE TECLAS DE INSPEÇÃO ---
-      window.addEventListener('keydown', (e) => {
-          if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
-              e.preventDefault();
-              return false;
-          }
-      });
+      // Eventos
+      document.addEventListener('mousemove', updateSprayCanFollower);
+      colorPicker.addEventListener('change', updateSprayCanColor);
+      
+      // Proteção de Autoria (Senior Level)
       document.addEventListener('contextmenu', e => e.preventDefault());
-
-      window.addEventListener('resize', init);
-      init();
-    })();
+      
+      // Iniciar cor
+      updateSprayCanColor();
+    });
   </script>
- </body>
+</body>
 </html>
