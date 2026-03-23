@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visual Graffiti | By Visual Studio Games</title>
+  <title>Visual Graffiti | Secured Portal</title>
   
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
@@ -14,73 +14,109 @@
     :root {
       --bg-color: #050505;
       --surface-color: #111111;
-      --text-color: #f0f0f0;
-      --primary-action: #00f3ff;
+      --neon: #00f3ff;
     }
-    canvas { touch-action: none; cursor: none; }
+    canvas { touch-action: none; cursor: none; background: #0a0a0a; }
     .ui-overlay { pointer-events: none; }
     .ui-overlay > * { pointer-events: auto; }
+    
+    /* Cursor de Spray Customizado */
+    #spray-follower {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        width: 60px;
+        height: 60px;
+        margin-left: -30px;
+        margin-top: -30px;
+        transition: transform 0.05s linear;
+    }
   </style>
 </head>
 <body class="text-white h-full flex flex-col">
 
-  <div class="fixed top-4 left-4 z-50 flex gap-2 ui-overlay">
-    <input type="color" id="color-picker" value="#00f3ff" class="w-12 h-12 rounded-lg border-2 border-white/20 bg-transparent cursor-pointer">
-  </div>
-
-  <canvas id="graffiti-canvas" class="w-full h-full"></canvas>
-
-  <div id="spray-follower" class="fixed pointer-events-none z-50" style="width: 100px; height: 100px; margin-left: -50px; margin-top: -50px;">
-    <svg viewBox="0 0 100 100" class="w-full h-full">
-      <path class="can-top-follower" d="M35 25h30v10H35z" fill="#00f3ff" />
-      <rect x="30" y="35" width="40" height="50" rx="5" fill="#333" />
-      <rect class="can-label-follower" x="30" y="45" width="40" height="20" fill="#00f3ff" opacity="0.8" />
+  <div id="spray-follower">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="40" stroke="#00f3ff" stroke-width="2" fill="none" opacity="0.5" class="can-color-stroke"/>
+      <circle cx="50" cy="50" r="5" fill="#00f3ff" class="can-color-fill"/>
     </svg>
   </div>
 
+  <div class="fixed top-4 left-4 z-50 flex gap-4 ui-overlay bg-black/50 p-3 rounded-xl border border-white/10">
+    <input type="color" id="color-picker" value="#00f3ff" class="w-10 h-10 rounded-lg border-none bg-transparent cursor-pointer">
+    <div class="flex flex-col justify-center">
+        <span class="text-[10px] text-gray-400 font-mono">COLOR_SELECTION</span>
+    </div>
+  </div>
+
+  <canvas id="graffiti-canvas"></canvas>
+
   <script>
-    // Inicialização Segura
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Iniciar Ícones
-      if(window.lucide) lucide.createIcons();
+      // Inicializar Ícones
+      lucide.createIcons();
 
       const canvas = document.getElementById('graffiti-canvas');
       const ctx = canvas.getContext('2d');
       const colorPicker = document.getElementById('color-picker');
       const follower = document.getElementById('spray-follower');
 
-      // Ajustar Canvas
       function resize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        // Redesenhar fundo escuro após resize
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
       window.addEventListener('resize', resize);
       resize();
 
-      // Lógica do Spray (Resumo da sua lógica original)
-      let isPainting = false;
+      let painting = false;
 
-      function updateSprayCanFollower(e) {
+      // Seguir o mouse/touch
+      const move = (e) => {
         const x = e.clientX || (e.touches ? e.touches[0].clientX : 0);
         const y = e.clientY || (e.touches ? e.touches[0].clientY : 0);
-        follower.style.transform = `translate(${x}px, ${y}px)`;
+        follower.style.left = x + 'px';
+        follower.style.top = y + 'px';
+
+        if (painting) spray(x, y);
+      };
+
+      // Lógica de Spray Neon
+      function spray(x, y) {
+        const radius = 20;
+        const density = 40;
+        ctx.fillStyle = colorPicker.value;
+        
+        for (let i = 0; i < density; i++) {
+          const offsetX = (Math.random() - 0.5) * 2 * radius;
+          const offsetY = (Math.random() - 0.5) * 2 * radius;
+          if (Math.sqrt(offsetX*offsetX + offsetY*offsetY) < radius) {
+            ctx.globalAlpha = Math.random() * 0.5;
+            ctx.fillRect(x + offsetX, y + offsetY, 2, 2);
+          }
+        }
       }
 
-      function updateSprayCanColor() {
-        const color = colorPicker.value;
-        document.querySelectorAll('.can-top-follower').forEach(el => el.setAttribute('fill', color));
-        document.querySelectorAll('.can-label-follower').forEach(el => el.setAttribute('fill', color));
-      }
-
-      // Eventos
-      document.addEventListener('mousemove', updateSprayCanFollower);
-      colorPicker.addEventListener('change', updateSprayCanColor);
+      // Eventos de Input
+      window.addEventListener('mousedown', () => painting = true);
+      window.addEventListener('mouseup', () => painting = false);
+      window.addEventListener('mousemove', move);
       
-      // Proteção de Autoria (Senior Level)
+      window.addEventListener('touchstart', (e) => { painting = true; move(e); });
+      window.addEventListener('touchend', () => painting = false);
+      window.addEventListener('touchmove', move);
+
+      // Atualizar cor do cursor
+      colorPicker.addEventListener('input', () => {
+        const c = colorPicker.value;
+        document.querySelector('.can-color-fill').setAttribute('fill', c);
+        document.querySelector('.can-color-stroke').setAttribute('stroke', c);
+      });
+
+      // Bloqueio de Segurança Senior
       document.addEventListener('contextmenu', e => e.preventDefault());
-      
-      // Iniciar cor
-      updateSprayCanColor();
     });
   </script>
 </body>
