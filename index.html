@@ -20,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* Background Animado Estilo Matrix */
         #matrix-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; opacity: 0.1; pointer-events: none;
@@ -72,9 +71,7 @@
         .card-content h3 { margin: 0 0 10px; color: var(--neon); font-size: 1.2rem; }
         .card-content p { color: var(--gray); font-size: 0.9rem; line-height: 1.5; }
 
-        .status-tag {
-            padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;
-        }
+        .status-tag { padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; }
 
         .btn-group { margin: 40px 0; display: flex; justify-content: center; gap: 15px; }
         .btn {
@@ -200,15 +197,27 @@
             });
         }
 
-        // --- ANTI-DEBUGGER LOOP ---
-        setInterval(function() {
-            (function(a) {return (function(a) {return (function(a) {return a(a);})(a);})(a);})(function(a) {
-                const start = new Date();
-                debugger;
-                const end = new Date();
-                if (end - start > 100) { window.location.reload(); }
-            });
-        }, 1000);
+        // --- V-SHIELD CAMUFLADO (POLIMÓRFICO) ---
+        (function() {
+            const _0xV = ['\x64\x65\x62\x75\x67\x67\x65\x72', '\x63\x6f\x6e\x73\x74\x72\x75\x63\x74\x6f\x72'];
+            const _0xS = function(_0x1, _0x2) { return _0xV[_0x1]; };
+            
+            const _0xAudit = function() {
+                const _0xLogic = function() {
+                    const _0xTask = function() {
+                        const _0xStart = new Date();
+                        // Aciona o debugger via construtor hexadecimal oculto
+                        Function(_0xS(0))(); 
+                        if (new Date() - _0xStart > 100) {
+                            window.location.replace("about:blank");
+                        }
+                    };
+                    setInterval(_0xTask, 800);
+                };
+                try { _0xLogic(); } catch (e) {}
+            };
+            setTimeout(_0xAudit, 1500); // Delay de ativação para camuflagem
+        })();
     </script>
 </body>
 </html>
