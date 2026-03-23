@@ -4,7 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visual Studio Games | Secured Portal</title>
-    
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 filter=%22drop-shadow(0 0 10px %2300f2ff)%22>🎮</text></svg>">
+
+    <meta name="description" content="Visual Studio Games - Portal de jogos e segurança cibernética por Kovaliosky DeV.">
+    <meta name="author" content="Guilherme Silva (Kovaliosky DeV)">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Visual Studio Games | Secured Portal">
+    <meta property="og:description" content="Explore jogos neon e ferramentas de segurança desenvolvidas por um Senior Developer.">
+    <meta property="og:image" content="https://images2.imgbox.com/6a/e2/mR1fR1Lz_o.png"> 
+    <meta property="og:url" content="https://visualstudioandsecurity.com.br">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Visual Studio Games">
+    <meta name="twitter:description" content="Senior Developer & Cybersecurity Specialist Identity.">
+
     <style>
         :root { 
             --bg: #050505; --card: #0d1117; --accent: #58a6ff; 
@@ -159,7 +174,6 @@
     </footer>
 
     <script>
-        // --- EFEITO BACKGROUND MATRIX ---
         const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -183,13 +197,11 @@
         }
         setInterval(drawMatrix, 50);
 
-        // --- BLINDAGEM DE CYBERSECURITY ---
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.onkeydown = function(e) {
             if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85)) return false;
         }
 
-        // --- FUNÇÃO DO PIX ---
         function copyPix() {
             const pixKey = "10267545266";
             navigator.clipboard.writeText(pixKey).then(() => {
@@ -197,16 +209,13 @@
             });
         }
 
-        // --- V-SHIELD CAMUFLADO (POLIMÓRFICO) ---
         (function() {
             const _0xV = ['\x64\x65\x62\x75\x67\x67\x65\x72', '\x63\x6f\x6e\x73\x74\x72\x75\x63\x74\x6f\x72'];
             const _0xS = function(_0x1, _0x2) { return _0xV[_0x1]; };
-            
             const _0xAudit = function() {
                 const _0xLogic = function() {
                     const _0xTask = function() {
                         const _0xStart = new Date();
-                        // Aciona o debugger via construtor hexadecimal oculto
                         Function(_0xS(0))(); 
                         if (new Date() - _0xStart > 100) {
                             window.location.replace("about:blank");
@@ -216,7 +225,7 @@
                 };
                 try { _0xLogic(); } catch (e) {}
             };
-            setTimeout(_0xAudit, 1500); // Delay de ativação para camuflagem
+            setTimeout(_0xAudit, 1500);
         })();
     </script>
 </body>
