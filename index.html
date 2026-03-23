@@ -1,3 +1,4 @@
+---  
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -91,10 +92,40 @@
             text-align: left; position: relative;
         }
 
-        .game-link:hover .game-card { 
+        .game-card:hover { 
             transform: translateY(-10px); 
             border-color: var(--neon); 
             box-shadow: 0 10px 30px rgba(0, 242, 255, 0.2);
         }
 
-        .game
+        .game {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="matrix-bg"></canvas>
+
+    <div class="container">
+        <h1>Visual Studio Games</h1>
+        <div class="badge-security">Secured Portal</div>
+
+        <div class="section-title">Projetos em Destaque</div>
+
+        <div class="gallery">
+            <a href="#" class="game-link">
+                <div class="game-card">
+                    <img src="https://images2.imgbox.com/6a/e2/mR1fR1Lz_o.png" alt="Game Preview" style="width:100%; border-bottom:1px solid #30363d;">
+                    <div style="padding:20px;">
+                        <h3 style="margin:0; color:white;">Cyber Neon</h3>
+                        <p class="game">Um jogo de ação futurista com estética neon e desafios de hacking.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+---
