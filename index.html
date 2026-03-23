@@ -20,6 +20,25 @@
     <meta name="twitter:title" content="Visual Studio Games">
     <meta name="twitter:description" content="Senior Developer & Cybersecurity Specialist Identity.">
 
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareSourceCode",
+      "name": "Visual Studio Games Portal",
+      "author": {
+        "@type": "Person",
+        "name": "Guilherme Silva",
+        "alternateName": "Kovaliosky DeV",
+        "jobTitle": "Senior Developer & Cybersecurity Specialist"
+      },
+      "description": "Portal oficial de desenvolvimento de jogos e soluções de segurança cibernética.",
+      "url": "https://visualstudioandsecurity.com.br",
+      "keywords": "Game Development, Cybersecurity, Visual Studio Games, Bitcoin Trading Bot, Senior Developer Brazil",
+      "programmingLanguage": "HTML, CSS, JS",
+      "abstract": "Projetos de alta performance e blindagem digital."
+    }
+    </script>
+
     <style>
         :root { 
             --bg: #050505; --card: #0d1117; --accent: #58a6ff; 
@@ -131,102 +150,3 @@
                             <span class="status-tag" style="background: var(--red);">LIVE</span>
                         </div>
                         <p>Simulador de graffiti profissional com marca d'água dinâmica e proteção de autoria.</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="neon-snaker/" class="game-link">
-                <div class="game-card">
-                    <img src="https://images2.imgbox.com/3d/8c/mG4W3O8V_o.png" alt="Neon Snaker">
-                    <div class="card-content">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3>Neon Snaker</h3>
-                            <span class="status-tag" style="background: var(--green);">STABLE</span>
-                        </div>
-                        <p>Desafio de reflexo em ambiente neon. Colete pacotes de dados sem corromper o sistema.</p>
-                    </div>
-                </div>
-            </a>
-
-            <a href="cyber-defense/" class="game-link">
-                <div class="game-card">
-                    <img src="https://images2.imgbox.com/fb/34/q8I9X8s5_o.png" alt="Cyber Defense">
-                    <div class="card-content">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3>Cyber Defense</h3>
-                            <span class="status-tag" style="background: var(--neon); color: #000;">HOT</span>
-                        </div>
-                        <p>Neutralize ameaças de intrusão em tempo real neste teste de velocidade de reação.</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <footer>
-        <div style="color: var(--neon); font-family: monospace; font-size: 12px; letter-spacing: 2px;">
-            [ ENCRYPTION: AES-256 ] [ IDENTITY: KOVALIOSKY DEV ]
-        </div>
-        <div class="apache-footer">
-            <p>&copy; 2026 Visual Studio Games. Licenciado sob Apache License 2.0.</p>
-            <p>Proteção de Domínio Ativa: visualstudioandsecurity.com.br</p>
-        </div>
-    </footer>
-
-    <script>
-        const canvas = document.getElementById('matrix-bg');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
-
-        function drawMatrix() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#00f2ff";
-            ctx.font = fontSize + "px monospace";
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 50);
-
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73) || (e.ctrlKey && e.keyCode == 85)) return false;
-        }
-
-        function copyPix() {
-            const pixKey = "10267545266";
-            navigator.clipboard.writeText(pixKey).then(() => {
-                alert("ACESSO AUTORIZADO: Chave PIX copiada. Obrigado por apoiar a VSG!");
-            });
-        }
-
-        (function() {
-            const _0xV = ['\x64\x65\x62\x75\x67\x67\x65\x72', '\x63\x6f\x6e\x73\x74\x72\x75\x63\x74\x6f\x72'];
-            const _0xS = function(_0x1, _0x2) { return _0xV[_0x1]; };
-            const _0xAudit = function() {
-                const _0xLogic = function() {
-                    const _0xTask = function() {
-                        const _0xStart = new Date();
-                        Function(_0xS(0))(); 
-                        if (new Date() - _0xStart > 100) {
-                            window.location.replace("about:blank");
-                        }
-                    };
-                    setInterval(_0xTask, 800);
-                };
-                try { _0xLogic(); } catch (e) {}
-            };
-            setTimeout(_0xAudit, 1500);
-        })();
-    </script>
-</body>
-</html>
