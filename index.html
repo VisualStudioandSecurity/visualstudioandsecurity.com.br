@@ -1,835 +1,177 @@
-<!doctype html>
-<html lang="pt-br" class="h-full">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kovaliosky DeV | Senior Developer &amp; Graphic Designer</title>
-  <meta name="description" content="Portfólio de Guilherme (Kovaliosky DeV). Especialista em Desenvolvimento Senior, Design Gráfico e Segurança Cibernética.">
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
-  <style>
-        html, body { height: 100%; margin: 0; }
-        body { 
-            background-color: #050505; 
-            color: #ffffff; 
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Studio & Security - Hub de Notícias: Segurança e Mercado Financeiro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos CSS Básicos para um Layout de Notícias Limpo */
+        :root {
+            --bg-color: #0c1015;
+            --card-bg: #161b22;
+            --text-main: #c9d1d9;
+            --text-heading: #f0f6fc;
+            --accent-security: #238636; /* Verde para Segurança */
+            --accent-finance: #ff9f43;    /* Laranja para Mercado Financeiro */
+            --border-color: #30363d;
         }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        .gradient-text {
-            background: linear-gradient(90deg, #fff, #00f2ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
-        .glass-card {
-            background: #0d0d0d;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: all 0.3s ease;
+
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; font-weight: 700; color: var(--text-heading); }
+
+        /* HEADER */
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
         }
-        .glass-card:hover {
-            border-color: #00f2ff;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 242, 255, 0.1);
-        }
-        .toast-notification {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #0d0d0d;
-            border: 1px solid #00f2ff;
-            color: #fff;
-            padding: 1rem 2rem;
-            border-radius: 1rem;
-            font-size: 0.875rem;
-            z-index: 9999;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-            pointer-events: none;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 40px rgba(0, 242, 255, 0.2);
-        }
-        .toast-notification.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        .pix-modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            z-index: 100;
+
+        .logo-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            gap: 10px;
         }
-        .pix-modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .pix-modal {
-            background: #0d0d0d;
-            border: 1px solid rgba(0, 242, 255, 0.3);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            max-width: 420px;
-            width: 90%;
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .pix-modal-overlay.active .pix-modal {
-            transform: scale(1);
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        .fade-in-up { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
-        .fade-in-up-d1 { animation-delay: 0.1s; }
-        .fade-in-up-d2 { animation-delay: 0.2s; }
-        .fade-in-up-d3 { animation-delay: 0.3s; }
-        .fade-in-up-d4 { animation-delay: 0.4s; }
-        .fade-in-up-d5 { animation-delay: 0.5s; }
 
-        .nav-link { position: relative; }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: #00f2ff;
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after { width: 100%; }
+        .logo-main { font-size: 2.5em; color: var(--text-heading); margin: 0; }
+        .tagline { font-size: 1.1em; color: var(--text-main); margin-top: 5px; }
 
-        .btn-primary {
-            position: relative;
+        /* CONTEÚDO PRINCIPAL (LAYOUT DE GRID) */
+        main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* ESTILO DO CARD DE NOTÍCIA */
+        .article-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
             overflow: hidden;
-        }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-        .btn-primary:hover::before { transform: translateX(100%); }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 75%;
-            max-width: 320px;
-            height: 100%;
-            background: #0a0a0a;
-            border-left: 1px solid rgba(255,255,255,0.05);
-            z-index: 60;
-            transition: right 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-            padding: 5rem 2rem 2rem;
-        }
-        .mobile-menu.open { right: 0; }
-        .mobile-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 55;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .mobile-backdrop.open { opacity: 1; pointer-events: all; }
-
-        .section-line {
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, #00f2ff, transparent);
+            transition: transform 0.2s, border-color 0.2s;
         }
 
-        /* Tech Stack Neon Glow */
-        .tech-tag {
-            transition: all 0.3s ease;
-            position: relative;
+        .article-card:hover {
+            transform: translateY(-5px);
+            border-color: #6e7681;
         }
 
-        .tech-python {
-            border-color: #3776ab !important;
-            color: #3776ab !important;
-            text-shadow: 0 0 8px #3776ab, 0 0 16px #3776ab;
-            box-shadow: 0 0 12px rgba(55, 118, 171, 0.4), inset 0 0 8px rgba(55, 118, 171, 0.1);
-        }
-        .tech-python:hover {
-            box-shadow: 0 0 20px rgba(55, 118, 171, 0.8), inset 0 0 12px rgba(55, 118, 171, 0.2), 0 10px 30px rgba(55, 118, 171, 0.3);
-            transform: translateY(-3px);
+        .article-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
 
-        .tech-javascript {
-            border-color: #f7df1e !important;
-            color: #f7df1e !important;
-            text-shadow: 0 0 8px #f7df1e, 0 0 16px #f7df1e;
-            box-shadow: 0 0 12px rgba(247, 223, 30, 0.4), inset 0 0 8px rgba(247, 223, 30, 0.1);
-        }
-        .tech-javascript:hover {
-            box-shadow: 0 0 20px rgba(247, 223, 30, 0.8), inset 0 0 12px rgba(247, 223, 30, 0.2), 0 10px 30px rgba(247, 223, 30, 0.3);
-            transform: translateY(-3px);
+        .article-content { padding: 20px; }
+
+        .category {
+            font-size: 0.8em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
         }
 
-        .tech-typescript {
-            border-color: #3178c6 !important;
-            color: #3178c6 !important;
-            text-shadow: 0 0 8px #3178c6, 0 0 16px #3178c6;
-            box-shadow: 0 0 12px rgba(49, 120, 198, 0.4), inset 0 0 8px rgba(49, 120, 198, 0.1);
+        .security-cat { background-color: var(--accent-security); color: white; }
+        .finance-cat { background-color: var(--accent-finance); color: #000; }
+
+        .article-title {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: var(--text-heading);
+            text-decoration: none;
+            display: block;
         }
-        .tech-typescript:hover {
-            box-shadow: 0 0 20px rgba(49, 120, 198, 0.8), inset 0 0 12px rgba(49, 120, 198, 0.2), 0 10px 30px rgba(49, 120, 198, 0.3);
-            transform: translateY(-3px);
+        
+        .article-title:hover {
+            color: #58a6ff;
         }
 
-        .tech-react {
-            border-color: #61dafb !important;
-            color: #61dafb !important;
-            text-shadow: 0 0 8px #61dafb, 0 0 16px #61dafb;
-            box-shadow: 0 0 12px rgba(97, 218, 251, 0.4), inset 0 0 8px rgba(97, 218, 251, 0.1);
-        }
-        .tech-react:hover {
-            box-shadow: 0 0 20px rgba(97, 218, 251, 0.8), inset 0 0 12px rgba(97, 218, 251, 0.2), 0 10px 30px rgba(97, 218, 251, 0.3);
-            transform: translateY(-3px);
+        .article-snippet { font-size: 1em; color: var(--text-main); margin-bottom: 15px; }
+
+        .meta-data { font-size: 0.9em; color: #8b949e; }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
         }
 
-        .tech-nodejs {
-            border-color: #68a063 !important;
-            color: #68a063 !important;
-            text-shadow: 0 0 8px #68a063, 0 0 16px #68a063;
-            box-shadow: 0 0 12px rgba(104, 160, 99, 0.4), inset 0 0 8px rgba(104, 160, 99, 0.1);
+        .footer-nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 0.9em;
         }
-        .tech-nodejs:hover {
-            box-shadow: 0 0 20px rgba(104, 160, 99, 0.8), inset 0 0 12px rgba(104, 160, 99, 0.2), 0 10px 30px rgba(104, 160, 99, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .tech-figma {
-            border-color: #a259ff !important;
-            color: #a259ff !important;
-            text-shadow: 0 0 8px #a259ff, 0 0 16px #a259ff;
-            box-shadow: 0 0 12px rgba(162, 89, 255, 0.4), inset 0 0 8px rgba(162, 89, 255, 0.1);
-        }
-        .tech-figma:hover {
-            box-shadow: 0 0 20px rgba(162, 89, 255, 0.8), inset 0 0 12px rgba(162, 89, 255, 0.2), 0 10px 30px rgba(162, 89, 255, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .tech-photoshop {
-            border-color: #001e36 !important;
-            color: #31a8ff !important;
-            text-shadow: 0 0 8px #31a8ff, 0 0 16px #31a8ff;
-            box-shadow: 0 0 12px rgba(49, 168, 255, 0.4), inset 0 0 8px rgba(49, 168, 255, 0.1);
-        }
-        .tech-photoshop:hover {
-            box-shadow: 0 0 20px rgba(49, 168, 255, 0.8), inset 0 0 12px rgba(49, 168, 255, 0.2), 0 10px 30px rgba(49, 168, 255, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .tech-linux {
-            border-color: #fcc624 !important;
-            color: #fcc624 !important;
-            text-shadow: 0 0 8px #fcc624, 0 0 16px #fcc624;
-            box-shadow: 0 0 12px rgba(252, 198, 36, 0.4), inset 0 0 8px rgba(252, 198, 36, 0.1);
-        }
-        .tech-linux:hover {
-            box-shadow: 0 0 20px rgba(252, 198, 36, 0.8), inset 0 0 12px rgba(252, 198, 36, 0.2), 0 10px 30px rgba(252, 198, 36, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .tech-docker {
-            border-color: #2496ed !important;
-            color: #2496ed !important;
-            text-shadow: 0 0 8px #2496ed, 0 0 16px #2496ed;
-            box-shadow: 0 0 12px rgba(36, 150, 237, 0.4), inset 0 0 8px rgba(36, 150, 237, 0.1);
-        }
-        .tech-docker:hover {
-            box-shadow: 0 0 20px rgba(36, 150, 237, 0.8), inset 0 0 12px rgba(36, 150, 237, 0.2), 0 10px 30px rgba(36, 150, 237, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .tech-git {
-            border-color: #f1502f !important;
-            color: #f1502f !important;
-            text-shadow: 0 0 8px #f1502f, 0 0 16px #f1502f;
-            box-shadow: 0 0 12px rgba(241, 80, 47, 0.4), inset 0 0 8px rgba(241, 80, 47, 0.1);
-        }
-        .tech-git:hover {
-            box-shadow: 0 0 20px rgba(241, 80, 47, 0.8), inset 0 0 12px rgba(241, 80, 47, 0.2), 0 10px 30px rgba(241, 80, 47, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .tech-aws {
-            border-color: #ff9900 !important;
-            color: #ff9900 !important;
-            text-shadow: 0 0 8px #ff9900, 0 0 16px #ff9900;
-            box-shadow: 0 0 12px rgba(255, 153, 0, 0.4), inset 0 0 8px rgba(255, 153, 0, 0.1);
-        }
-        .tech-aws:hover {
-            box-shadow: 0 0 20px rgba(255, 153, 0, 0.8), inset 0 0 12px rgba(255, 153, 0, 0.2), 0 10px 30px rgba(255, 153, 0, 0.3);
-            transform: translateY(-3px);
-        }
-
-        .tech-kali {
-            border-color: #33c3f0 !important;
-            color: #33c3f0 !important;
-            text-shadow: 0 0 8px #33c3f0, 0 0 16px #33c3f0;
-            box-shadow: 0 0 12px rgba(51, 195, 240, 0.4), inset 0 0 8px rgba(51, 195, 240, 0.1);
-        }
-        .tech-kali:hover {
-            box-shadow: 0 0 20px rgba(51, 195, 240, 0.8), inset 0 0 12px rgba(51, 195, 240, 0.2), 0 10px 30px rgba(51, 195, 240, 0.3);
-            transform: translateY(-3px);
+        
+        .footer-nav a:hover {
+            color: var(--text-heading);
+            text-decoration: underline;
         }
     </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full antialiased">
-  <div id="app-wrapper" class="w-full h-full overflow-auto">
-   <!-- Toast Notification -->
-   <div id="toast" class="toast-notification"></div><!-- PIX Modal -->
-   <div id="pixModal" class="pix-modal-overlay">
-    <div class="pix-modal text-center">
-     <div class="text-[#00f2ff] mb-4">
-      <i data-lucide="qr-code" style="width:48px;height:48px;margin:0 auto;"></i>
-     </div>
-     <h3 class="text-xl font-bold mb-2">Pagamento via PIX</h3>
-     <p class="text-gray-400 text-sm mb-6">Copie a chave abaixo para realizar o pagamento</p>
-     <div class="bg-black/50 border border-white/10 rounded-xl p-4 mb-6 flex items-center gap-3">
-      <span id="pixKeyDisplay" class="mono text-sm text-[#00f2ff] flex-1 truncate text-left">visualstudioandsecurityoficial@gmail.com</span> <button id="copyPixBtn" class="text-white/50 hover:text-[#00f2ff] transition shrink-0" title="Copiar"> <i data-lucide="copy" style="width:18px;height:18px;"></i> </button>
-     </div>
-     <div class="flex gap-3">
-      <button id="copyPixFullBtn" class="flex-1 px-4 py-3 bg-[#00f2ff] text-black font-bold rounded-xl hover:bg-[#00d4e0] transition text-sm"> COPIAR CHAVE PIX </button> <button id="closePixBtn" class="px-4 py-3 border border-white/10 rounded-xl text-gray-400 hover:text-white hover:border-white/30 transition text-sm"> FECHAR </button>
-     </div>
-    </div>
-   </div><!-- Mobile Menu -->
-   <div id="mobileBackdrop" class="mobile-backdrop"></div>
-   <div id="mobileMenu" class="mobile-menu">
-    <button id="closeMobileBtn" class="absolute top-6 right-6 text-gray-400 hover:text-white transition"> <i data-lucide="x" style="width:24px;height:24px;"></i> </button>
-    <div class="flex flex-col gap-6">
-     <a href="#about" class="text-xl font-bold text-gray-300 hover:text-white transition mobile-nav-link">Sobre</a> <a href="#services" class="text-xl font-bold text-gray-300 hover:text-white transition mobile-nav-link">Serviços</a> <a href="#contact" class="text-xl font-bold text-gray-300 hover:text-white transition mobile-nav-link">Contato</a>
-     <div class="border-t border-white/10 pt-6 mt-4">
-      <a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-400 hover:text-[#00f2ff] transition mb-3"> <i data-lucide="github" style="width:20px;height:20px;"></i> <span class="text-sm">GitHub</span> </a> <a href="https://www.linkedin.com/in/Kovaliosky" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-400 hover:text-[#00f2ff] transition"> <i data-lucide="linkedin" style="width:20px;height:20px;"></i> <span class="text-sm">LinkedIn</span> </a>
-     </div>
-    </div>
-   </div><!-- Navigation -->
-   <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5 px-6 py-4 flex justify-between items-center">
-    <div class="text-xl font-bold tracking-tighter mono uppercase">
-     Kovaliosky<span class="text-[#00f2ff]">.DeV</span>
-    </div>
-    <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400 uppercase tracking-widest">
-     <a href="#about" class="nav-link hover:text-white transition">Sobre</a> <a href="#services" class="nav-link hover:text-white transition">Serviços</a> <a href="#contact" class="nav-link hover:text-white transition">Contato</a>
-    </div><button id="hamburgerBtn" class="md:hidden text-gray-400 hover:text-white transition"> <i data-lucide="menu" style="width:24px;height:24px;"></i> </button>
-   </nav><!-- Hero Section -->
-   <section class="min-h-screen flex flex-col justify-center items-center px-6 pt-20 relative overflow-hidden">
-    <!-- Background decoration -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-     <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-[#00f2ff]/3 rounded-full blur-[120px]"></div>
-     <div class="absolute bottom-1/3 right-1/4 w-48 h-48 bg-[#00f2ff]/5 rounded-full blur-[100px]"></div>
-    </div>
-    <div class="relative z-10 flex flex-col items-center">
-     <div class="inline-block px-3 py-1 border border-[#00f2ff]/30 rounded-full text-[#00f2ff] text-[10px] font-bold uppercase tracking-[0.3em] mb-6 animate-pulse fade-in-up fade-in-up-d1">
-      Disponível para Projetos High-End
-     </div>
-     <h1 class="text-5xl md:text-8xl font-extrabold tracking-tighter mb-6 text-center fade-in-up fade-in-up-d2"><span id="heroLine1">VANGUARDS</span> <br><span id="heroLine2" class="gradient-text tracking-normal italic">VISUAL STUDIO</span></h1>
-     <p id="heroDesc" class="max-w-2xl text-center text-gray-400 text-lg md:text-xl leading-relaxed mb-10 fade-in-up fade-in-up-d3">Arquitetura de software de alta performance e design gráfico estratégico. Transformando linhas de código em experiências visuais de elite.</p>
-     <div class="flex flex-col md:flex-row gap-4 fade-in-up fade-in-up-d4">
-      <button id="hirePix" class="btn-primary px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-[#00f2ff] transition-all transform hover:scale-105 cursor-pointer"> CONTRATAR AGORA (PIX) </button> <a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="px-8 py-4 border border-white/10 rounded-full font-bold hover:bg-white/5 transition-all text-center flex items-center justify-center gap-2"> <i data-lucide="github" style="width:18px;height:18px;"></i> VER REPOSITÓRIO </a>
-     </div>
-    </div>
-    <div class="absolute bottom-8 animate-float">
-     <i data-lucide="chevron-down" style="width:24px;height:24px;" class="text-gray-600"></i>
-    </div>
-   </section><!-- About Section -->
-   <section id="about" class="py-24 px-6 max-w-5xl mx-auto w-full">
-    <div class="flex items-center gap-4 mb-12">
-     <div class="section-line"></div><span class="mono text-[#00f2ff] text-sm uppercase tracking-widest">Sobre mim</span>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-     <div>
-      <h2 class="text-3xl md:text-4xl font-extrabold mb-6 leading-tight">Código com <span class="text-[#00f2ff]">visão estratégica</span></h2>
-      <p class="text-gray-400 leading-relaxed mb-4">Sou Guilherme, conhecido como Kovaliosky DeV. Atuo como desenvolvedor senior full-stack e designer gráfico, com foco em criar soluções digitais que combinam performance técnica com impacto visual.</p>
-      <p class="text-gray-500 leading-relaxed text-sm">Minha expertise abrange desde arquitetura de sistemas complexos até a criação de identidades visuais completas, passando por segurança cibernética e otimização de performance.</p>
-     </div>
-     <div class="grid grid-cols-2 gap-4">
-      <div class="glass-card rounded-2xl p-6 text-center">
-       <div class="text-3xl font-extrabold text-[#00f2ff] mb-1">
-        5+
-       </div>
-       <div class="text-xs text-gray-500 uppercase tracking-wider">
-        Anos Exp.
-       </div>
-      </div>
-      <div class="glass-card rounded-2xl p-6 text-center">
-       <div class="text-3xl font-extrabold text-[#00f2ff] mb-1">
-        50+
-       </div>
-       <div class="text-xs text-gray-500 uppercase tracking-wider">
-        Projetos
-       </div>
-      </div>
-      <div class="glass-card rounded-2xl p-6 text-center">
-       <div class="text-3xl font-extrabold text-[#00f2ff] mb-1">
-        100%
-       </div>
-       <div class="text-xs text-gray-500 uppercase tracking-wider">
-        Dedicação
-       </div>
-      </div>
-      <div class="glass-card rounded-2xl p-6 text-center">
-       <div class="text-3xl font-extrabold text-[#00f2ff] mb-1">
-        24/7
-       </div>
-       <div class="text-xs text-gray-500 uppercase tracking-wider">
-        Suporte
-       </div>
-      </div>
-     </div>
-    </div>
-   </section><!-- Services Section -->
-   <section id="services" class="py-24 px-6 max-w-7xl mx-auto w-full">
-    <div class="flex items-center gap-4 mb-12">
-     <div class="section-line"></div><span class="mono text-[#00f2ff] text-sm uppercase tracking-widest">Serviços</span>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-     <div class="glass-card p-10 rounded-3xl">
-      <div class="text-[#00f2ff] mb-6 mono text-lg font-bold">
-       01/
-      </div>
-      <h3 id="svc1Title" class="text-2xl font-bold mb-4">Software Dev</h3>
-      <p class="text-gray-500 text-sm leading-relaxed">Desenvolvimento full-stack com foco em performance, escalabilidade e manutenibilidade. Aplicações web, mobile e sistemas robustos.</p>
-      <div class="flex flex-wrap gap-2 mt-6">
-       <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">Python</span> <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">JavaScript</span> <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">React</span> <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">Node.js</span>
-      </div>
-     </div>
-     <div class="glass-card p-10 rounded-3xl">
-      <div class="text-[#00f2ff] mb-6 mono text-lg font-bold">
-       02/
-      </div>
-      <h3 id="svc2Title" class="text-2xl font-bold mb-4">Design Gráfico</h3>
-      <p class="text-gray-500 text-sm leading-relaxed">Identidade visual estratégica, interfaces de alto impacto e materiais gráficos que comunicam a essência de cada marca.</p>
-      <div class="flex flex-wrap gap-2 mt-6">
-       <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">UI/UX</span> <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">Branding</span> <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">Figma</span> <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">Motion</span>
-      </div>
-     </div>
-     <div class="glass-card p-10 rounded-3xl">
-      <div class="text-[#00f2ff] mb-6 mono text-lg font-bold">
-       03/
-      </div>
-      <h3 id="svc3Title" class="text-2xl font-bold mb-4">Cyber Security</h3>
-      <p class="text-gray-500 text-sm leading-relaxed">Análise de vulnerabilidades, pentesting e implementação de protocolos de segurança para proteger seus ativos digitais.</p>
-      <div class="flex flex-wrap gap-2 mt-6">
-       <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">Pentest</span> <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">Audit</span> <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">Firewall</span> <span class="text-[10px] mono px-2 py-1 border border-white/10 rounded-full text-gray-500">OSINT</span>
-      </div>
-     </div>
-    </div>
-   </section><!-- Tech Stack Section -->
-   <section class="py-24 px-6 max-w-5xl mx-auto w-full">
-    <div class="flex items-center gap-4 mb-12">
-     <div class="section-line"></div><span class="mono text-[#00f2ff] text-sm uppercase tracking-widest">Stack Tecnológico</span>
-    </div>
-    <div class="flex flex-wrap gap-3 justify-center">
-     <span class="tech-tag tech-python px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">Python</span> <span class="tech-tag tech-javascript px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">JavaScript</span> <span class="tech-tag tech-typescript px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">TypeScript</span> <span class="tech-tag tech-react px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">React</span> <span class="tech-tag tech-nodejs px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">Node.js</span> <span class="tech-tag tech-figma px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">Figma</span> <span class="tech-tag tech-photoshop px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">Photoshop</span> <span class="tech-tag tech-linux px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">Linux</span> <span class="tech-tag tech-docker px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">Docker</span> <span class="tech-tag tech-git px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">Git</span> <span class="tech-tag tech-aws px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">AWS</span> <span class="tech-tag tech-kali px-5 py-2.5 glass-card rounded-full text-sm text-gray-300 mono">Kali</span>
-    </div>
-   </section><!-- Contact Section -->
-   <section id="contact" class="py-24 px-6 max-w-3xl mx-auto w-full text-center">
-    <div class="flex items-center gap-4 mb-12 justify-center">
-     <div class="section-line"></div><span class="mono text-[#00f2ff] text-sm uppercase tracking-widest">Contato</span>
-     <div class="section-line" style="transform:rotate(180deg)"></div>
-    </div>
-    <h2 class="text-3xl md:text-5xl font-extrabold mb-6">Vamos criar algo <span class="gradient-text">extraordinário</span></h2>
-    <p class="text-gray-400 mb-10 max-w-lg mx-auto">Entre em contato para discutir seu projeto. Respostas em até 24h.</p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center flex-wrap">
-     <button id="contactPixBtn" class="btn-primary px-8 py-4 bg-[#00f2ff] text-black font-bold rounded-full hover:bg-white transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer"> <i data-lucide="zap" style="width:18px;height:18px;"></i> CONTRATAR VIA PIX </button> <a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="px-8 py-4 border border-white/10 rounded-full font-bold hover:bg-white/5 transition-all flex items-center justify-center gap-2"> <i data-lucide="github" style="width:18px;height:18px;"></i> GITHUB </a> <a href="https://www.linkedin.com/in/Kovaliosky" target="_blank" rel="noopener noreferrer" class="px-8 py-4 border border-white/10 rounded-full font-bold hover:bg-white/5 transition-all flex items-center justify-center gap-2"> <i data-lucide="linkedin" style="width:18px;height:18px;"></i> LINKEDIN </a>
-    </div>
-   </section><!-- Footer -->
-   <footer class="border-t border-white/5 py-8 px-6 text-center">
-    <div class="mono text-gray-600 text-xs uppercase tracking-widest">
-     © 2026 Kovaliosky<span class="text-[#00f2ff]/50">.DeV</span> — All rights reserved
-    </div>
-   </footer>
-  </div><!-- Lane Page 2 - Projects -->
-  <div id="lane-page-2" class="w-full h-full overflow-auto bg-black text-white" style="display: none;">
-   <!-- Toast Notification -->
-   <div id="toast-2" class="toast-notification"></div><!-- Navigation -->
-   <nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5 px-6 py-4 flex justify-between items-center">
-    <div class="text-xl font-bold tracking-tighter mono uppercase cursor-pointer" onclick="navigateToPage('home')">
-     Kovaliosky<span class="text-[#00f2ff]">.DeV</span>
-    </div>
-    <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400 uppercase tracking-widest">
-     <a onclick="navigateToPage('home')" class="nav-link hover:text-white transition cursor-pointer">Home</a> <a onclick="navigateToPage('lane2')" class="nav-link hover:text-white transition cursor-pointer">Projetos</a> <a onclick="navigateToPage('home'); setTimeout(() => { document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' }) }, 100)" class="nav-link hover:text-white transition cursor-pointer">Contato</a>
-    </div><button id="hamburgerBtn-2" class="md:hidden text-gray-400 hover:text-white transition"> <i data-lucide="menu" style="width:24px;height:24px;"></i> </button>
-   </nav><!-- Mobile Menu -->
-   <div id="mobileBackdrop-2" class="mobile-backdrop"></div>
-   <div id="mobileMenu-2" class="mobile-menu">
-    <button id="closeMobileBtn-2" class="absolute top-6 right-6 text-gray-400 hover:text-white transition"> <i data-lucide="x" style="width:24px;height:24px;"></i> </button>
-    <div class="flex flex-col gap-6">
-     <a onclick="navigateToPage('home'); closeMobileMenu2()" class="text-xl font-bold text-gray-300 hover:text-white transition cursor-pointer">Home</a> <a onclick="navigateToPage('lane2'); closeMobileMenu2()" class="text-xl font-bold text-gray-300 hover:text-white transition cursor-pointer">Projetos</a> <a onclick="navigateToPage('home'); setTimeout(() => { document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' }) }, 100); closeMobileMenu2()" class="text-xl font-bold text-gray-300 hover:text-white transition cursor-pointer">Contato</a>
-     <div class="border-t border-white/10 pt-6 mt-4">
-      <a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-400 hover:text-[#00f2ff] transition mb-3"> <i data-lucide="github" style="width:20px;height:20px;"></i> <span class="text-sm">GitHub</span> </a> <a href="https://www.linkedin.com/in/Kovaliosky" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-400 hover:text-[#00f2ff] transition"> <i data-lucide="linkedin" style="width:20px;height:20px;"></i> <span class="text-sm">LinkedIn</span> </a>
-     </div>
-    </div>
-   </div><!-- Hero Section -->
-   <section class="min-h-screen flex flex-col justify-center items-center px-6 pt-20 relative overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-     <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-[#00f2ff]/3 rounded-full blur-[120px]"></div>
-     <div class="absolute bottom-1/3 right-1/4 w-48 h-48 bg-[#00f2ff]/5 rounded-full blur-[100px]"></div>
-    </div>
-    <div class="relative z-10 flex flex-col items-center">
-     <div class="inline-block px-3 py-1 border border-[#00f2ff]/30 rounded-full text-[#00f2ff] text-[10px] font-bold uppercase tracking-[0.3em] mb-6 animate-pulse fade-in-up fade-in-up-d1">
-      Portfólio Completo
-     </div>
-     <h1 class="text-5xl md:text-8xl font-extrabold tracking-tighter mb-6 text-center fade-in-up fade-in-up-d2"><span class="gradient-text">PROJETOS</span> <br><span>DE ELITE</span></h1>
-     <p class="max-w-2xl text-center text-gray-400 text-lg md:text-xl leading-relaxed mb-10 fade-in-up fade-in-up-d3">Conheça os trabalhos que transformaram visão em realidade. Cada projeto representa excelência técnica e design de impacto.</p>
-    </div>
-    <div class="absolute bottom-8 animate-float">
-     <i data-lucide="chevron-down" style="width:24px;height:24px;" class="text-gray-600"></i>
-    </div>
-   </section><!-- Projects Section -->
-   <section class="py-24 px-6 max-w-6xl mx-auto w-full">
-    <div class="flex items-center gap-4 mb-12">
-     <div class="section-line"></div><span class="mono text-[#00f2ff] text-sm uppercase tracking-widest">Projetos em Destaque</span>
-    </div>
-    <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-     <div class="glass-card rounded-3xl overflow-hidden group hover:border-[#00f2ff] transition-all cursor-pointer transform hover:scale-105">
-      <div class="relative h-48 bg-gradient-to-br from-[#00f2ff]/20 to-[#00f2ff]/5 flex items-center justify-center overflow-hidden">
-       <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#00f2ff]/40 to-transparent"></div><i data-lucide="code" style="width:64px;height:64px;" class="text-[#00f2ff] opacity-50 group-hover:opacity-100 transition-opacity"></i>
-      </div>
-      <div class="p-8">
-       <h3 class="text-xl font-bold mb-3">Platform E-commerce</h3>
-       <p class="text-gray-500 text-sm mb-6 leading-relaxed">Plataforma de vendas full-stack com integração de pagamento, painel admin avançado e otimização para conversão.</p>
-       <div class="flex flex-wrap gap-2 mb-6">
-        <span class="text-[10px] mono px-2 py-1 border border-[#00f2ff]/30 rounded text-[#00f2ff]">React</span> <span class="text-[10px] mono px-2 py-1 border border-[#00f2ff]/30 rounded text-[#00f2ff]">Node.js</span> <span class="text-[10px] mono px-2 py-1 border border-[#00f2ff]/30 rounded text-[#00f2ff]">PostgreSQL</span>
-       </div><a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#00f2ff] hover:gap-3 transition text-sm font-bold"> Ver Projeto <i data-lucide="arrow-right" style="width:16px;height:16px;"></i> </a>
-      </div>
-     </div>
-     <div class="glass-card rounded-3xl overflow-hidden group hover:border-[#00f2ff] transition-all cursor-pointer transform hover:scale-105">
-      <div class="relative h-48 bg-gradient-to-br from-[#f7df1e]/20 to-[#f7df1e]/5 flex items-center justify-center overflow-hidden">
-       <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#f7df1e]/40 to-transparent"></div><i data-lucide="palette" style="width:64px;height:64px;" class="text-[#f7df1e] opacity-50 group-hover:opacity-100 transition-opacity"></i>
-      </div>
-      <div class="p-8">
-       <h3 class="text-xl font-bold mb-3">Design System</h3>
-       <p class="text-gray-500 text-sm mb-6 leading-relaxed">Sistema de design completo com componentes reutilizáveis, documentação interativa e guia de estilo visual.</p>
-       <div class="flex flex-wrap gap-2 mb-6">
-        <span class="text-[10px] mono px-2 py-1 border border-[#f7df1e]/30 rounded text-[#f7df1e]">Figma</span> <span class="text-[10px] mono px-2 py-1 border border-[#f7df1e]/30 rounded text-[#f7df1e]">UI/UX</span> <span class="text-[10px] mono px-2 py-1 border border-[#f7df1e]/30 rounded text-[#f7df1e]">Branding</span>
-       </div><a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#f7df1e] hover:gap-3 transition text-sm font-bold"> Ver Projeto <i data-lucide="arrow-right" style="width:16px;height:16px;"></i> </a>
-      </div>
-     </div>
-     <div class="glass-card rounded-3xl overflow-hidden group hover:border-[#00f2ff] transition-all cursor-pointer transform hover:scale-105">
-      <div class="relative h-48 bg-gradient-to-br from-[#33c3f0]/20 to-[#33c3f0]/5 flex items-center justify-center overflow-hidden">
-       <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#33c3f0]/40 to-transparent"></div><i data-lucide="lock" style="width:64px;height:64px;" class="text-[#33c3f0] opacity-50 group-hover:opacity-100 transition-opacity"></i>
-      </div>
-      <div class="p-8">
-       <h3 class="text-xl font-bold mb-3">Security Audit</h3>
-       <p class="text-gray-500 text-sm mb-6 leading-relaxed">Análise completa de vulnerabilidades, pentesting avançado e implementação de protocolos de segurança robustos.</p>
-       <div class="flex flex-wrap gap-2 mb-6">
-        <span class="text-[10px] mono px-2 py-1 border border-[#33c3f0]/30 rounded text-[#33c3f0]">Pentest</span> <span class="text-[10px] mono px-2 py-1 border border-[#33c3f0]/30 rounded text-[#33c3f0]">Audit</span> <span class="text-[10px] mono px-2 py-1 border border-[#33c3f0]/30 rounded text-[#33c3f0]">Kali</span>
-       </div><a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#33c3f0] hover:gap-3 transition text-sm font-bold"> Ver Projeto <i data-lucide="arrow-right" style="width:16px;height:16px;"></i> </a>
-      </div>
-     </div>
-     <div class="glass-card rounded-3xl overflow-hidden group hover:border-[#00f2ff] transition-all cursor-pointer transform hover:scale-105">
-      <div class="relative h-48 bg-gradient-to-br from-[#61dafb]/20 to-[#61dafb]/5 flex items-center justify-center overflow-hidden">
-       <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#61dafb]/40 to-transparent"></div><i data-lucide="smartphone" style="width:64px;height:64px;" class="text-[#61dafb] opacity-50 group-hover:opacity-100 transition-opacity"></i>
-      </div>
-      <div class="p-8">
-       <h3 class="text-xl font-bold mb-3">Mobile App - Fitness</h3>
-       <p class="text-gray-500 text-sm mb-6 leading-relaxed">Aplicativo nativo com rastreamento de treinos, integração com dispositivos wearables e IA para recomendações.</p>
-       <div class="flex flex-wrap gap-2 mb-6">
-        <span class="text-[10px] mono px-2 py-1 border border-[#61dafb]/30 rounded text-[#61dafb]">React Native</span> <span class="text-[10px] mono px-2 py-1 border border-[#61dafb]/30 rounded text-[#61dafb]">Firebase</span> <span class="text-[10px] mono px-2 py-1 border border-[#61dafb]/30 rounded text-[#61dafb]">ML</span>
-       </div><a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#61dafb] hover:gap-3 transition text-sm font-bold"> Ver Projeto <i data-lucide="arrow-right" style="width:16px;height:16px;"></i> </a>
-      </div>
-     </div>
-     <div class="glass-card rounded-3xl overflow-hidden group hover:border-[#00f2ff] transition-all cursor-pointer transform hover:scale-105">
-      <div class="relative h-48 bg-gradient-to-br from-[#68a063]/20 to-[#68a063]/5 flex items-center justify-center overflow-hidden">
-       <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#68a063]/40 to-transparent"></div><i data-lucide="database" style="width:64px;height:64px;" class="text-[#68a063] opacity-50 group-hover:opacity-100 transition-opacity"></i>
-      </div>
-      <div class="p-8">
-       <h3 class="text-xl font-bold mb-3">Dashboard Analytics</h3>
-       <p class="text-gray-500 text-sm mb-6 leading-relaxed">Dashboard em tempo real com visualizações avançadas, processamento de big data e API escalável.</p>
-       <div class="flex flex-wrap gap-2 mb-6">
-        <span class="text-[10px] mono px-2 py-1 border border-[#68a063]/30 rounded text-[#68a063]">Python</span> <span class="text-[10px] mono px-2 py-1 border border-[#68a063]/30 rounded text-[#68a063]">Docker</span> <span class="text-[10px] mono px-2 py-1 border border-[#68a063]/30 rounded text-[#68a063]">AWS</span>
-       </div><a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#68a063] hover:gap-3 transition text-sm font-bold"> Ver Projeto <i data-lucide="arrow-right" style="width:16px;height:16px;"></i> </a>
-      </div>
-     </div>
-     <div class="glass-card rounded-3xl overflow-hidden group hover:border-[#00f2ff] transition-all cursor-pointer transform hover:scale-105">
-      <div class="relative h-48 bg-gradient-to-br from-[#a259ff]/20 to-[#a259ff]/5 flex items-center justify-center overflow-hidden">
-       <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[#a259ff]/40 to-transparent"></div><i data-lucide="brush" style="width:64px;height:64px;" class="text-[#a259ff] opacity-50 group-hover:opacity-100 transition-opacity"></i>
-      </div>
-      <div class="p-8">
-       <h3 class="text-xl font-bold mb-3">Brand Identity</h3>
-       <p class="text-gray-500 text-sm mb-6 leading-relaxed">Identidade visual completa com logo, manual de marca, materiais colaterais e presença digital estratégica.</p>
-       <div class="flex flex-wrap gap-2 mb-6">
-        <span class="text-[10px] mono px-2 py-1 border border-[#a259ff]/30 rounded text-[#a259ff]">Figma</span> <span class="text-[10px] mono px-2 py-1 border border-[#a259ff]/30 rounded text-[#a259ff]">Photoshop</span> <span class="text-[10px] mono px-2 py-1 border border-[#a259ff]/30 rounded text-[#a259ff]">Motion</span>
-       </div><a href="https://github.com/VisualStudioAndSecurity" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#a259ff] hover:gap-3 transition text-sm font-bold"> Ver Projeto <i data-lucide="arrow-right" style="width:16px;height:16px;"></i> </a>
-      </div>
-     </div>
-    </div>
-   </section><!-- Footer -->
-   <footer class="border-t border-white/5 py-8 px-6 text-center">
-    <div class="mono text-gray-600 text-xs uppercase tracking-widest">
-     © 2026 Kovaliosky<span class="text-[#00f2ff]/50">.DeV</span> — All rights reserved
-    </div>
-   </footer>
-  </div>
-  <script>
-    // === Page Navigation ===
-    function navigateToPage(page) {
-        const lanePage1 = document.getElementById('app-wrapper');
-        const lanePage2 = document.getElementById('lane-page-2');
+</head>
+<body>
 
-        if (page === 'home') {
-            lanePage1.style.display = '';
-            lanePage2.style.display = 'none';
-            window.scrollTo(0, 0);
-        } else if (page === 'lane2') {
-            lanePage1.style.display = 'none';
-            lanePage2.style.display = '';
-            window.scrollTo(0, 0);
-            // Re-init Lucide for new page
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-        }
-    }
+    <header>
+        <div class="logo-container">
+            <h1 class="logo-main">VANGUARDS <span style="color: #ff3333;">SECURITY</span> & <span style="color: #58a6ff;">FINANCE</span></h1>
+        </div>
+        <p class="tagline">O seu Hub Diário de Notícias sobre Cibersegurança e o Mercado Financeiro Global</p>
+    </header>
 
-    function openMobileMenu2() {
-        document.getElementById('mobileMenu-2').classList.add('open');
-        document.getElementById('mobileBackdrop-2').classList.add('open');
-    }
+    <main>
+        <article class="article-card">
+            <img src="https://via.placeholder.com/600x400/161b22/8b949e?text=Imagem+de+Segurança" alt="Imagem Ilustrativa">
+            <div class="article-content">
+                <span class="category security-cat">Cibersegurança</span>
+                <a href="#" class="article-title">Vazamento Massivo Excede Bilhões de Dados Sensíveis: O que Você Precisa Saber</a>
+                <p class="article-snippet">Pesquisadores de segurança alertam sobre um dos maiores vazamentos da década, expondo credenciais e informações pessoais de usuários globalmente.</p>
+                <div class="meta-data">Por Kovakiosky DEV | 24 Mar 2026</div>
+            </div>
+        </article>
 
-    function closeMobileMenu2() {
-        document.getElementById('mobileMenu-2').classList.remove('open');
-        document.getElementById('mobileBackdrop-2').classList.remove('open');
-    }
+        <article class="article-card">
+            <img src="https://via.placeholder.com/600x400/161b22/8b949e?text=Imagem+de+Finanças" alt="Imagem Ilustrativa">
+            <div class="article-content">
+                <span class="category finance-cat">Mercado Financeiro</span>
+                <a href="#" class="article-title">Fed Anuncia Decisão Sobre Taxas de Juros: Impactos nos Mercados Globais</a>
+                <p class="article-snippet">O Federal Reserve dos EUA mantém as taxas estáveis, mas as projeções de cortes futuros agitam as bolsas de valores e o mercado de criptoativos.</p>
+                <div class="meta-data">Por Kovakiosky DEV | 24 Mar 2026</div>
+            </div>
+        </article>
+        
+        </main>
 
-    // Mobile menu listeners for page 2
-    document.addEventListener('DOMContentLoaded', function() {
-        const hamburgerBtn2 = document.getElementById('hamburgerBtn-2');
-        const closeMobileBtn2 = document.getElementById('closeMobileBtn-2');
-        const mobileBackdrop2 = document.getElementById('mobileBackdrop-2');
+    <footer>
+        <div class="footer-nav">
+            <a href="index.html">Página Principal</a>
+            <a href="privacidade.html">Política de Privacidade</a>
+            <a href="robots.txt">Robots.txt</a>
+            <a href="sitemap.xml">Sitemap.xml</a>
+        </div>
+        <p style="color: #8b949e; font-size: 0.8em; margin-top: 15px;">&copy; 2026 Visual Studio & Security. Todos os direitos reservados.</p>
+    </footer>
 
-        if (hamburgerBtn2) {
-            hamburgerBtn2.addEventListener('click', openMobileMenu2);
-        }
-        if (closeMobileBtn2) {
-            closeMobileBtn2.addEventListener('click', closeMobileMenu2);
-        }
-        if (mobileBackdrop2) {
-            mobileBackdrop2.addEventListener('click', closeMobileMenu2);
-        }
-    });
-
-    // === Config & SDK ===
-    const defaultConfig = {
-        background_color: '#050505',
-        surface_color: '#0d0d0d',
-        text_color: '#ffffff',
-        accent_color: '#00f2ff',
-        secondary_color: '#6b7280',
-        font_family: 'Inter',
-        font_size: 16,
-        hero_title_line1: 'VANGUARDS',
-        hero_title_line2: 'VISUAL STUDIO',
-        hero_description: 'Arquitetura de software de alta performance e design gráfico estratégico. Transformando linhas de código em experiências visuais de elite.',
-        service1_title: 'Software Dev',
-        service2_title: 'Design Gráfico',
-        service3_title: 'Cyber Security',
-        pix_key: 'visualstudioandsecurityoficial@gmail.com'
-    };
-
-    let currentPixKey = defaultConfig.pix_key;
-
-    // Toast
-    function showToast(message, duration = 3000) {
-        const toast = document.getElementById('toast');
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), duration);
-    }
-
-    // PIX Modal
-    function openPixModal() {
-        const modal = document.getElementById('pixModal');
-        modal.classList.add('active');
-    }
-
-    function closePixModal() {
-        const modal = document.getElementById('pixModal');
-        modal.classList.remove('active');
-    }
-
-    async function copyPixKey() {
-        try {
-            await navigator.clipboard.writeText(currentPixKey);
-            showToast('✅ Chave PIX copiada com sucesso!');
-        } catch (e) {
-            // Fallback
-            const textarea = document.createElement('textarea');
-            textarea.value = currentPixKey;
-            textarea.style.position = 'fixed';
-            textarea.style.opacity = '0';
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast('✅ Chave PIX copiada com sucesso!');
-        }
-    }
-
-    // Mobile Menu
-    function openMobileMenu() {
-        document.getElementById('mobileMenu').classList.add('open');
-        document.getElementById('mobileBackdrop').classList.add('open');
-    }
-
-    function closeMobileMenu() {
-        document.getElementById('mobileMenu').classList.remove('open');
-        document.getElementById('mobileBackdrop').classList.remove('open');
-    }
-
-    // Button Listeners
-    document.getElementById('hirePix').addEventListener('click', openPixModal);
-    document.getElementById('contactPixBtn').addEventListener('click', openPixModal);
-    document.getElementById('closePixBtn').addEventListener('click', closePixModal);
-    document.getElementById('copyPixBtn').addEventListener('click', copyPixKey);
-    document.getElementById('copyPixFullBtn').addEventListener('click', copyPixKey);
-    document.getElementById('hamburgerBtn').addEventListener('click', openMobileMenu);
-    document.getElementById('closeMobileBtn').addEventListener('click', closeMobileMenu);
-    document.getElementById('mobileBackdrop').addEventListener('click', closeMobileMenu);
-    document.getElementById('pixModal').addEventListener('click', function(e) {
-        if (e.target === this) closePixModal();
-    });
-
-    // Close mobile menu on nav link click
-    document.querySelectorAll('.mobile-nav-link').forEach(link => {
-        link.addEventListener('click', closeMobileMenu);
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-
-    // Element SDK Init
-    if (window.elementSdk) {
-        window.elementSdk.init({
-            defaultConfig,
-            onConfigChange: async (config) => {
-                const c = { ...defaultConfig, ...config };
-                const font = c.font_family || defaultConfig.font_family;
-                const baseSize = c.font_size || defaultConfig.font_size;
-                const baseFontStack = 'Inter, sans-serif';
-                const fullFont = `${font}, ${baseFontStack}`;
-
-                currentPixKey = c.pix_key || defaultConfig.pix_key;
-
-                // Apply background
-                document.getElementById('app-wrapper').style.backgroundColor = c.background_color;
-
-                // Apply text color
-                document.querySelectorAll('h1, h2, h3, nav .mono').forEach(el => {
-                    el.style.color = c.text_color;
-                });
-
-                // Apply surface to glass cards
-                document.querySelectorAll('.glass-card').forEach(el => {
-                    el.style.backgroundColor = c.surface_color;
-                });
-
-                // Apply accent
-                document.querySelectorAll('.text-\\[\\#00f2ff\\]').forEach(el => {
-                    el.style.color = c.accent_color;
-                });
-
-                // Font
-                document.body.style.fontFamily = fullFont;
-                document.querySelectorAll('h1, h2, h3, p').forEach(el => {
-                    el.style.fontFamily = fullFont;
-                });
-
-                // Font size
-                const el1 = document.getElementById('heroLine1');
-                const el2 = document.getElementById('heroLine2');
-                const desc = document.getElementById('heroDesc');
-                if (el1) el1.closest('h1').style.fontSize = `${baseSize * 3}px`;
-                if (desc) desc.style.fontSize = `${baseSize * 1.125}px`;
-
-                // Text content
-                if (el1) el1.textContent = c.hero_title_line1 || defaultConfig.hero_title_line1;
-                if (el2) el2.textContent = c.hero_title_line2 || defaultConfig.hero_title_line2;
-                if (desc) desc.textContent = c.hero_description || defaultConfig.hero_description;
-                
-                const svc1 = document.getElementById('svc1Title');
-                const svc2 = document.getElementById('svc2Title');
-                const svc3 = document.getElementById('svc3Title');
-                if (svc1) svc1.textContent = c.service1_title || defaultConfig.service1_title;
-                if (svc2) svc2.textContent = c.service2_title || defaultConfig.service2_title;
-                if (svc3) svc3.textContent = c.service3_title || defaultConfig.service3_title;
-
-                // Update PIX display
-                const pixDisplay = document.getElementById('pixKeyDisplay');
-                if (pixDisplay) pixDisplay.textContent = currentPixKey;
-            },
-            mapToCapabilities: (config) => {
-                const c = { ...defaultConfig, ...config };
-                return {
-                    recolorables: [
-                        { get: () => c.background_color || defaultConfig.background_color, set: (v) => { c.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
-                        { get: () => c.surface_color || defaultConfig.surface_color, set: (v) => { c.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
-                        { get: () => c.text_color || defaultConfig.text_color, set: (v) => { c.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
-                        { get: () => c.accent_color || defaultConfig.accent_color, set: (v) => { c.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } },
-                        { get: () => c.secondary_color || defaultConfig.secondary_color, set: (v) => { c.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } }
-                    ],
-                    borderables: [],
-                    fontEditable: {
-                        get: () => c.font_family || defaultConfig.font_family,
-                        set: (v) => { c.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
-                    },
-                    fontSizeable: {
-                        get: () => c.font_size || defaultConfig.font_size,
-                        set: (v) => { c.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
-                    }
-                };
-            },
-            mapToEditPanelValues: (config) => {
-                const c = { ...defaultConfig, ...config };
-                return new Map([
-                    ['hero_title_line1', c.hero_title_line1 || defaultConfig.hero_title_line1],
-                    ['hero_title_line2', c.hero_title_line2 || defaultConfig.hero_title_line2],
-                    ['hero_description', c.hero_description || defaultConfig.hero_description],
-                    ['service1_title', c.service1_title || defaultConfig.service1_title],
-                    ['service2_title', c.service2_title || defaultConfig.service2_title],
-                    ['service3_title', c.service3_title || defaultConfig.service3_title],
-                    ['pix_key', c.pix_key || defaultConfig.pix_key]
-                ]);
-            }
-        });
-    }
-
-    // Init Lucide icons
-    lucide.createIcons();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e10c14631c30127',t:'MTc3NDMwMzcwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
