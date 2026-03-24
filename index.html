@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Studio & Security | Inteligência Digital</title>
+    <title>Visual Studio & Security | Hub de Cibersegurança</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
@@ -27,17 +27,50 @@
         .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
         
         article { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 40px; }
-        .featured-img { width: 100%; height: 300px; background-size: cover; background-position: center; }
+        .featured-img { width: 100%; height: 250px; background-color: #21262d; background-size: cover; background-position: center; }
         
         .body { padding: 30px; }
-        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; color: white; }
-        .bg-sec { background: var(--accent-green); }
-        .bg-fin { background: #f1c40f; color: black; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; color: white; background: var(--accent-green); }
 
-        h1, h2 { color: var(--header); line-height: 1.3; }
+        h1, h2, h3 { color: var(--header); line-height: 1.3; }
         .meta { font-size: 0.85rem; color: #8b949e; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         
-        pre { background: var(--code-bg); padding: 15px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); color: #79c0ff; font-size: 0.9rem; }
+        pre { background: var(--code-bg); padding: 15px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--border); color: #79c0ff; font-size: 0.9rem; margin: 20px 0; }
         code { font-family: 'Consolas', monospace; }
 
-        .cta-box { background: rgba(88, 166, 255, 0.1); border-left: 4px solid
+        .cta-box { background: rgba(88, 166, 255, 0.1); border-left: 4px solid var(--accent-blue); padding: 15px; margin: 20px 0; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+
+        footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); margin-top: 50px; }
+        .nav-links a { color: var(--accent-blue); text-decoration: none; margin: 0 10px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="logo">Visual Studio <span>& Security</span></h1>
+    <p>Hub de Cibersegurança e Inteligência em TI</p>
+</header>
+
+<div class="container">
+    
+    <article>
+        <div class="featured-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200');"></div>
+        <div class="body">
+            <span class="badge">Análise Técnica</span>
+            <h1>Campanha FAUX#ELEVATE: O Ataque de 25 Segundos</h1>
+            <div class="meta">Por Equipe Técnica Visual Studio & Security | 24 de Março, 2026</div>
+            
+            <p>A campanha <strong>FAUX#ELEVATE</strong> utiliza currículos falsos como isca ("bait") para comprometer ambientes corporativos em tempo recorde.</p>
+            
+            <h3>Mecânica da Infecção</h3>
+            <ul>
+                <li><strong>O Bait:</strong> O usuário vê uma mensagem de erro de arquivo corrompido, disfarçando um script VBScript de 224 mil linhas.</li>
+                <li><strong>Velocidade:</strong> A infecção completa, do início até a exfiltração de dados, leva aproximadamente 25 segundos.</li>
+                <li><strong>Exfiltração:</strong> Credenciais são enviadas via SMTP para domínios russos como <em>olga.aitsaid@mail.ru</em>.</li>
+                <li><strong>Persistência:</strong> O malware desativa o Microsoft Defender e altera o registro do Windows para desativar o UAC.</li>
+            </ul>
+
+            <div class="cta-box">
+                <strong>Proteção Ativa:</strong> O malware utiliza o driver <em>WinRing0x
