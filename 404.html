@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página não encontrada | Visual Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --bg: #121212; /* Fundo escuro para destacar o erro */
+            --text: #fdfcf6; 
+            --accent: #c7864e; 
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0; 
+            text-align: center; 
+        }
+        .container { max-width: 600px; padding: 20px; }
+        h1 { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 8rem; 
+            margin: 0; 
+            color: var(--accent); 
+        }
+        h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 20px; }
+        p { font-size: 1.1rem; opacity: 0.8; margin-bottom: 40px; }
+        .btn-back {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-back:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <h2>Ops! Parece que você se perdeu.</h2>
+        <p>A página que você está procurando não existe ou foi movida para um novo endereço.</p>
+        <a href="index.html" class="btn-back">Voltar para a Home</a>
+    </div>
+</body>
+</html>
