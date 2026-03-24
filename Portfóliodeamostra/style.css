@@ -1,0 +1,100 @@
+:root {
+    --bg-dark: #0a0a0a;
+    --bg-light: #fdfcf6;
+    --accent-orange: #c7864e;
+    --btn-cream: #f4f7d8;
+    --text-main: #222;
+    --text-light: #fff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-light);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+h1, h2, h3, .quote {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('sua-foto-fundo.jpg') center/cover;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.hero h1 { font-size: 3.5rem; max-width: 700px; margin-bottom: 20px; }
+
+/* Buttons */
+.btn-primary, .btn-secondary, .btn-dark, .btn-submit {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary { background: var(--btn-cream); color: #000; }
+.btn-secondary { background: var(--btn-cream); color: #000; margin-top: 20px; }
+.btn-dark { background: #000; color: #fff; }
+.btn-submit { background: var(--accent-orange); color: #fff; width: 100%; margin-top: 15px; }
+
+/* Section Layouts */
+.dark-bg { background-color: var(--bg-dark); color: var(--text-light); }
+.orange-bg { background-color: var(--accent-orange); color: var(--text-light); }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+.image-spacer {
+    height: 400px;
+    background: url('imagem-meio.jpg') center/cover fixed;
+}
+
+/* Forms */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+.contact-form {
+    background: var(--btn-cream);
+    padding: 30px;
+    border-radius: 10px;
+}
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.footer {
+    background: #000;
+    color: #fff;
+    padding: 40px 0;
+    font-size: 0.9rem;
+}
+
+.footer-grid {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .grid-2, .contact-grid, .footer-grid { grid-template-columns: 1fr; flex-direction: column; text-align: center; }
+    .hero h1 { font-size: 2.5rem; }
+}
