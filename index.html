@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kovaliosky DeV | Security & Finance Hub</title>
+    <title>Visual Studio & Security | Notícias de Elite</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
@@ -18,144 +18,64 @@
             --border: #30363d;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        header {
-            background-color: var(--card);
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .logo {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.5rem;
-            color: var(--header);
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        header { background-color: var(--card); padding: 40px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+        .logo { font-family: 'Poppins', sans-serif; font-size: 2.2rem; color: var(--header); margin: 0; text-transform: uppercase; }
         .logo span { color: var(--accent-blue); }
+        
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        
+        .featured-article { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 30px; }
+        .article-header-img { width: 100%; height: 350px; background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; }
+        
+        .article-body { padding: 30px; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; background: var(--accent-green); color: white; }
+        
+        h1.post-title { font-size: 2rem; color: var(--header); margin-top: 0; line-height: 1.3; }
+        .meta { font-size: 0.85rem; color: #8b949e; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        
+        .post-content h3 { color: var(--accent-blue); margin-top: 25px; }
+        .post-content p { margin-bottom: 15px; text-align: justify; }
+        .post-content ul { padding-left: 20px; margin-bottom: 20px; }
+        .post-content li { margin-bottom: 8px; }
 
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .card:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
-
-        .card-img {
-            width: 100%;
-            height: 200px;
-            background: #21262d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: #8b949e;
-        }
-
-        .content { padding: 20px; }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .badge-security { background: var(--accent-green); color: white; }
-        .badge-finance { background: #f1c40f; color: black; }
-
-        h2 { font-size: 1.4rem; color: var(--header); margin: 0 0 10px 0; }
-        p { font-size: 0.95rem; margin-bottom: 20px; }
-
-        .footer-meta {
-            font-size: 0.8rem;
-            color: #8b949e;
-            border-top: 1px solid var(--border);
-            padding-top: 15px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px;
-            border-top: 1px solid var(--border);
-            margin-top: 50px;
-        }
-
+        footer { text-align: center; padding: 40px; border-top: 1px solid var(--border); margin-top: 50px; }
         .nav-links a { color: var(--accent-blue); text-decoration: none; margin: 0 10px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 class="logo">Kovaliosky<span>.Dev</span></h1>
-    <p>Inteligência em Cibersegurança e Análise do Mercado Financeiro</p>
+    <h1 class="logo">Visual Studio <span>& Security</span></h1>
+    <p>Inteligência em Cibersegurança e Mercado Financeiro</p>
 </header>
 
 <div class="container">
-    <article class="card">
-        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
-        <div class="content">
-            <span class="badge badge-security">Cibersegurança</span>
-            <h2>Campanha FAUX#ELEVATE: Hackers utilizam currículos falsos para minerar Monero</h2>
-            <p>
-                Identificada uma operação sofisticada de 25 segundos que utiliza scripts VBScript ofuscados para roubar credenciais e instalar mineradores XMRig em ambientes corporativos. 
-                O ataque utiliza infraestruturas legítimas como Dropbox e WordPress para camuflar o tráfego de comando e controle[cite: 2].
-            </p>
-            <div class="footer-meta">
-                Publicado por Kovaliosky DeV | 24 de Março, 2026
-            </div>
-        </div>
-    </article>
+    <article class="featured-article">
+        <div class="article-header-img"></div>
+        <div class="article-body">
+            <span class="badge">Alerta de Ameaça</span>
+            <h1 class="post-title">Campanha FAUX#ELEVATE: O Ataque de 25 Segundos que Compromete Redes Corporativas</h1>
+            <div class="meta">Publicado por Equipe Técnica Visual Studio & Security | 24 de Março, 2026</div>
+            
+            <div class="post-content">
+                <p>Uma nova e perigosa campanha de ataque, batizada de <strong>FAUX#ELEVATE</strong>, está mirando ambientes corporativos com uma precisão alarmante. O ataque utiliza currículos falsos como "bait" (isca) para iniciar uma cadeia de infecção que dura apenas 25 segundos do início ao fim.</p>
 
-    <article class="card">
-        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1611974717482-480457d7741d?auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
-        <div class="content">
-            <span class="badge badge-finance">Mercado Financeiro</span>
-            <h2>Volatilidade no Mercado Cripto: Analisando o Suporte do Bitcoin</h2>
-            <p>
-                Após a recente consolidação, analistas observam zonas críticas de liquidez. O mercado de derivativos apresenta alta alavancagem, sugerindo movimentos bruscos no fechamento mensal.
-            </p>
-            <div class="footer-meta">
-                Publicado por Kovaliosky DeV | 24 de Março, 2026
-            </div>
-        </div>
-    </article>
+                <h3>A Mecânica do "Bait"</h3>
+                <p>Os cibercriminosos distribuem e-mails de phishing contendo anexos que simulam documentos de currículo (CV). Ao abrir o arquivo, o usuário recebe uma mensagem de erro falsa indicando que o documento está corrompido. Na verdade, esta mensagem serve apenas para mascarar a execução de um script VBScript massivo com mais de 224 mil linhas de código ofuscado.</p>
 
-    <article class="card">
-        <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=600&q=80'); background-size: cover;"></div>
-        <div class="content">
-            <span class="badge badge-security">Educação Digital</span>
-            <h2>O que é "Bait" na Cibersegurança e como não cair na isca</h2>
-            <p>
-                Cibercriminosos utilizam mensagens de erro falsas e promessas de ganhos rápidos para induzir cliques maliciosos. Entenda como o "Baiting" se tornou a porta de entrada para infecções persistentes[cite: 3].
-            </p>
-            <div class="footer-meta">
-                Publicado por Kovaliosky DeV | 24 de Março, 2026
+                <h3>Exfiltração e Criptomineração</h3>
+                <p>Uma vez ativo, o malware executa múltiplas funções simultâneas:</p>
+                <ul>
+                    <li><strong>Roubo de Credenciais:</strong> Utiliza componentes como o <em>ChromElevator</em> para extrair senhas de navegadores baseados em Chromium e o <em>mozilla.vbs</em> para perfis do Firefox.</li>
+                    <li><strong>Exfiltração via SMTP:</strong> Os dados roubados são enviados para contas de e-mail russas (.ru) configuradas no script.</li>
+                    <li><strong>Mineração de Monero:</strong> O vírus instala o <em>mservice.exe</em> (XMRig) para sequestrar o poder de processamento da máquina e minerar criptoativos.</li>
+                </ul>
+
+                <h3>Camuflagem Avançada</h3>
+                <p>O que torna esta campanha particularmente difícil de detectar é o abuso de infraestruturas legítimas. Os atacantes utilizam o <strong>Dropbox</strong> para armazenar seus payloads e sites <strong>WordPress</strong> comprometidos para hospedar as configurações de Comando e Controle (C2). Além disso, o malware tenta desativar agressivamente o Microsoft Defender e o UAC do Windows para limpar seus rastros forenses.</p>
+                
+                <p><em>Recomendação: Empresas devem reforçar o monitoramento de execuções de VBScript e bloquear tráfego SMTP não autorizado em estações de trabalho.</em></p>
             </div>
         </div>
     </article>
@@ -164,7 +84,7 @@
 <footer>
     <nav class="nav-links">
         <a href="index.html">Início</a>
-        <a href="privacidade.html">Privacidade</a>
+        <a href="privacidade.html">Política de Privacidade</a>
         <a href="sitemap.xml">Sitemap</a>
     </nav>
     <p style="font-size: 0.8rem; margin-top: 20px;">&copy; 2026 Visual Studio & Security. Todos os direitos reservados.</p>
