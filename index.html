@@ -28,7 +28,7 @@
         .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
         
         .featured-article { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 50px; }
-        .article-header-img { width: 100%; height: 350px; background-color: #21262d; background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200'); background-size: cover; background-position: center; }
+        .article-header-img { width: 100%; height: 350px; background-color: #21262d; background-size: cover; background-position: center; }
         .article-body { padding: 40px; }
         
         .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; background: var(--accent-green); color: white; }
@@ -62,38 +62,37 @@
 <div class="container">
     
     <article class="featured-article">
-        <div class="article-header-img"></div>
+        <div class="article-header-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200');"></div>
         <div class="article-body">
-            <span class="badge">Análise Forense Avançada</span>
+            <span class="badge">Análise Forense</span>
             <h1 class="post-title">Campanha FAUX#ELEVATE: O Ataque de 25 Segundos e o Uso de VBScript Massivo</h1>
             <div class="meta">Publicado por Equipe Técnica Visual Studio & Security | 24 de Março, 2026</div>
-            
             <div class="post-content">
-                <p>O cenário de ameaças corporativas enfrenta uma nova operação coordenada batizada de <strong>FAUX#ELEVATE</strong>. Esta campanha utiliza engenharia social refinada para roubar credenciais e implementar mecanismos de mineração de Monero.</p>
-
-                <h3>O Mecanismo de Infecção</h3>
-                <p>Os invasores utilizam scripts VBScript de 224 mil linhas, onde apenas 226 contêm o código real, visando evitar detecção por sandboxes. O malware utiliza o <strong>Windows Management Instrumentation (WMI)</strong> para focar especificamente em sistemas empresariais conectados ao domínio.</p>
-
-                <h3>Arsenal Técnico e Exfiltração</h3>
-                <ul>
-                    <li><strong>ChromElevator:</strong> Extrai dados sensíveis contornando a proteção ABE.</li>
-                    <li><strong>mozilla.vbs & walls.vbs:</strong> Responsáveis pelo roubo de perfis do Firefox e ficheiros do Desktop.</li>
-                    <li><strong>mservice.exe:</strong> Minerador XMRig que utiliza o driver <strong>WinRing0x64.sys</strong> para sequestrar a CPU.</li>
-                    <li><strong>Canais de Saída:</strong> Dados são enviados via SMTP para contas como <em>olga.aitsaid@mail.ru</em>.</li>
-                </ul>
-
-                <div class="warning-box">
-                    <strong>Velocidade Crítica:</strong> A infecção completa ocorre em apenas <strong>25 segundos</strong>.
-                </div>
+                <p>A operação coordenada <strong>FAUX#ELEVATE</strong> utiliza currículos falsos infectados com scripts VBScript de 224 mil linhas para infiltrar redes corporativas. O malware utiliza o <strong>WMI</strong> para focar em sistemas empresariais e exfiltrar dados via SMTP para endereços russos.</p>
+                <div class="warning-box"><strong>Velocidade Crítica:</strong> A infecção completa ocorre em apenas <strong>25 segundos</strong>.</div>
             </div>
         </div>
     </article>
 
-    <article class="featured-article" style="margin-top: 50px;">
+    <article class="featured-article">
+        <div class="article-header-img" style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1200');"></div>
         <div class="article-body">
-            <span class="badge" style="background: #555;">Segurança Apple</span>
-            <h1 class="post-title">Apple Lança Melhorias de Segurança em Segundo Plano</h1>
-            <p>A Apple introduziu o recurso "Melhorias de Segurança em Segundo Plano" para corrigir falhas críticas como a <strong>CVE-2026-20643</strong> no WebKit. Esta correção impede que sites maliciosos acessem dados de outros domínios.</p>
+            <span class="badge">Alerta Global de IA</span>
+            <h1 class="post-title">CNCERT Alerta para Vulnerabilidades no Agente Autônomo OpenClaw</h1>
+            <div class="meta">Publicado por Equipe Técnica Visual Studio & Security | 24 de Março, 2026</div>
+            <div class="post-content">
+                <p>O Centro de Resposta a Emergências de Redes da China (CNCERT) emitiu um comunicado urgente sobre o <strong>OpenClaw</strong>. Segundo o alerta, as diretrizes de segurança padrão frágeis da plataforma, somadas ao seu alto nível de privilégio no sistema, podem permitir que invasores assumam o controle total dos endpoints.</p>
+
+                <h3>Injeção Indireta de Prompt (IDPI)</h3>
+                <p>Uma das maiores ameaças identificadas é a Injeção de Prompt Cruz-Domínio (XPIA). Neste cenário, o atacante manipula o agente de IA através de conteúdos externos, como resumos de páginas web, forçando o sistema a vazar informações confidenciais ou ignorar filtros de segurança.</p>
+                
+                <h3>Riscos de Exfiltração via Apps de Mensagens</h3>
+                <p>Investigações recentes revelaram que o recurso de pré-visualização de links em plataformas como Telegram e Discord pode ser explorado. O agente de IA é enganado para criar uma URL dinâmica que envia dados sensíveis do usuário diretamente para o domínio do criminoso, sem que haja necessidade de um clique manual.</p>
+
+                <div class="warning-box">
+                    <strong>Recomendação de Defesa:</strong> Evite expor a porta de gerenciamento do OpenClaw à rede pública e desative a atualização automática de novas habilidades vindas de repositórios não verificados.
+                </div>
+            </div>
         </div>
     </article>
 
@@ -101,14 +100,29 @@
         <h2>Glossário Técnico</h2>
         <dl>
             <dt>WMI (Windows Management Instrumentation)</dt>
-            <dd>Infraestrutura para gerenciamento de dados e operações em sistemas baseados em Windows.</dd>
+            <dd>Estrutura para administração de dados e operações em ambientes Microsoft Windows.</dd>
             
-            <dt>C2 (Comando e Controle)</dt>
-            <dd>Infraestrutura utilizada por atacantes para enviar instruções a sistemas comprometidos.</dd>
+            <dt>IDPI / XPIA</dt>
+            <dd>Injeção de instruções maliciosas em modelos de linguagem através de fontes de dados externas para manipular o comportamento da IA.</dd>
             
-            <dt>ABE (App-Bound Encryption)</dt>
-            <dd>Mecanismo de proteção que vincula dados criptografados a um aplicativo específico.</dd>
+            <dt>C2 (Command and Control)</dt>
+            <dd>Servidor central utilizado por cibercriminosos para comandar máquinas infectadas remotamente.</dd>
 
             <dt>Exfiltração via SMTP</dt>
-            <dd>Uso do protocolo de e-mail para retirar dados roubados de uma rede privada.</dd>
+            <dd>Transferência não autorizada de dados para fora de uma rede utilizando o protocolo de e-mail.</dd>
         </dl>
+    </section>
+
+</div>
+
+<footer>
+    <nav class="nav-links">
+        <a href="index.html">Início</a>
+        <a href="privacidade.html">Política de Privacidade</a>
+        <a href="sitemap.xml">Sitemap</a>
+    </nav>
+    <p>&copy; 2026 Visual Studio & Security. Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>
