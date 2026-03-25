@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Studio & Security | Intelligence Hub</title>
+    <title>Visual Studio & Security | Hub de Inteligência Digital</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --bg: #0a0c10;
@@ -21,17 +23,25 @@
         }
 
         * { box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; line-height: 1.6; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            line-height: 1.6; 
+            overflow-x: hidden;
+        }
 
-        /* Header com Vídeo de Fundo (O Olho) */
+        /* --- Header Principal com Vídeo Background --- */
         header {
             position: relative;
-            height: 450px;
+            height: 500px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             border-bottom: 2px solid var(--accent-blue);
+            background-color: #000;
         }
 
         .header-video {
@@ -43,72 +53,169 @@
             width: auto;
             height: auto;
             transform: translate(-50%, -50%);
-            z-index: -1;
+            z-index: 1;
             object-fit: cover;
-            opacity: 0.5;
+            opacity: 0.6; /* Ajuste de visibilidade do olho */
         }
 
+        /* Efeito de Vidro (Glassmorphism) no Texto */
         .header-content {
-            background: rgba(13, 17, 23, 0.8);
-            backdrop-filter: blur(8px);
-            padding: 40px;
-            border-radius: 16px;
+            position: relative;
+            z-index: 2;
+            background: rgba(13, 17, 23, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 45px;
+            border-radius: 20px;
             text-align: center;
-            border: 1px solid var(--border);
-            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 850px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
         }
 
-        .logo { font-family: 'Poppins', sans-serif; font-size: 2.5rem; color: var(--header); margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        .logo { 
+            font-family: 'Poppins', sans-serif; 
+            font-size: 2.8rem; 
+            color: var(--header); 
+            margin: 0; 
+            text-transform: uppercase; 
+            letter-spacing: 3px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
         .logo span { color: var(--accent-blue); }
 
-        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+        .header-content p {
+            font-size: 1.2rem;
+            color: var(--text);
+            margin-top: 10px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
 
-        /* Grid de Artigos */
+        /* --- Grid de Artigos e Conteúdo --- */
+        .container { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+
         .articles-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
+            gap: 30px;
         }
 
         .featured-article { 
             background: var(--card); 
             border: 1px solid var(--border); 
-            border-radius: 12px; 
+            border-radius: 14px; 
             overflow: hidden; 
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .featured-article:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: var(--accent-blue);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
 
-        .article-header-img { width: 100%; height: 200px; background-size: cover; background-position: center; }
-        .article-body { padding: 25px; flex-grow: 1; }
+        .article-header-img { 
+            width: 100%; 
+            height: 210px; 
+            background-size: cover; 
+            background-position: center;
+            border-bottom: 1px solid var(--border);
+        }
 
-        .badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; background: var(--accent-green); color: white; }
-        .badge-apple { background: #555; }
+        .article-body { padding: 30px; flex-grow: 1; }
+
+        .badge { 
+            display: inline-block; 
+            padding: 5px 12px; 
+            border-radius: 6px; 
+            font-size: 0.7rem; 
+            font-weight: 700; 
+            margin-bottom: 15px; 
+            text-transform: uppercase; 
+            background: var(--accent-green); 
+            color: white; 
+        }
+        .badge-apple { background: #444; }
         .badge-alert { background: #d73a49; }
 
-        h1.post-title { font-size: 1.4rem; color: var(--header); margin-top: 0; line-height: 1.3; }
-        .meta { font-size: 0.75rem; color: #8b949e; margin-bottom: 15px; }
+        h2.post-title { 
+            font-size: 1.5rem; 
+            color: var(--header); 
+            margin: 0 0 15px 0; 
+            line-height: 1.3; 
+        }
 
-        .post-content p { font-size: 0.95rem; text-align: left; opacity: 0.9; }
+        .meta { font-size: 0.8rem; color: #8b949e; margin-bottom: 15px; display: block;}
 
-        /* Glossário Estilizado */
-        .glossary { background: #1c2128; padding: 40px; border-radius: 12px; border: 1px dotted var(--border); margin-top: 60px; }
-        .glossary h2 { color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; }
-        .glossary dt { font-weight: bold; color: var(--accent-gold); margin-top: 15px; font-family: 'JetBrains Mono', monospace; }
+        .post-content p { 
+            font-size: 0.95rem; 
+            text-align: left; 
+            color: #8b949e;
+            margin: 0;
+        }
 
-        footer { text-align: center; padding: 60px 20px; border-top: 1px solid var(--border); background: var(--code-bg); }
-        .nav-links a { color: var(--accent-blue); text-decoration: none; margin: 0 15px; font-weight: 600; }
-        .nav-links a:hover { text-decoration: underline; }
+        /* --- Glossário Estilizado --- */
+        .glossary { 
+            background: #111418; 
+            padding: 40px; 
+            border-radius: 16px; 
+            border: 1px dashed var(--border); 
+            margin-top: 70px; 
+        }
+        .glossary h2 { 
+            color: var(--accent-blue); 
+            font-family: 'JetBrains Mono', monospace; 
+            margin-top: 0;
+            font-size: 1.6rem;
+        }
+        .glossary dt { 
+            font-weight: 700; 
+            color: var(--accent-gold); 
+            margin-top: 20px; 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 1rem;
+        }
+        .glossary dd { 
+            margin: 5px 0 0 0;
+            color: #8b949e;
+            font-size: 0.9rem;
+        }
 
+        /* --- Footer Profissional --- */
+        footer { 
+            text-align: center; 
+            padding: 80px 20px; 
+            border-top: 1px solid var(--border); 
+            background: var(--code-bg); 
+            margin-top: 80px;
+        }
+        .nav-links { margin-bottom: 25px; }
+        .nav-links a { 
+            color: var(--accent-blue); 
+            text-decoration: none; 
+            margin: 0 15px; 
+            font-weight: 600; 
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--accent-gold); }
+        
+        .copyright { 
+            font-size: 0.85rem; 
+            color: #484f58; 
+            margin-top: 20px;
+        }
+
+        /* Responsividade */
         @media (max-width: 768px) {
-            .header-content { margin: 20px; padding: 20px; }
+            header { height: 400px; }
+            .header-content { margin: 0 20px; padding: 25px; }
             .logo { font-size: 1.8rem; }
+            .articles-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -118,9 +225,10 @@
     <video autoplay loop muted playsinline class="header-video">
         <source src="assets/tech_eye_background.mp4" type="video/mp4">
     </video>
+    
     <div class="header-content">
         <h1 class="logo">Visual Studio <span>& Security</span></h1>
-        <p>Hub de Inteligência em Cibersegurança e Análise de Ameaças</p>
+        <p>Inteligência em Cibersegurança e Defesa Digital</p>
     </div>
 </header>
 
@@ -131,10 +239,10 @@
             <div class="article-header-img" style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600');"></div>
             <div class="article-body">
                 <span class="badge">Relatório Técnico</span>
-                <h1 class="post-title">Campanha FAUX#ELEVATE: Ataque VBScript</h1>
-                <div class="meta">24 Mar, 2026</div>
+                <h2 class="post-title">Operação FAUX#ELEVATE</h2>
+                <span class="meta">Publicado em 24 de Março, 2026</span>
                 <div class="post-content">
-                    <p>Invasão via CVs falsos executando scripts de 224k linhas. Exfiltração de dados Chromium em apenas 25 segundos.</p>
+                    <p>Análise detalhada da infecção via VBScript ofuscado que exfiltra dados de navegadores Chromium em menos de 30 segundos.</p>
                 </div>
             </div>
         </article>
@@ -143,10 +251,10 @@
             <div class="article-header-img" style="background-image: url('https://images.unsplash.com/photo-21780ecad995?q=80&w=600');"></div>
             <div class="article-body">
                 <span class="badge badge-alert">Alerta CNCERT</span>
-                <h1 class="post-title">Risco Crítico no Agente IA OpenClaw</h1>
-                <div class="meta">24 Mar, 2026</div>
+                <h2 class="post-title">Vulnerabilidade OpenClaw</h2>
+                <span class="meta">Publicado em 24 de Março, 2026</span>
                 <div class="post-content">
-                    <p>Vulnerabilidades de Injeção Indireta de Prompt (XPIA) permitem controle total do sistema via links maliciosos.</p>
+                    <p>Riscos de Injeção Indireta de Prompt (XPIA) em agentes autônomos de IA e como mitigar o controle remoto de sistemas.</p>
                 </div>
             </div>
         </article>
@@ -155,26 +263,26 @@
             <div class="article-header-img" style="background-image: url('https://images.unsplash.com/photo-b1ec696e5237?q=80&w=600');"></div>
             <div class="article-body">
                 <span class="badge badge-apple">Segurança Apple</span>
-                <h1 class="post-title">Apple Corrige CVE-2026-20643 (WebKit)</h1>
-                <div class="meta">24 Mar, 2026</div>
+                <h2 class="post-title">Correção CVE-2026-20643</h2>
+                <span class="meta">Publicado em 24 de Março, 2026</span>
                 <div class="post-content">
-                    <p>Patch de segurança em segundo plano corrige falha crítica de origem cruzada na API de Navegação.</p>
+                    <p>Apple lança atualização crítica para WebKit via Rapid Security Response para bloquear ataques de Cross-Origin.</p>
                 </div>
             </div>
         </article>
     </div>
 
     <section class="glossary">
-        <h2>_glossário_técnico</h2>
+        <h2>_terminologia_técnica</h2>
         <dl>
             <dt>WMI (Windows Management Instrumentation)</dt>
-            <dd>Framework de gerenciamento explorado para persistência e coleta de dados em sistemas Windows.</dd>
+            <dd>Interface de infraestrutura para dados e operações que malwares utilizam para persistência "fileless".</dd>
             
             <dt>IDPI / XPIA</dt>
-            <dd>Técnica de manipulação de LLMs através de entradas de dados externas não sanitizadas.</dd>
+            <dd>Exploração onde instruções maliciosas são injetadas em modelos de IA através de dados externos de confiança.</dd>
             
             <dt>ABE (App-Bound Encryption)</dt>
-            <dd>Camada de proteção do Chromium que vincula segredos criptografados à identidade do executável.</dd>
+            <dd>Mecanismo de defesa que vincula a descriptografia de segredos à integridade do processo solicitante.</dd>
         </dl>
     </section>
 
@@ -182,11 +290,12 @@
 
 <footer>
     <nav class="nav-links">
-        <a href="index.html">Dashboards</a>
-        <a href="#">Finance</a>
-        <a href="#">Games</a>
+        <a href="#">Inteligência</a>
+        <a href="#">Finanças</a>
+        <a href="#">Desenvolvimento</a>
+        <a href="#">Privacidade</a>
     </nav>
-    <p>&copy; 2026 Kovaliosky DeV | Visual Studio & Security. Licenciado sob Apache 2.0.</p>
+    <p class="copyright">&copy; 2026 Kovaliosky DeV | Visual Studio & Security. Todos os direitos reservados.</p>
 </footer>
 
 </body>
