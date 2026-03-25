@@ -1,52 +1,35 @@
-/* --- Efeito de Pulsação Cibernética na Borda --- */
+/* --- Header com o Olho Metálico - Versão Otimizada --- */
+header {
+    height: 480px; /* Reduzi a altura do header para centralizar o foco */
+    /* ... resto do seu código ... */
+}
+
+.header-video {
+    opacity: 0.25; /* Reduzi um pouco a opacidade para o texto saltar mais */
+    filter: brightness(0.4) contrast(1.4) saturate(0.6);
+    /* ... resto do seu código ... */
+}
+
 .header-content {
-    /* ... seu código anterior ... */
-    position: relative;
-    overflow: hidden;
+    /* ... seu código anterior (blur, border, etc.) ... */
+    
+    /* A GRANDE MUDANÇA: Reduzi o padding e o tamanho máximo */
+    padding: 35px 50px; /* Muito mais compacto */
+    max-width: 600px; /* O card agora é menor e mais técnico */
+    border-radius: 18px; /* Cantos menos arredondados para um visual mais 'sharp' */
+    
+    /* ... animação fadeInContent ... */
 }
 
-.header-content::before {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, transparent, var(--accent-blue), transparent);
-    z-index: -1;
-    border-radius: 24px;
-    animation: borderGlow 4s linear infinite;
-    opacity: 0.3;
-}
-
-@keyframes borderGlow {
-    0% { filter: hue-rotate(0deg); opacity: 0.2; }
-    50% { opacity: 0.5; }
-    100% { filter: hue-rotate(360deg); opacity: 0.2; }
-}
-
-/* --- Interatividade de Senior Developer (Hover) --- */
-.header-content:hover {
-    transform: translateY(-5px) scale(1.01);
-    border-color: var(--accent-blue);
-    box-shadow: 0 30px 60px -12px rgba(88, 166, 255, 0.3);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* --- Refinamento da Tipografia --- */
+/* --- Ajuste de Escala dos Textos --- */
 .header-content h1 {
-    font-size: 3.8rem;
-    font-weight: 800;
-    background: linear-gradient(180deg, #fff 0%, var(--accent-blue) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 15px;
-    filter: drop-shadow(0 0 10px rgba(88, 166, 255, 0.3));
+    font-size: 2.3rem; /* Reduzi de 3.5rem para 2.3rem. Impactante, mas não gigante */
+    font-weight: 700;
+    margin-bottom: 8px; /* Menos espaço entre o título e a descrição */
 }
 
 .header-content p {
-    color: #8b949e;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    font-size: 0.95rem; /* Reduzi de 1.2rem para 0.95rem */
+    letter-spacing: 0.5px;
+    color: rgba(139, 148, 158, 0.9);
 }
