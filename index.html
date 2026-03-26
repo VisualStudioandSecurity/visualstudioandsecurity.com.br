@@ -8,7 +8,7 @@
   <meta name="keywords" content="Desenvolvedor Senior, Design Gráfico, Segurança Cibernética, Portfólio, Guilherme Kovaliosky, Desenvolvimento Web, UI/UX, Pentest, AWS, Azure, GCP">
   <meta name="author" content="Guilherme Kovaliosky DeV">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://visualstudioandsecurity.github.io/_sdk/element_sdk.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&amp;family=JetBrains+Mono&amp;display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <style>
@@ -104,7 +104,7 @@
         .delay-4 { animation-delay: 0.4s; }
     </style>
   <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://visualstudioandsecurity.github.io/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
  <body class="antialiased h-full">
   <div id="app-wrapper" class="w-full h-full overflow-auto">
@@ -276,100 +276,4 @@
 
             document.body.style.backgroundColor = bg;
             document.body.style.color = txt;
-            document.body.style.fontFamily = `${font}, Inter, sans-serif`;
-            document.body.style.fontSize = `${size}px`;
-
-            document.querySelectorAll('.gradient-text').forEach(el => {
-                el.style.background = `linear-gradient(90deg, ${txt}, ${accent})`;
-                el.style.webkitBackgroundClip = 'text';
-                el.style.webkitTextFillColor = 'transparent';
-            });
-
-            document.querySelectorAll('.btn-primary').forEach(el => {
-                el.style.backgroundColor = accent;
-                el.style.color = bg;
-            });
-
-            document.querySelectorAll('.btn-outline').forEach(el => {
-                el.style.borderColor = accent;
-                el.style.color = accent;
-            });
-
-            document.querySelectorAll('.skill-tag').forEach(el => {
-                el.style.color = accent;
-                el.style.borderColor = accent + '33';
-                el.style.backgroundColor = accent + '14';
-            });
-
-            document.querySelectorAll('[data-lucide]').forEach(el => {
-                el.style.color = accent;
-            });
-        }
-
-        window.elementSdk.init({
-            defaultConfig,
-            onConfigChange: async (config) => { applyConfig(config); },
-            mapToCapabilities: (config) => ({
-                recolorables: [
-                    { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
-                    { get: () => config.card_color || defaultConfig.card_color, set: (v) => { config.card_color = v; window.elementSdk.setConfig({ card_color: v }); } },
-                    { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
-                    { get: () => config.accent_color || defaultConfig.accent_color, set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } }
-                ],
-                borderables: [],
-                fontEditable: {
-                    get: () => config.font_family || defaultConfig.font_family,
-                    set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
-                },
-                fontSizeable: {
-                    get: () => config.font_size || defaultConfig.font_size,
-                    set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
-                }
-            }),
-            mapToEditPanelValues: (config) => new Map([
-                ['hero_title', config.hero_title || defaultConfig.hero_title]
-            ])
-        });
-
-        lucide.createIcons();
-  </script>
-
-  <script>
-    function applyBan() {
-        localStorage.setItem('visual_studio_ban', 'true');
-        document.body.innerHTML = `
-            <div style="background:#000; color:#0f0; height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; font-family: 'Courier New', monospace; text-align:center; padding:20px; position:fixed; top:0; left:0; width:100%; z-index:9999;">
-                <h1 style="font-size:3rem; text-shadow: 0 0 10px #f00; color:#f00; margin-bottom:20px;">⚠️ ACESSO BLOQUEADO ⚠️</h1>
-                <p style="font-size:1.5rem; margin-bottom:10px;">Tentativa de inspeção detectada pelo sistema de segurança Visual Studio.</p>
-                <p>Seu dispositivo foi identificado e o acesso a este portfólio foi revogado permanentemente.</p>
-                <div style="margin-top:30px; border:1px solid #0f0; padding:15px; animation: blink 1s infinite;">
-                    STATUS: BLACKLISTED | PROTOCOLO: 0x88234
-                </div>
-            </div>
-            <style> @keyframes blink { 50% { opacity: 0; } } body { overflow: hidden !important; } </style>
-        `;
-    }
-
-    if (localStorage.getItem('visual_studio_ban') === 'true') {
-        applyBan();
-    }
-
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.onkeydown = function(e) {
-        if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
-            applyBan();
-            return false;
-        }
-    };
-
-    setInterval(() => {
-        const threshold = 160;
-        if (window.outerWidth - window.innerWidth > threshold || window.outerHeight - window.innerHeight > threshold) {
-            applyBan();
-        }
-    }, 1000);
-  </script>
-
-  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e22a2c423f5628b',t:'MTc3NDQ5MTIwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
- </body>
-</html>
+            document.body.style.fontFamily
