@@ -34,7 +34,7 @@ Este projeto utiliza camadas de proteção para garantir a integridade da propri
 3.  **Bootstrapping Seguro**: Sistema de carregamento em "Splash" para evitar vazamento de dados durante o load.
 
 𝙻𝚒𝚗𝚔𝚜 𝚘𝚜 𝚕𝚎𝚟𝚊𝚖 𝚍𝚒𝚛𝚎𝚝𝚘 𝚙𝚛𝚘 𝚜𝚒𝚝𝚎𝚜 𝚏𝚎𝚒𝚝𝚘𝚜 𝚙𝚎𝚕𝚊 𝚅𝚒𝚜𝚞𝚊𝚕 𝚂𝚝𝚞𝚍𝚒𝚘 𝙰𝚗𝚍 𝚂𝚎𝚌𝚞𝚛𝚒𝚝𝚢  
----------------------         --->file:///C:/Users/Pichau/visual-studio-security/Portf%C3%B3liodeamostra/index.html <----- ---------------------------------------------------------------------------
+           ---------------------         --->file:///C:/Users/Pichau/visual-studio-security/Portf%C3%B3liodeamostra/index.html <----- ---------------------------------------
 --->  file:///C:/Users/Pichau/visual-studio-security/siteestilomercadolivre.html  <--------------------------------------------------------------------------------
 --->  https://visualstudioandsecurity.github.io/automatiza-o/        <------------------------------------------------------------------------
 
