@@ -47,4 +47,57 @@
     <section class="flex-grow flex items-center px-10 py-20">
       <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         <div>
-          <h1 class="hero-title mb-
+          <h1 class="hero-title mb-6">Olá, eu sou<br><span class="text-cyan">Guilherme Kovaliosky</span></h1>
+          <p class="text-xl text-gray-400 mb-10 max-w-lg text-justify">
+            Senior Developer, Designer Gráfico e especialista em Segurança Cibernética. Unindo código e design para criar a <span class="text-white font-bold">Visual Studio and Security</span>.
+          </p>
+          <div class="flex gap-4">
+            <a href="#projects" class="btn-main">Meus Projetos</a>
+            <a href="#contact" class="btn-sec">Contato</a>
+          </div>
+        </div>
+        
+        <div class="flex justify-center">
+          <div class="gk-circle">
+            <span class="text-7xl font-black text-cyan">GK</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 text-center" id="skills">
+      <h2 class="text-4xl font-bold mb-12">Habilidades Profissionais</h2>
+      <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto px-6">
+        <span class="tag-skill">Pentest</span>
+        <span class="tag-skill">Cybersecurity</span>
+        <span class="tag-skill">React</span>
+        <span class="tag-skill">Python</span>
+        <span class="tag-skill">Node.js</span>
+      </div>
+    </section>
+
+    <footer class="py-10 text-center text-gray-600 border-t border-white/5">
+      <p>© 2026 Kovaliosky DeV. Todos os direitos reservados para <span class="text-gray-400">Visual Studio and Security</span>.</p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', e => {
+      if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && [73, 74, 67].includes(e.keyCode)) || (e.ctrlKey && e.keyCode == 85)) e.preventDefault();
+    });
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    setInterval(() => {
+      const s = new Date();
+      debugger;
+      if (new Date() - s > 100) window.location.href = "about:blank";
+    }, 1000);
+
+    window.addEventListener('resize', () => {
+      if ((window.outerWidth - window.innerWidth) > 160) {
+        document.body.innerHTML = "<div style='background:#050505;color:#00f2ff;height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;'><h1>ACESSO RESTRITO<br>SISTEMA MONITORADO POR<br>VISUAL STUDIO AND SECURITY</h1></div>";
+      }
+    });
+  </script>
+</body>
+</html>
