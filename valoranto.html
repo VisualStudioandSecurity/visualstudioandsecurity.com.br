@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valoranto | Visual Studio Games</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        @keyframes flipIn { 0% { transform: rotateX(90deg); opacity: 0; } 100% { transform: rotateX(0deg); opacity: 1; } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+        
+        body { 
+            background: linear-gradient(135deg, #0f1923 0%, #1a0a0a 50%, #0f1923 100%);
+            font-family: 'Rajdhani', sans-serif;
+            color: white;
+        }
+        .cell {
+            width: 50px; height: 50px;
+            border: 2px solid #333;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700; font-size: 1.2rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .cell.active { border-color: #ff4655; box-shadow: 0 0 10px rgba(255, 70, 85, 0.3); }
+        .cell.correct { background: #538d4e; border-color: #538d4e; }
+        .cell.present { background: #b59f3b; border-color: #b59f3b; }
+        .cell.absent { background: #3a3a3c; border-color: #3a3a3c; }
+        
+        .key {
+            height: 45px; min-width: 30px; padding: 0 5px;
+            border-radius: 4px; background: #444;
+            font-weight: bold; cursor: pointer; font-size: 0.8rem;
+        }
+        .key:hover { background: #666; }
+        .key.wide { min-width: 50px; background: #ff4655; }
+        .flip-in { animation: flipIn 0.4s ease forwards; }
+        .shake { animation: shake 0.5s ease; }
+    </style>
+</head>
+<body class="h-full flex flex-col items-center">
+
+    <header class="w-full max-w-lg flex items-center justify-between p-4 mb-4 border-b border-red-500/30">
+        <a href="index.html" class="text-gray-500 hover:text-white transition"><i data-lucide="arrow-left"></i></a>
+        <h1 class="text-2xl font-black italic tracking-tighter text-[#ff4655] font-orbitron">VALORANTO</h1>
+        <div id="stats" class="text-[10px] text-gray-500 text-right">
+            W: <span id="win-count" class="text-white">0</span> | L: <span id="loss-count" class="text-white">0</span>
+        </div>
+    </header>
+
+    <div class="mb-4">
+        <button onclick="showHint()" id="hint-btn" class="px-4 py-1 bg-indigo-600 rounded text-xs font-bold hover:bg-indigo-500 transition">💡 DICA</button>
+        <p id="hint-text" class="hidden text-indigo-400 text-[11px] mt-2 text-center max-w-[250px] italic"></p>
+    </div>
+
+    <main id="grid" class="flex flex-col gap-1.5 mb-8"></main>
+
+    <div id="keyboard" class="w-full max-w-md px-2 flex flex-col gap-1.5 mt-auto pb-8"></div>
+
+    <div id="modal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
+        <div class="bg-[#1a1a2e] border-2 border-[#ff4655] p-8 rounded-xl text-center max-w-xs w-full">
+            <h2 id="modal-title" class="text-2xl font-bold mb-2 font-orbitron text-[#ff4655]"></h2>
+            <p id="modal-word" class="text-gray-400 mb-6 uppercase tracking-widest"></p>
+            <button onclick="newGame()" class="w-full py-3 bg-[#ff4655] font-bold rounded-lg hover:brightness-110">JOGAR NOVAMENTE</button>
+        </div>
+    </div>
+
+    <script>
+        const WORDS = [
+            {w:'JETT',d:'Duelista coreana, mestre das facas.'},
+            {w:'RAZE',d:'Duelista brasileira, adora explosivos.'},
+            {w:'SAGE',d:'Sentinela chinesa que cura e ressuscita.'},
+            {w:'SOVA',d:'Iniciador russo com arco e drone.'},
+            {w:'OMEN',d:'Controlador que usa sombras e teleportes.'},
+            {w:'GHOST',d:'Pistola silenciosa e precisa.'},
+            {w:'SPIKE',d:'O artefato que deve ser plantado.'},
+            {w:'PLANT',d:'Ato de colocar a Spike no Bomb.'},
+            {w:'FLASH',d:'Habilidade que cega os inimigos.'},
+            {w:'SMOKE',d:'Esferas que bloqueiam a visão.'}
+        ];
+
+        let answer, answerDesc, guesses, currentGuess, gameOver, currentRow;
+        let stats = { wins: 0, losses: 0 };
+
+        function newGame() {
+            const pick = WORDS[Math.floor(Math.random() * WORDS.length)];
+            answer = pick.w;
+            answerDesc = pick.d;
+            guesses = [];
+            currentGuess = '';
+            currentRow = 0;
+            gameOver = false;
+            
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('hint-text').classList.add('hidden');
+            document.getElementById('hint-btn').classList.remove('hidden');
+            
+            buildGrid();
+            buildKeyboard();
+            lucide.createIcons();
+        }
+
+        function buildGrid() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+            for (let r = 0; r < 6; r++) {
+                const row = document.createElement('div');
+                row.className = 'flex gap-1.5';
+                row.id = `row-${r}`;
+                for (let c = 0; c < answer.length; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.id = `cell-${r}-${c}`;
+                    row.appendChild(cell);
+                }
+                grid.appendChild(row);
+            }
+        }
+
+        function buildKeyboard() {
+            const kb = document.getElementById('keyboard');
+            kb.innerHTML = '';
+            const layout = [['Q','W','E','R','T','Y','U','I','O','P'], ['A','S','D','F','G','H','J','K','L'], ['ENTER','Z','X','C','V','B','N','M','⌫']];
+            layout.forEach(row => {
+                const r = document.createElement('div');
+                r.className = 'flex gap-1 justify-center';
+                row.forEach(key => {
+                    const btn = document.createElement('button');
+                    btn.className = `key ${key.length > 1 ? 'wide' : ''}`;
+                    btn.textContent = key;
+                    btn.onclick = () => handleKey(key);
+                    r.appendChild(btn);
+                });
+                kb.appendChild(r);
+            });
+        }
+
+        function handleKey(k) {
+            if (gameOver) return;
+            if (k === '⌫') {
+                currentGuess = currentGuess.slice(0, -1);
+            } else if (k === 'ENTER') {
+                submitGuess();
+            } else if (currentGuess.length < answer.length) {
+                currentGuess += k;
+            }
+            updateRow();
+        }
+
+        function updateRow() {
+            for (let c = 0; c < answer.length; c++) {
+                const cell = document.getElementById(`cell-${currentRow}-${c}`);
+                cell.textContent = currentGuess[c] || '';
+                cell.className = 'cell' + (c === currentGuess.length ? ' active' : '');
+            }
+        }
+
+        function submitGuess() {
+            if (currentGuess.length !== answer.length) return;
+            const guess = currentGuess;
+            const row = document.getElementById(`row-${currentRow}`);
+            
+            for (let i = 0; i < answer.length; i++) {
+                const cell = document.getElementById(`cell-${currentRow}-${i}`);
+                if (guess[i] === answer[i]) cell.classList.add('correct');
+                else if (answer.includes(guess[i])) cell.classList.add('present');
+                else cell.classList.add('abs
