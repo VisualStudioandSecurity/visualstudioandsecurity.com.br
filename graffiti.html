@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Graffiti | Visual Studio Games</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Graffiti | Visual Studio Games</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
         body, html { margin: 0; padding: 0; overflow: hidden; background: #050505; height: 100%; font-family: 'Rajdhani', sans-serif; }
         canvas { display: block; background: #000; touch-action: none; cursor: crosshair; }
         
@@ -21,6 +21,11 @@
             border: 1px solid #333;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
             backdrop-filter: blur(5px);
+            display: none;
+        }
+
+        .tools.active {
+            display: flex;
         }
 
         /* Efeito de neon para o botão limpar */
@@ -44,111 +49,734 @@
             color: #000000 !important;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
+
+        /* Menu Cover */
+        #menuCover {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .menu-content {
+            text-align: center;
+            animation: slideUp 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .glitch-title {
+            font-size: 4rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #00f2ff, #ff00ff, #00f2ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glitch 3s ease-in-out infinite, glow 2s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+            letter-spacing: 3px;
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                background-position: 0% center;
+            }
+            50% {
+                background-position: 100% center;
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(0, 242, 255, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.8));
+            }
+        }
+
+        .subtitle {
+            color: #00f2ff;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            opacity: 0.8;
+            letter-spacing: 2px;
+        }
+
+        .play-btn {
+            margin-top: 50px;
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00f2ff, #ff00ff);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: slideUp 0.8s ease-out 0.6s both;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.8);
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        .menu-divider {
+            height: 2px;
+            width: 100px;
+            background: linear-gradient(90deg, transparent, #00f2ff, transparent);
+            margin: 30px auto;
+            animation: slideUp 0.8s ease-out 0.4s both;
+        }
+
+        .menu-footer {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #00f2ff;
+            opacity: 0.6;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            animation: fadeIn 1.5s ease-out 1s both;
+        }
+
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        #canvas.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spray-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        .spray-cursor.active {
+            display: block;
+        }
+
+        .spray-can-icon {
+            width: 40px;
+            height: 50px;
+            filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.6));
+        }
+
+        .challenge-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 150;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(3px);
+        }
+
+        .challenge-overlay.active {
+            display: flex;
+        }
+
+        .challenge-panel {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #00f2ff;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 242, 255, 0.3);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .challenge-title {
+            font-size: 2rem;
+            color: #00f2ff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .challenge-description {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .challenge-hint {
+            background: rgba(0, 242, 255, 0.1);
+            border-left: 3px solid #00f2ff;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+            color: #00f2ff;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .challenge-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-challenge {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-ready {
+            background: linear-gradient(90deg, #00f2ff, #ff00ff);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+        }
+
+        .btn-ready:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.8);
+        }
+
+        .btn-skip {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid #666;
+        }
+
+        .btn-skip:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .result-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 160;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .result-overlay.active {
+            display: flex;
+        }
+
+        .result-panel {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 16px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.4);
+            animation: slideUp 0.6s ease-out;
+            max-width: 600px;
+        }
+
+        .result-success {
+            border: 3px solid #00ff00;
+        }
+
+        .result-fail {
+            border: 3px solid #ff4655;
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .result-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .result-success .result-title {
+            background: linear-gradient(90deg, #00ff00, #00f2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-fail .result-title {
+            color: #ff4655;
+        }
+
+        .result-message {
+            color: #ccc;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-next {
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #00f2ff, #00ff00);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+        }
+
+        .btn-next:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.8);
+        }
+
+        .btn-retry {
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid #666;
+        }
+
+        .btn-retry:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
     </style>
-</head>
-<body>
-
-    <div class="tools flex items-center gap-4">
-        
-        <a href="index.html" class="btn-back text-white/70 text-xs font-bold border border-white/10 px-3 py-2.5 rounded-lg flex items-center gap-2 transition">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-        </a>
-
-        <div class="relative group">
-            <input type="color" id="colorPicker" value="#00f2ff" class="w-11 h-11 cursor-pointer bg-transparent border-none rounded-full overflow-hidden">
-            <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-cyan-400 opacity-0 group-hover:opacity-100 transition">COR</span>
-        </div>
-        
-        <button onclick="clearCanvas()" class="btn-clear ml-2 text-white text-xs font-bold border border-white/20 px-4 py-2.5 rounded-lg bg-black/50 transition flex items-center gap-2">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-            LIMPAR
-        </button>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body>
+  <div id="menuCover">
+   <div class="menu-content">
+    <h1 class="glitch-title">VISUAL GRAFFITI</h1>
+    <div class="menu-divider"></div>
+    <p class="subtitle">Express Your Creativity</p><button class="play-btn" onclick="startGame()">Play Now</button>
+   </div>
+  </div>
+  <div class="menu-footer">
+   Visual Studio Games © 2026
+  </div>
+  <div class="tools flex items-center gap-4"><button onclick="goToMenu()" class="btn-back text-white/70 text-xs font-bold border border-white/10 px-3 py-2.5 rounded-lg flex items-center gap-2 transition"> <i data-lucide="arrow-left" class="w-4 h-4"></i> </button>
+   <div class="relative group"><input type="color" id="colorPicker" value="#00f2ff" class="w-11 h-11 cursor-pointer bg-transparent border-none rounded-full overflow-hidden"> <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-cyan-400 opacity-0 group-hover:opacity-100 transition">COR</span>
+   </div>
+   <div class="relative group"><input type="range" id="thicknessPicker" min="10" max="80" value="40" class="w-24 h-2 bg-white/20 rounded-lg cursor-pointer appearance-none" style="accent-color: #00f2ff;"> <span class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-cyan-400 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">ESPESSURA</span>
+   </div><button onclick="clearCanvas()" class="btn-clear ml-2 text-white text-xs font-bold border border-white/20 px-4 py-2.5 rounded-lg bg-black/50 transition flex items-center gap-2"> <i data-lucide="trash-2" class="w-4 h-4"></i> LIMPAR </button> <button onclick="submitChallenge()" class="ml-auto text-white text-xs font-bold border border-cyan-400 px-4 py-2.5 rounded-lg bg-black/50 transition flex items-center gap-2 hover:border-cyan-300"> <i data-lucide="check" class="w-4 h-4"></i> PRONTO </button>
+  </div>
+  <div class="challenge-overlay" id="challengeOverlay">
+   <div class="challenge-panel">
+    <h2 class="challenge-title" id="challengeTitle">DESAFIO 1</h2>
+    <p class="challenge-description" id="challengeDescription">Desenhe uma casa!</p>
+    <div class="challenge-hint" id="challengeHint">
+     💡 Dica: Comece com as linhas básicas do telhado e paredes
     </div>
+    <div class="challenge-buttons"><button onclick="startChallenge()" class="btn-challenge btn-ready">COMEÇAR</button> <button onclick="skipChallenge()" class="btn-challenge btn-skip">PULAR</button>
+    </div>
+   </div>
+  </div>
+  <div class="result-overlay" id="resultOverlay">
+   <div class="result-panel" id="resultPanel">
+    <div class="result-icon" id="resultIcon">
+     ✓
+    </div>
+    <h2 class="result-title" id="resultTitle">PARABÉNS!</h2>
+    <p class="result-message" id="resultMessage">Você completou o desafio com sucesso!</p>
+    <div class="result-buttons"><button onclick="nextChallenge()" class="btn-next">PRÓXIMO</button> <button onclick="retryChallenge()" class="btn-retry">TENTAR NOVAMENTE</button>
+    </div>
+   </div>
+  </div>
+  <canvas id="canvas"></canvas>
+  <div class="spray-cursor" id="sprayCursor">
+   <svg class="spray-can-icon" viewbox="0 0 40 50" xmlns="http://www.w3.org/2000/svg">
+    <!-- Corpo da lata --> <rect x="6" y="15" width="28" height="30" rx="2" fill="currentColor" opacity="0.9" /> <!-- Topo da lata (bico) --> <rect x="16" y="5" width="8" height="12" rx="1" fill="currentColor" /> <!-- Botão no topo --> <circle cx="20" cy="2" r="3" fill="white" opacity="0.9" /> <!-- Brilho na lata --> <rect x="10" y="18" width="5" height="20" fill="white" opacity="0.2" rx="1" /> <!-- Detalhe de design --> <ellipse cx="20" cy="20" rx="8" ry="3" fill="white" opacity="0.1" />
+   </svg>
+  </div>
+  <script>
+        let gameRunning = false;
+        let currentChallenge = 0;
+        let challengeStarted = false;
 
-    <canvas id="canvas"></canvas>
+        const challenges = [
+            {
+                title: 'DESAFIO 1: CASA',
+                description: 'Desenhe uma casa com telhado, paredes e porta!',
+                hint: '💡 Comece com o telhado triangular, depois as paredes e uma porta no meio'
+            },
+            {
+                title: 'DESAFIO 2: ÁRVORE',
+                description: 'Desenhe uma árvore com tronco e galhos!',
+                hint: '💡 Faça um tronco vertical e galhos saindo para os lados'
+            },
+            {
+                title: 'DESAFIO 3: SOL',
+                description: 'Desenhe um sol com raios!',
+                hint: '💡 Comece com um círculo no centro e adicione raios saindo'
+            },
+            {
+                title: 'DESAFIO 4: CARRO',
+                description: 'Desenhe um carro com rodas e janelas!',
+                hint: '💡 Faça um retângulo, adicione círculos para as rodas'
+            },
+            {
+                title: 'DESAFIO 5: ESTRELA',
+                description: 'Desenhe uma estrela com 5 pontas!',
+                hint: '💡 Conecte 5 pontos formando uma forma de estrela'
+            }
+        ];
 
-    <script>
+        const startGame = () => {
+            gameRunning = true;
+            document.getElementById('menuCover').style.display = 'none';
+            document.getElementById('canvas').classList.add('active');
+            document.querySelector('.tools').classList.add('active');
+            document.getElementById('sprayCursor').classList.add('active');
+            showChallenge();
+            resize();
+            lucide.createIcons();
+        };
+
+        const showChallenge = () => {
+            if (currentChallenge < challenges.length) {
+                const challenge = challenges[currentChallenge];
+                document.getElementById('challengeTitle').textContent = challenge.title;
+                document.getElementById('challengeDescription').textContent = challenge.description;
+                document.getElementById('challengeHint').textContent = challenge.hint;
+                document.getElementById('challengeOverlay').classList.add('active');
+                challengeStarted = false;
+            } else {
+                showGameComplete();
+            }
+        };
+
+        const startChallenge = () => {
+            document.getElementById('challengeOverlay').classList.remove('active');
+            challengeStarted = true;
+            clearCanvas();
+        };
+
+        const skipChallenge = () => {
+            currentChallenge++;
+            document.getElementById('challengeOverlay').classList.remove('active');
+            showChallenge();
+        };
+
+        const submitChallenge = () => {
+            if (!challengeStarted || currentChallenge >= challenges.length) return;
+
+            // Análise básica: verifica se há desenho no canvas
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            let pixelsDrawn = 0;
+
+            // Conta pixels coloridos (não pretos/cinzas muito escuros)
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+                const brightness = (r + g + b) / 3;
+                
+                // Se não é preto/muito escuro, é pixel desenhado
+                if (brightness > 30) {
+                    pixelsDrawn++;
+                }
+            }
+
+            const minPixels = (canvas.width * canvas.height) * 0.02; // 2% do canvas
+            const success = pixelsDrawn > minPixels;
+
+            showResult(success);
+        };
+
+        const showResult = (success) => {
+            const resultPanel = document.getElementById('resultPanel');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+
+            if (success) {
+                resultPanel.classList.remove('result-fail');
+                resultPanel.classList.add('result-success');
+                resultIcon.textContent = '✓';
+                resultTitle.textContent = 'PARABÉNS!';
+                resultMessage.textContent = `Você completou "${challenges[currentChallenge].title.split(':')[1]}" com sucesso! 🎉`;
+                document.querySelector('.btn-next').style.display = 'block';
+            } else {
+                resultPanel.classList.remove('result-success');
+                resultPanel.classList.add('result-fail');
+                resultIcon.textContent = '✗';
+                resultTitle.textContent = 'TENTE NOVAMENTE';
+                resultMessage.textContent = `Você precisa desenhar mais! Tente novamente ou pule este desafio.`;
+                document.querySelector('.btn-next').style.display = 'none';
+            }
+
+            document.getElementById('resultOverlay').classList.add('active');
+        };
+
+        const nextChallenge = () => {
+            document.getElementById('resultOverlay').classList.remove('active');
+            currentChallenge++;
+            showChallenge();
+        };
+
+        const retryChallenge = () => {
+            document.getElementById('resultOverlay').classList.remove('active');
+            clearCanvas();
+            challengeStarted = true;
+        };
+
+        const showGameComplete = () => {
+            const resultPanel = document.getElementById('resultPanel');
+            resultPanel.classList.add('result-success');
+            resultPanel.classList.remove('result-fail');
+            document.getElementById('resultIcon').textContent = '🏆';
+            document.getElementById('resultTitle').textContent = 'TODOS OS DESAFIOS!';
+            document.getElementById('resultMessage').textContent = 'Você completou todos os 5 desafios! Você é um artista graffiti! 🎨✨';
+            document.querySelector('.btn-next').textContent = 'VOLTAR AO MENU';
+            document.querySelector('.btn-next').onclick = () => goToMenu();
+            document.querySelector('.btn-retry').style.display = 'none';
+            document.getElementById('resultOverlay').classList.add('active');
+        };
+
+        const goToMenu = () => {
+            gameRunning = false;
+            currentChallenge = 0;
+            challengeStarted = false;
+            document.getElementById('menuCover').style.display = 'flex';
+            document.getElementById('canvas').classList.remove('active');
+            document.querySelector('.tools').classList.remove('active');
+            document.getElementById('sprayCursor').classList.remove('active');
+            document.getElementById('challengeOverlay').classList.remove('active');
+            document.getElementById('resultOverlay').classList.remove('active');
+            clearCanvas();
+        };
+
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         const colorPicker = document.getElementById('colorPicker');
+        const thicknessPicker = document.getElementById('thicknessPicker');
+        const sprayCursor = document.getElementById('sprayCursor');
+
+        // Criar contexto de áudio para spray
+        const sprayAudio = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSpraySound() {
+            const now = sprayAudio.currentTime;
+            const duration = 0.2;
+            
+            // Criar ruído branco
+            const bufferSize = sprayAudio.sampleRate * duration;
+            const noiseBuffer = sprayAudio.createBuffer(1, bufferSize, sprayAudio.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
+            }
+            
+            const noiseSource = sprayAudio.createBufferSource();
+            noiseSource.buffer = noiseBuffer;
+            
+            // Filtro passa-alta para remover frequências baixas (deixa só o xiado)
+            const highpass = sprayAudio.createBiquadFilter();
+            highpass.type = 'highpass';
+            highpass.frequency.value = 7000;
+            highpass.Q.value = 1;
+            
+            // Outro filtro passa-alta ainda mais agressivo
+            const highpass2 = sprayAudio.createBiquadFilter();
+            highpass2.type = 'highpass';
+            highpass2.frequency.value = 10000;
+            highpass2.Q.value = 1;
+            
+            // Envelope de volume mais suave
+            const gain = sprayAudio.createGain();
+            gain.gain.setValueAtTime(0.15, now);
+            gain.gain.exponentialRampToValueAtTime(0.02, now + duration);
+            
+            // Conectar tudo em série
+            noiseSource.connect(highpass);
+            highpass.connect(highpass2);
+            highpass2.connect(gain);
+            gain.connect(sprayAudio.destination);
+            
+            noiseSource.start(now);
+            noiseSource.stop(now + duration);
+        }
 
         // Configuração inicial do Canvas
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            
-            // Preenche o fundo com a cor base
-            ctx.fillStyle = '#050505';
+            ctx.fillStyle = '#0a0a0a';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
         window.addEventListener('resize', resize);
-        resize(); // Chama no início
+        resize();
 
-        // Lógica de Desenho
+        // Lógica de Desenho com Spray
         let drawing = false;
+        let mouseX = 0;
+        let mouseY = 0;
+        let sprayInterval = null;
+
+        const applySpray = (x, y) => {
+            const color = colorPicker.value;
+            const radius = parseInt(thicknessPicker.value);
+            const particles = Math.floor(radius / 3);
+
+            for (let i = 0; i < particles; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                // Distribuição gaussiana para concentrar mais no centro
+                const randomVal = Math.random() + Math.random();
+                const distance = (randomVal / 2) * (radius * 0.4);
+                const particleX = x + Math.cos(angle) * distance;
+                const particleY = y + Math.sin(angle) * distance;
+                const particleSize = Math.random() * 2 + 0.5;
+                const opacity = Math.random() * 0.7 + 0.3;
+
+                ctx.globalAlpha = opacity;
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(particleX, particleY, particleSize, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+        };
+
+        const updateMousePos = (e) => {
+            mouseX = e.clientX || (e.touches && e.touches[0].clientX);
+            mouseY = e.clientY || (e.touches && e.touches[0].clientY);
+            
+            // Atualizar posição da lata de spray
+            if (gameRunning) {
+                sprayCursor.style.left = (mouseX - 20) + 'px';
+                sprayCursor.style.top = (mouseY - 25) + 'px';
+                sprayCursor.style.color = colorPicker.value;
+            }
+        };
 
         const start = (e) => { 
-            drawing = true; 
-            draw(e); // Começa a desenhar no ponto do clique
+            if (!gameRunning || !challengeStarted) return;
+            drawing = true;
+            updateMousePos(e);
+            
+            sprayInterval = setInterval(() => {
+                if (drawing && gameRunning && challengeStarted) {
+                    applySpray(mouseX, mouseY);
+                    playSpraySound();
+                }
+            }, 50);
         };
+
         const end = () => { 
-            drawing = false; 
-            ctx.beginPath(); // Reseta o caminho para não ligar as linhas
-        };
-        
-        const draw = (e) => {
-            if (!drawing) return;
-            
-            // Pega as coordenadas corretas (Mouse ou Touch)
-            const x = e.clientX || (e.touches && e.touches[0].clientX);
-            const y = e.clientY || (e.touches && e.touches[0].clientY);
-
-            // Se não pegou coordenada (ex: touchend), sai
-            if (x === undefined || y === undefined) return;
-
-            // Configuração do "Spray Neon"
-            ctx.lineWidth = 15; // Grossura da linha
-            ctx.lineCap = 'round'; // Ponta redonda
-            ctx.strokeStyle = colorPicker.value; // Cor do seletor
-
-            // Efeito de Neon (Brilho)
-            ctx.shadowBlur = 12; // Intensidade do brilho
-            ctx.shadowColor = colorPicker.value; // Cor do brilho
-            
-            // Desenha a linha
-            ctx.lineTo(x, y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
+            drawing = false;
+            if (sprayInterval) {
+                clearInterval(sprayInterval);
+                sprayInterval = null;
+            }
         };
 
-        // Função Limpar (Refatorada)
-        function clearCanvas() {
-            ctx.shadowBlur = 0; // Desativa o brilho para limpar
-            ctx.fillStyle = '#050505';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-
-        // Eventos de Mouse
+        // Event listeners
         canvas.addEventListener('mousedown', start);
         canvas.addEventListener('mouseup', end);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseleave', end); // Para de desenhar se sair da tela
+        canvas.addEventListener('mousemove', updateMousePos);
+        canvas.addEventListener('mouseleave', end);
 
-        // Eventos de Touch (Mobile)
-        canvas.addEventListener('touchstart', (e) => { 
-            e.preventDefault(); // Impede o scroll da página ao desenhar
-            start(e); 
-        });
+        canvas.addEventListener('touchstart', start);
         canvas.addEventListener('touchend', end);
-        canvas.addEventListener('touchmove', (e) => { 
-            e.preventDefault(); 
-            draw(e); 
-        });
+        canvas.addEventListener('touchmove', updateMousePos);
 
-        // Inicializa os ícones do Lucide
+        const clearCanvas = () => {
+            ctx.fillStyle = '#0a0a0a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        };
+
         lucide.createIcons();
     </script>
-</body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e50dc7393286cc5',t:'MTc3NDk3NTkxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
