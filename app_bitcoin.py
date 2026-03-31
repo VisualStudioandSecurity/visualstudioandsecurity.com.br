@@ -1,49 +1,61 @@
-import os
+import ccxt
+import pandas as pd
 import time
-from flask import Flask, jsonify
-from flask_cors import CORS  # Essencial para destravar o site
-import requests
-from dotenv import load_dotenv
 
-# Carrega suas chaves do arquivo .env
-load_dotenv()
+# Configuração da Exchange (Apenas leitura pública, sem necessidade de API Key para dados)
+exchange = ccxt.binance()
 
-app = Flask(__name__)
-# Permite que o seu site no GitHub acesse os dados do seu PC local
-CORS(app)
+SYMBOL = 'BTC/USDT'
+TIMEFRAME = '4h'  # Foco no seu operacional de 4H
 
-# Simulação de base de dados do Bot (Substitua pela sua lógica de análise)
-def get_market_analysis():
-    # Aqui entraria sua lógica de RSI, MACD e NLP
-    return {
-        "BTC/USDT": {
-            "price": "67,432.50",
-            "score": 0.8,
-            "sentiment": "BULLISH (Forte)",
-            "headline": "Instituições aumentam custódia de BTC nas últimas 24h.",
-            "time": time.strftime("%H:%M:%S")
-        },
-        "ETH/USDT": {
-            "price": "3,521.10",
-            "score": 0.2,
-            "sentiment": "NEUTRO",
-            "headline": "Rede Ethereum apresenta estabilidade nas taxas de gás.",
-            "time": time.strftime("%H:%M:%S")
-        }
-    }
+def fetch_data(symbol, timeframe):
+    """Busca os candles mais recentes da Binance"""
+    bars = exchange.fetch_ohlcv(symbol, timeframe=timeframe, limit=5)
+    df = pd.DataFrame(bars, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
+    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
+    return df
 
-@app.route('/status', methods=['GET'])
-def status():
-    try:
-        data = get_market_analysis()
-        return jsonify(data)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+def is_shooting_star(open_p, high, low, close):
+    """
+    Lógica técnica do padrão Shooting Star:
+    1. Sombra superior deve ser pelo menos 2x o tamanho do corpo.
+    2. Corpo pequeno na parte inferior do candle.
+    3. Sombra inferior muito pequena ou inexistente.
+    """
+    body = abs(close - open_p)
+    upper_shadow = high - max(open_p, close)
+    lower_shadow = min(open_p, close) - low
+    
+    # Critérios de validação do padrão
+    is_upper_long = upper_shadow >= (2 * body)
+    is_lower_short = lower_shadow <= (body * 0.5)
+    
+    return is_upper_long and is_lower_short
 
-if __name__ == '__main__':
-    print("---")
-    print("🚀 MONITORAMENTO HÍBRIDO ATIVO: KOVALIOSKY DeV")
-    print("📡 Servidor Flask rodando em http://127.0.0.1:5000/status")
-    print("---")
-    # Roda o servidor na porta 5000 que você liberou no Firewall
-app.run(host='127.0.0.1', port=5000, debug=True)
+def start_scanner():
+    print(f"--- Monitoramento Visual Studio Finance Iniciado ---")
+    print(f"Ativo: {SYMBOL} | Timeframe: {TIMEFRAME} | Padrão: Shooting Star")
+    
+    while True:
+        try:
+            df = fetch_data(SYMBOL, TIMEFRAME)
+            last_candle = df.iloc[-1] # Candle atual (ainda em formação)
+            prev_candle = df.iloc[-2] # Último candle fechado
+            
+            # Verificamos o candle fechado para evitar sinais falsos
+            if is_shooting_star(prev_candle['open'], prev_candle['high'], prev_candle['low'], prev_candle['close']):
+                print(f"\n⚠️ ALERTA: Shooting Star Detectada em {prev_candle['timestamp']}")
+                print(f"Preço de Fechamento: {prev_candle['close']}")
+                print(f"Estratégia sugerida: Analisar MACD para possível entrada Short alavancada.")
+            else:
+                print(".", end="", flush=True)
+                
+            # Aguarda 60 segundos para a próxima verificação para evitar rate limit
+            time.sleep(60)
+            
+        except Exception as e:
+            print(f"\nErro na conexão: {e}")
+            time.sleep(10)
+
+if __name__ == "__main__":
+    start_scanner()
