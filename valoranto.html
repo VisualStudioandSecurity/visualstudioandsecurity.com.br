@@ -3,114 +3,48 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Valoranto | Word Game</title>
+  <title>Valoranto | Visual Studio Games</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet">
   <style>
-    @keyframes flipIn { 
-      0% { transform: rotateX(90deg); opacity: 0; } 
-      100% { transform: rotateX(0deg); opacity: 1; } 
-    }
-    @keyframes shake { 
-      0%, 100% { transform: translateX(0); } 
-      20%, 60% { transform: translateX(-6px); } 
-      40%, 80% { transform: translateX(6px); } 
-    }
-    @keyframes slideUp { 
-      0% { transform: translateY(20px); opacity: 0; } 
-      100% { transform: translateY(0); opacity: 1; } 
-    }
-    
+    @keyframes flipIn { 0% { transform: rotateX(90deg); opacity: 0; } 100% { transform: rotateX(0deg); opacity: 1; } }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+    @keyframes slideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; padding: 0; }
-    
-    body {
-      background: linear-gradient(135deg, #0f1923 0%, #1a0a0a 50%, #0f1923 100%);
-      font-family: 'Rajdhani', sans-serif;
-      color: white;
-      overflow: auto;
-    }
-    
-    .cell {
-      width: 50px; 
-      height: 50px;
-      border: 2px solid #555;
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      font-family: 'Orbitron', monospace;
-      font-weight: 700; 
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      background: #1a1a2e;
-      transition: all 0.3s;
-    }
-    
+    body { background: linear-gradient(135deg, #0f1923 0%, #1a0a0a 50%, #0f1923 100%); font-family: 'Rajdhani', sans-serif; color: white; overflow: auto; }
+    .cell { width: 50px; height: 50px; border: 2px solid #555; display: flex; align-items: center; justify-content: center; font-family: 'Orbitron', monospace; font-weight: 700; font-size: 1.2rem; text-transform: uppercase; background: #1a1a2e; transition: all 0.3s; }
     .cell.filled { border-color: #ff4655; }
     .cell.correct { background: #538d4e; border-color: #538d4e; }
     .cell.present { background: #b59f3b; border-color: #b59f3b; }
     .cell.absent { background: #3a3a3c; border-color: #3a3a3c; }
-    
-    .key {
-      height: 45px; 
-      min-width: 40px; 
-      padding: 0 8px;
-      border-radius: 6px; 
-      background: #444;
-      font-weight: bold; 
-      cursor: pointer; 
-      font-size: 0.8rem;
-      display: flex; 
-      align-items: center; 
-      justify-content: center;
-      transition: all 0.15s;
-      user-select: none;
-      font-family: 'Orbitron', monospace;
-      border: 1px solid #666;
-    }
-    
+    .key { height: 45px; min-width: 40px; padding: 0 8px; border-radius: 6px; background: #444; font-weight: bold; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; transition: all 0.15s; user-select: none; font-family: 'Orbitron', monospace; border: 1px solid #666; }
     .key:hover { background: #666; transform: scale(1.05); }
     .key:active { transform: scale(0.95); }
     .key.wide { min-width: 60px; }
     .key.correct { background: #538d4e; border-color: #538d4e; }
     .key.present { background: #b59f3b; border-color: #b59f3b; }
     .key.absent { background: #2a2a2c; border-color: #2a2a2c; color: #666; }
-    
     .flip-in { animation: flipIn 0.4s ease forwards; }
     .shake { animation: shake 0.5s ease; }
-    
-    .toast {
-      position: fixed; 
-      top: 20px; 
-      left: 50%; 
-      transform: translateX(-50%);
-      background: #1a1a2e; 
-      border: 2px solid #ff4655; 
-      padding: 12px 20px;
-      border-radius: 8px; 
-      font-weight: 600; 
-      font-size: 0.9rem; 
-      z-index: 100;
-      animation: slideUp 0.3s ease;
-    }
   </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
  </head>
  <body class="flex flex-col items-center">
   <div class="w-full max-w-2xl px-4 py-6">
-   <header class="flex items-center justify-between mb-6 pb-4 border-b border-red-500/30"><button id="hint-btn" class="text-xl cursor-pointer hover:text-[#ff4655] transition" title="Dica">💡</button>
-    <h1 class="text-3xl font-black italic tracking-tighter text-[#ff4655]" style="font-family:'Orbitron',monospace">VALORANTO</h1><button id="reset-btn" class="text-2xl cursor-pointer hover:text-[#ff4655] transition">⟲</button>
+   <header class="flex items-center justify-between mb-6 pb-4 border-b border-red-500/30">
+    <button id="hint-btn" class="text-xl cursor-pointer hover:text-[#ff4655] transition" title="Dica">💡</button>
+    <h1 class="text-3xl font-black italic tracking-tighter text-[#ff4655]" style="font-family:'Orbitron',monospace">VALORANTO</h1>
+    <button id="reset-btn" class="text-2xl cursor-pointer hover:text-[#ff4655] transition">⟲</button>
    </header>
    <div id="game-board" class="flex flex-col gap-2 mb-6 justify-center items-center"></div>
    <div id="keyboard" class="flex flex-col gap-2"></div>
    <div id="message" class="text-center mt-6 text-sm text-gray-400 h-5"></div>
   </div>
+
   <script>
-   const WORD_LIST=["AGENT","ARENA","ARMOR","ATLAS","AUDIO","BADGE","BARON","BEAST","BLADE","BLAST","BLAZE","BLOOD","BLUFF","BOARD","BOOST","BOUND","BRAIN","BRAND","BRAVE","BREAK","BREED","BRIEF","BRING","BRINK","BROAD","BROKE","BROWN","BUILD","BURST","CABIN","CABLE","CADET","CANAL","CANDY","CANOE","CARGO","CARRY","CATCH","CAUSE","CEASE","CHAIN","CHAIR","CHALK","CHAMP","CHAOS","CHARM","CHART","CHASE","CHEAP","CHEAT","CHECK","CHEEK","CHEER","CHESS","CHEST","CHICK","CHIEF","CHILD","CHILL","CHIME","CHIMP","CHINA","CHIRP","CHOIR","CHOKE","CHORD","CHORE","CHOSE","CHUCK","CHUNK","CIGAR","CIVIC","CIVIL","CLAIM","CLAMP","CLANG","CLANK","CLASH","CLASS","CLEAN","CLEAR","CLEAT","CLEFT","CLERK","CLICK","CLIFF","CLIMB","CLING","CLOAK","CLOCK","CLONE","CLOSE","CLOTH","CLOUD","CLOUT","CLOVE","CLOWN","CLUBS","CLUCK","CLUMP","CLUNG","COACH","COAST","COBRA","COILS","COINS","COLON","COLOR","COMET","COMIC","CORAL","CORDS","CORES","CORNS","COULD","COUNT","COURT","COVER","COVET","CRACK","CRAFT","CRANE","CRANK","CRASH","CRASS","CRATE","CRAVE","CRAWL","CRAZE","CRAZY","CREAK","CREAM","CREED","CREEK","CREEP","CREST","CRIME","CRISP","CROAK","CROCK","CROOK","CROPS","CROSS","CROWD","CROWN","CRUDE","CRUEL","CRUMB","CRUSH","CRUST","CURVE","CYCLE","CYNIC","DAILY","DAIRY","DAISY","DANCE","DANDY","DATED","DATES","DEALT","DEATH","DEBUT","DECAY","DECOR","DECOY","DEFER","DEITY","DELAY","DELTA","DEMON","DENIM","DENSE","DEPOT","DEPTH","DERBY","DETER","DEUCE","DIARY","DICED","DIGIT","DIMLY","DINED","DINER","DIRTY","DISCO","DITCH","DITTO","DIVAN","DIVER","DIZZY","DODGE","DOING","DOLLY","DONOR","DOPEY","DOUBT","DOUGH","DOUSE","DRAFT","DRAIN","DRAKE","DRAMA","DRANK","DRAPE","DRAWL","DRAWN","DREAD","DREAM","DREAR","DREGS","DRESS","DRIED","DRIER","DRIFT","DRILL","DRINK","DRIVE","DROLL","DRONE","DROOL","DROOP","DROPS","DROSS","DROVE","DROWN","DRUGS","DRUMS","DRUNK","DUALS","DUCKS","DUFFS","DUKES","DULLS","DULLY","DUMPS","DUNCE","DUNES","DUNKS","DUSKY","DUSTY","DUTCH","DUVET","DWARF","DWELL","DWELT","DYERS","DYING","EAGER","EAGLE","EARED","EARLY","EARNS","EARTH","EASED","EASEL","EASES","EASTS","EATEN","EATER","EAVES","EBBED","EBONY","EDGED","EDGES","EDIFY","EDICT","EDITS","EERIE","EGADS","EIGHT","EJECT","EKING","ELATE","ELBOW","ELDER","ELECT","ELEGY","ELITE","ELOPE","ELUDE","EMAIL","EMBED","EMBER","EMCEE","EMEND","EMERY","EMITS","EMOJI","EMOTE","EMPTY","ENACT","ENDED","ENDER","ENDOW","ENEMA","ENEMY","ENJOY","ENSUE","ENTER","ENTRY","ENVOY","EQUAL","EQUIP","ERASE","ERECT","ERGOT","ERODE","ERROR","ERUPT","ESSAY","ESTER","ETHER","ETHIC","ETHYL","ETHOS","ETUDE","EVADE","EVENS","EVENT","EVERY","EVICT","EVOKE","EXACT","EXALT","EXAMS","EXCEL","EXECS","EXERT","EXILE","EXIST","EXITS","EXPAT","EXPEL","EXTOL","EXTRA","EXUDE","EXULT","EYING","FABLE","FACED","FACER","FACES","FACET","FACTS","FADED","FADES","FAILS","FAINT","FAIRS","FAIRY","FAITH","FAKED","FAKER","FAKES","FALLS","FALSE","FAMED","FANCY","FANGS","FARCE","FARED","FARES","FARMS","FATAL","FATED","FATES","FATTY","FAULT","FAUNA","FAVOR","FAWNS","FEARS","FEAST","FEATS","FEEDS","FEELS","FELON","FELTS","FEMUR","FENCE","FENDS","FERAL","FERRY","FETAL","FETCH","FETED","FETES","FETID","FETUS","FEUDS","FEVER","FEWER","FIBER","FIBRE","FICUS","FIELD","FIEND","FIERY","FIFES","FIFTH","FIFTY","FIGHT","FILET","FILER","FILES","FILLY","FILMS","FILMY","FILTH","FINAL","FINCH","FINDS","FINED","FINER","FINES","FINIS","FIORD","FIRED","FIRER","FIRES","FIRMS","FIRST","FISHY","FISTS","FITLY","FIVES","FIXED","FIXER","FIXES","FIZZY","FJORD","FLAGS","FLAIL","FLAIR","FLAKE","FLAKY","FLAME","FLANK","FLAPS","FLARE","FLASH","FLASK","FLATS","FLAWS","FLECK","FLEES","FLEET","FLESH","FLEWS","FLICK","FLIED","FLIER","FLIES","FLING","FLINT","FLIPS","FLIRT","FLITS","FLOAT","FLOCK","FLOGS","FLOOD","FLOOR","FLOPS","FLORA","FLOSS","FLOUR","FLOUT","FLOWS","FLUBS","FLUFF","FLUID","FLUKE","FLUKY","FLUME","FLUNG","FLUNK","FLUSH","FLUTE","FOALS","FOAMS","FOAMY","FOCAL","FOCUS","FOILS","FOIST","FOLDS","FOLIO","FOLKS","FOLLY","FONTS","FOODS","FOOLS","FOOTS","FORAY","FORCE","FORDS","FORGE","FORGO","FORKS","FORMS","FORTE","FORTS","FORUM","FOSSA","FOSSE","FOULS","FOUND","FOUNT","FOURS","FOYER","FOXED","FOXES","FRAIL","FRAME","FRANC","FRANK","FRAUD","FRAYS","FREAK","FREED","FREES","FRESH","FRETS","FRIAR","FRIED","FRIES","FRILL","FRISK","FRITZ","FRIZZ","FROCK","FROGS","FROND","FRONT","FROST","FROTH","FROWN","FROZE","FRUGAL","FRUIT","FRUMP","FRYER","FUDGE","FUELS","FUGUE","FULLY","FUMED","FUMES","FUNDS","FUNKY","FUNNY","FUROR","FURRY","FURZE","FUSED","FUSES","FUSSY","FUSTY","FUZZY","GABLE","GAILY","GAINS","GAITS","GALES","GAMED","GAMER","GAMES","GAMMA","GAMUT","GANGS","GAPED","GAPES","GARBS","GUARD","GORED","GORES","GORGE","GORSE","GOWNS","GRABS","GRACE","GRADE","GRAFT","GRAIN","GRAND","GRANT","GRAPE","GRAPH","GRASP","GRASS","GRATE","GRAVE","GRAVY","GRAZE","GREAT","GREED","GREEN","GREET","GRIEF","GRILL","GRIME","GRIND","GRINS","GRIPE","GRIST","GRITS","GROAN","GROOM","GROPE","GROSS","GROUP","GROUT","GROVE","GROWL","GROWN","GROWS","GRUBS","GUARD","GUAVA","GUESS","GUEST","GUILD","GUILT","GUISE","GULCH","GULFS","GULLS","GUMBO","GUMMY","GUNKY","GUSTS","GUTSY","GYPSY","HABIT","HAIRY","HALLS","HALTS","HALVE","HANDS","HANDY","HANKS","HAPPY","HARDY","HAREM","HARES","HARKS","HARMS","HARPS","HARRY","HARSH","HASPS","HASTE","HASTY","HATCH","HATED","HATER","HATES","HAULS","HAUNT","HAVEN","HAVOC","HAWKS","HAZEL","HEADS","HEALS","HEAPS","HEARD","HEARS","HEART","HEATH","HEATS","HEAVE","HEAVY","HEDGE","HEEDS","HEELS","HEFTY","HEIRS","HELIX","HELLO","HELMS","HELPS","HENCE","HERBS","HERDS","HERON","HEROS","HIDED","HIDES","HIGHS","HIKER","HIKES","HILLS","HILTS","HINDS","HINGE","HINTS","HIPPO","HIPPY","HIRED","HIRES","HITCH","HIVES","HOARD","HOARY","HOBBY","HOCKS","HODGE","HOISE","HOIST","HOLDS","HOLES","HOLLY","HOLM","HOMES","HONED","HONES","HONEY","HONKS","HONOR","HOODS","HOOFS","HOOKS","HOOPS","HOOTS","HOPED","HOPES","HORDE","HORNS","HORNY","HORSE","HOSED","HOSES","HOTEL","HOTLY","HOUND","HOURS","HOUSE","HOVEL","HOVEN","HOVER","HOWDY","HOWLS","HUBBY","HUFFS","HUFFY","HULKS","HULLS","HUMAN","HUMID","HUMOR","HUMPS","HUMUS","HUNCH","HUNKS","HUNTS","HURLS","HURRY","HURTS","HUSKY","HUSSY","HUTCH","HYDRA","HYENA","HYMNS","HYPER","ICHOR","ICING","ICONS","IDEAL","IDEAS","IDIOM","IDIOT","IDLES","IDYLL","IGLOO","ILEUM","IMAGE","IMAGO","IMBUE","IMPLY","IAMBS","INCUR","INDEX","INEPT","INFER","INFRA","INGOT","INKED","INLET","INNER","INSET","INTER","INTONE","IRONY","IRONS","ISSUE","ISLET","ITEMS","IVORY","JACKS","JACKET","JADED","JADES","JAGGY","JAGUAR","JAILS","JEANS","JEEPS","JEERS","JELLO","JELTS","JESTS","JESUS","JETTY","JEWEL","JIFFY","JIHAD","JINKS","JIVED","JIVES","JIZZ","JOBED","JOCUND","JOIST","JOKED","JOKER","JOKES","JOLLY","JOLTS","JOUST","JOWLS","JOYFUL","JOYOUS","JUDDER","JUDGE","JUDIT","JUICE","JUICY","JULEP","JUMBO","JUMPS","JUMPY","JUNCO","JUNKS","JUNKY","JUNTAS","JURORS","JUROR","JUROR","JURAT","JURIS","JURIS","JUROR","JUROR","JURORS","JURAT","JUSIS","JUIST","JUICY","JULEP","JUMBO","JUMPS","JUMPY","JUNCO","JUNKS","JUNKY","JURIS","JURIS","JUROR","JUROR","JURORS","JURAT","JUSIS","JUIST","KABAR","KABOB","KABUS","KAILS","KAINS","KAIRE","KAIRS","KAKAS","KAKIE","KAILS","KALES","KALIF","KALIT","KALIS","KAMAE","KAMES","KAMIS","KAMME","KAMOK","KAMOY","KAMPE","KAMUS","KAMUT","KANAS","KANDY","KANEJ","KANES","KANIK","KANIN","KANIS","KANIX","KANKI","KANKO","KANKS","KANNA","KANNO","KANON","KANOS","KANOY","KANRI","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","KANSA","LABEL","LABOR","LACED","LACER","LACES","LACKS","LACTIC","LADED","LADER","LADES","LADLE","LAGER","LAGER","LAGIA","LAGIS","LAGLE","LAGLY","LAGOS","LAGON","LAGOU","LAGOY","LAITS","LAITU","LAITY","LAJAM","LAKAN","LAKER","LAKER","LAKES","LAKING","LALLS","LALLY","LALOS","LAMAS","LAMBA","LAMBS","LAMED","LAMEE","LAMEN","LAMER","LAMES","LAMIA","LAMIE","LAMIN","LAMMA","LAMMY","LAMOD","LAMPS","LAMPY","LANCA","LANCE","LAND","LANDE","LANDS","LANDY","LANED","LANES","LANEY","LANKY","LANNE","LANON","LANOY","LANTC","LANTH","LANTU","LAODE","LAOIS","LAONS","LAOPI","LAOPS","LAOPT","LAORA","LAORE","LAORI","LAORK","LAORN","LAORO","LAORS","LAORY","LAOSA","LAOSE","LAOSH","LAOSI","LAOSP","LAOSY","LAOTA","LAOTE","LAOTI","LAOTS","LAOTU","LAOTY","LAOVA","LAOVE","LAOVI","LAOVS","LAOWE","LAOWL","LAOWN","LAOWY","LAOZA","LAOZE","LAOZI","LAOZL","LAOZS","LAOZZ","LAPSE","LARCH","LARDS","LARDY","LARES","LARGE","LARGO","LARIS","LARKS","LARKY","LARME","LARNS","LAROE","LARVA","LARUM","LARUS","LASER","LASES","LASSE","LASSO","LASTS","LATCH","LATED","LATEN","LATER","LATES","LATHE","LATHI","LATHS","LATHY","LATIS","LATTE","LAUGH","LAUND","LAURA","LAURE","LAURI","LAURO","LAURS","LAURY","LAUSA","LAUSE","LAUSH","LAUSS","LAUTA","LAUTE","LAUTI","LAUTO","LAUTS","LAVAL","LAVAS","LAVE","LAVED","LAVEL","LAVEN","LAVER","LAVES","LAVEY","LAVIN","LAVIS","LAVOR","LAVRA","LAVRE","LAVRI","LAVRO","LAVRS","LAVRY","LAVUS","LAVUT","LAVUT","LAWED","LAWER","LAWES","LAWGE","LAWIE","LAWIK","LAWIL","LAWIN","LAWIR","LAWIS","LAWIT","LAWIW","LAWIX","LAWIZ","LAWLY","LAWME","LAWMN","LAWMO","LAWMS","LAWMU","LAWMY","LAWNA","LAWNE","LAWNI","LAWNO","LAWNS","LAWNU","LAWNY","LAWPE","LAWPI","LAWPK","LAWPL","LAWPM","LAWPO","LAWPS","LAWPU","LAWPY","LAWRA","LAWRE","LAWRI","LAWRO","LAWRS","LAWRY","LAWSE","LAWSI","LAWSK","LAWSL","LAWSM","LAWSO","LAWSP","LAWSU","LAWSY","LAWTA","LAWTE","LAWTI","LAWTO","LAWTS","LAWTU","LAWTY","LAWUA","LAWUE","LAWUI","LAWUO","LAWUS","LAWUU","LAWUY","LAWVA","LAWVE","LAWVI","LAWVO","LAWVS","LAWVU","LAWVY","LAWWA","LAWWE","LAWWI","LAWWO","LAWWS","LAWWU","LAWWY","LAWYA","LAWYE","LAWYI","LAWYO","LAWYS","LAWYU","LAWYY","LAXED","LAXER","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES","LAXES"],ROWS=6,COLS=5;let secretWord=WORD_LIST[Math.floor(Math.random()*WORD_LIST.length)],currentRow=0,currentCol=0,gameOver=!1,gameWon=!1,keyStates={},hintsUsed=0;const MAX_HINTS=3;function showMessage(A){const E=document.getElementById("message");E.textContent=A,setTimeout(()=>E.textContent="",2e3)}function renderBoard(){var A=document.getElementById("game-board");A.innerHTML="";for(let E=0;E<ROWS;E++){var L=document.createElement("div");L.className="flex gap-2";for(let A=0;A<COLS;A++){var S=document.createElement("div"),R=(S.className="cell",S.id=`cell-${E}-`+A,getGuessForRow(E));R&&R[A]&&(S.textContent=R[A],S.classList.add("filled")),L.appendChild(S)}A.appendChild(L)}}function renderKeyboard(){const E=document.getElementById("keyboard");E.innerHTML="",["QWERTYUIOP".split(""),"ASDFGHJKL".split(""),["ENTER",..."ZXCVBNM".split(""),"BACKSPACE"]].forEach(A=>{const L=document.createElement("div");L.className="flex gap-1 justify-center",A.forEach(A=>{var E=document.createElement("button");E.className="key","ENTER"!==A&&"BACKSPACE"!==A||E.classList.add("wide"),E.textContent="BACKSPACE"===A?"⌫":A,keyStates[A]&&E.classList.add(keyStates[A]),E.addEventListener("click",()=>handleKey(A)),L.appendChild(E)}),E.appendChild(L)})}function getGuessForRow(E){var L=[];for(let A=0;A<COLS;A++){var S=document.getElementById(`cell-${E}-`+A);S&&L.push(S.textContent)}return L.join("")||null}function handleKey(A){var E;gameOver||("BACKSPACE"===A?0<currentCol&&(currentCol--,(E=document.getElementById(`cell-${currentRow}-`+currentCol)).textContent="",E.classList.remove("filled")):"ENTER"===A?currentCol===COLS?submitGuess():showMessage("Palavra incompleta"):currentCol<COLS&&((E=document.getElementById(`cell-${currentRow}-`+currentCol)).textContent=A,E.classList.add("filled"),currentCol++))}function submitGuess(){var E=getGuessForRow(currentRow).toUpperCase();if(WORD_LIST.includes(E)){const S=[];var L={};for(let A=0;A<COLS;A++)E[A]===secretWord[A]?(S[A]="correct",keyStates[E[A]]="correct"):L[secretWord[A]]=(L[secretWord[A]]||0)+1;for(let A=0;A<COLS;A++)"correct"!==S[A]&&(L[E[A]]&&0<L[E[A]]?(S[A]="present",L[E[A]]--,"correct"!==keyStates[E[A]]&&(keyStates[E[A]]="present")):(S[A]="absent",keyStates[E[A]]||(keyStates[E[A]]="absent")));for(let A=0;A<COLS;A++){const R=document.getElementById(`cell-${currentRow}-`+A);R.classList.add("flip-in"),setTimeout(()=>{R.classList.add(S[A])},200)}E===secretWord?(gameWon=!0,gameOver=!0,setTimeout(()=>showMessage("Parabéns! 🎉"),600)):currentRow===ROWS-1?(gameOver=!0,setTimeout(()=>showMessage("Palavra: "+secretWord),600)):(currentRow++,currentCol=0),renderKeyboard()}else showMessage("Palavra não válida"),document.getElementById("game-board").classList.add("shake"),setTimeout(()=>document.getElementById("game-board").classList.remove("shake"),500)}function updateHintBtn(){var A=document.getElementById("hint-btn");A.textContent=`💡 ${hintsUsed}/`+MAX_HINTS,A.style.opacity=hintsUsed>=MAX_HINTS?"0.5":"1"}function showHint(){hintsUsed>=MAX_HINTS?showMessage("Sem dicas disponíveis"):gameOver?showMessage("Jogo terminado"):(showMessage([()=>{var A=secretWord.split("").filter(A=>"AEIOU".includes(A));return`Tem ${A.length} vogal(s): `+A.join(", ")},()=>{return"Começa com: "+secretWord[0]},()=>{return"Termina com: "+secretWord[4]}][++hintsUsed-1]()),updateHintBtn())}"QWERTYUIOPASDFGHJKLZXCVBNM".split("").forEach(A=>{keyStates[A]=null}),document.getElementById("reset-btn").addEventListener("click",()=>{currentRow=0,currentCol=0,gameOver=!1,gameWon=!1,hintsUsed=0,secretWord=WORD_LIST[Math.floor(Math.random()*WORD_LIST.length)],keyStates={},"QWERTYUIOPASDFGHJKLZXCVBNM".split("").forEach(A=>{keyStates[A]=null}),renderBoard(),renderKeyboard(),updateHintBtn()}),document.addEventListener("keydown",A=>{A=A.key.toUpperCase();/^[A-Z]$/.test(A)?handleKey(A):"ENTER"===A?handleKey("ENTER"):"BACKSPACE"===A&&handleKey("BACKSPACE")}),document.getElementById("hint-btn").addEventListener("click",showHint),updateHintBtn(),renderBoard(),renderKeyboard();
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e5100e540741d1f',t:'MTc3NDk3NzQwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
-  
+    // Security: Domain Lock
+    if (window.location.hostname !== "visualstudioandsecurity.com.br" && window.location.hostname !== "localhost") {
+        document.body.innerHTML = "<div style='display:flex;justify-content:center;align-items:center;height:100vh;color:#ff4655;text-align:center;padding:20px;'><h1>ACESSO NEGADO.<br>Este jogo pertence à Visual Studio Games.</h1></div>";
+    } else {
+        // Minified Game Logic
+        const WORD_LIST=["AGENT","ARENA","ARMOR","ATLAS","AUDIO","BADGE","BARON","BEAST","BLADE","BLAST","BLAZE","BLOOD","BLUFF","BOARD","BOOST","BOUND","BRAIN","BRAND","BRAVE","BREAK","BREED","BRIEF","BRING","BRINK","BROAD","BROKE","BROWN","BUILD","BURST","CABIN","CABLE","CADET","CANAL","CANDY","CANOE","CARGO","CARRY","CATCH","CAUSE","CEASE","CHAIN","CHAIR","CHALK","CHAMP","CHAOS","CHARM","CHART","CHASE","CHEAP","CHEAT","CHECK","CHEEK","CHEER","CHESS","CHEST","CHICK","CHIEF","CHILD","CHILL","CHIME","CHIMP","CHINA","CHIRP","CHOIR","CHOKE","CHORD","CHORE","CHOSE","CHUCK","CHUNK","CIGAR","CIVIC","CIVIL","CLAIM","CLAMP","CLANG","CLANK","CLASH","CLASS","CLEAN","CLEAR","CLEAT","CLEFT","CLERK","CLICK","CLIFF","CLIMB","CLING","CLOAK","CLOCK","CLONE","CLOSE","CLOTH","CLOUD","CLOUT","CLOVE","CLOWN","CLUBS","CLUCK","CLUMP","CLUNG","COACH","COAST","COBRA","COILS","COINS","COLON","COLOR","COMET","COMIC","CORAL","CORDS","CORES","CORNS","COULD","COUNT","COURT","COVER","COVET","CRACK","CRAFT","CRANE","CRANK","CRASH","CRASS","CRATE","CRAVE","CRAWL","CRAZE","CRAZY","CREAK","CREAM","CREED","CREEK","CREEP","CREST","CRIME","CRISP","CROAK","CROCK","CROOK","CROPS","CROSS","CROWD","CROWN","CRUDE","CRUEL","CRUMB","CRUSH","CRUST","CURVE","CYCLE","CYNIC","DAILY","DAIRY","DAISY","DANCE","DANDY","DATED","DATES","DEALT","DEATH","DEBUT","DECAY","DECOR","DECOY","DEFER","DEITY","DELAY","DELTA","DEMON","DENIM","DENSE","DEPOT","DEPTH","DERBY","DETER","DEUCE","DIARY","DICED","DIGIT","DIMLY","DINED","DINER","DIRTY","DISCO","DITCH","DITTO","DIVAN","DIVER","DIZZY","DODGE","DOING","DOLLY","DONOR","DOPEY","DOUBT","DOUGH","DOUSE","DRAFT","DRAIN","DRAKE","DRAMA","DRANK","DRAPE","DRAWL","DRAWN","DREAD","DREAM","DREAR","DREGS","DRESS","DRIED","DRIER","DRIFT","DRILL","DRINK","DRIVE","DROLL","DRONE","DROOL","DROOP","DROPS","DROSS","DROVE","DROWN","DRUGS","DRUMS","DRUNK","DUALS","DUCKS","DUFFS","DUKES","DULLS","DULLY","DUMPS","DUNCE","DUNES","DUNKS","DUSKY","DUSTY","DUTCH","DUVET","DWARF","DWELL","DWELT","DYERS","DYING","EAGER","EAGLE","EARED","EARLY","EARNS","EARTH","EASED","EASEL","EASES","EASTS","EATEN","EATER","EAVES","EBBED","EBONY","EDGED","EDGES","EDIFY","EDICT","EDITS","EERIE","EGADS","EIGHT","EJECT","EKING","ELATE","ELBOW","ELDER","ELECT","ELEGY","ELITE","ELOPE","ELUDE","EMAIL","EMBED","EMBER","EMCEE","EMEND","EMERY","EMITS","EMOJI","EMOTE","EMPTY","ENACT","ENDED","ENDER","ENDOW","ENEMA","ENEMY","ENJOY","ENSUE","ENTER","ENTRY","ENVOY","EQUAL","EQUIP","ERASE","ERECT","ERGOT","ERODE","ERROR","ERUPT","ESSAY","ESTER","ETHER","ETHIC","ETHYL","ETHOS","ETUDE","EVADE","EVENS","EVENT","EVERY","EVICT","EVOKE","EXACT","EXALT","EXAMS","EXCEL","EXECS","EXERT","EXILE","EXIST","EXITS","EXPAT","EXPEL","EXTOL","EXTRA","EXUDE","EXULT","EYING","FABLE","FACED","FACER","FACES","FACET","FACTS","FADED","FADES","FAILS","FAINT","FAIRS","FAIRY","FAITH","FAKED","FAKER","FAKES","FALLS","FALSE","FAMED","FANCY","FANGS","FARCE","FARED","FARES","FARMS","FATAL","FATATED","FATES","FATTY","FAULT","FAUNA","FAVOR","FAWNS","FEARS","FEAST","FEATS","FEEDS","FEELS","FELON","FELTS","FEMUR","FENCE","FENDS","FERAL","FERRY","FETAL","FETCH","FETED","FETES","FETID","FETUS","FEUDS","FEVER","FEWER","FIBER","FIBRE","FICUS","FIELD","FIEND","FIERY","FIFES","FIFTH","FIFTY","FIGHT","FILET","FILER","FILES","FILLY","FILMS","FILMY","FILTH","FINAL","FINCH","FINDS","FINED","FINER","FINES","FINIS","FIORD","FIRED","FIRER","FIRES","FIRMS","FIRST","FISHY","FISTS","FITLY","FIVES","FIXED","FIXER","FIXES","FIZZY","FJORD","FLAGS","FLAIL","FLAIR","FLAKE","FLAKY","FLAME","FLANK","FLAPS","FLARE","FLASH","FLASK","FLATS","FLAWS","FLECK","FLEES","FLEET","FLESH","FLEWS","FLICK","FLIED","FLIER","FLIES","FLING","FLINT","FLIPS","FLIRT","FLITS","FLOAT","FLOCK","FLOGS","FLOOD","FLOOR","FLOPS","FLORA","FLOSS","FLOUR","FLOUT","FLOWS","FLUBS","FLUFF","FLUID","FLUKE","FLUKY","FLUME","FLUNG","FLUNK","FLUSH","FLUTE","FOALS","FOAMS","FOAMY","FOCAL","FOCUS","FOILS","FOIST","FOLDS","FOLIO","FOLKS","FOLLY","FONTS","FOODS","FOOLS","FOOTS","FORAY","FORCE","FORDS","FORGE","FORGO","FORKS","FORMS","FORTE","FORTS","FORUM","FOSSA","FOSSE","FOULS","FOUND","FOUNT","FOURS","FOYER","FOXED","FOXES","FRAIL","FRAME","FRANC","FRANK","FRAUD","FRAYS","FREAK","FREED","FRE
