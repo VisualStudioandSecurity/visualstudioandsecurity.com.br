@@ -31500,18 +31500,13 @@
 
 
 
-
-
-
-
-
 <!doctype html>
 <html lang="pt-BR" class="h-full">
  <head>
   <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visual Studio Games |
+  <title>Visual Studio Games | Kv's Enterprise</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   
@@ -31520,10 +31515,10 @@
     :root { --valorant-red: #ff4655; }
     .orbitron { font-family: 'Orbitron', sans-serif; }
     .mono { font-family: 'Courier New', monospace; }
-    body { background: #0f1923; color: #e5e7eb; }
+    body { background: #0f1923; color: #e5e7eb; margin: 0; }
     .game-card { border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.3); transition: all 0.3s ease; }
     .game-card:hover { border-color: var(--valorant-red); background: rgba(0, 0, 0, 0.5); }
-    .btn-play { background: var(--valorant-red); clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); transition: 0.3s; display: inline-block; padding: 8px 32px; font-size: 14px; font-weight: 900; font-style: italic; color: white; text-decoration: none; cursor: pointer; }
+    .btn-play { background: var(--valorant-red); clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); transition: 0.3s; display: inline-block; padding: 8px 32px; font-size: 14px; font-weight: 900; font-style: italic; color: white; text-decoration: none; cursor: pointer; border: none; }
     .btn-play:hover { filter: brightness(1.2); padding-right: 48px; }
     .status-dot { width: 6px; height: 6px; border-radius: 50%; animation: pulse-dot 2s infinite; }
     @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
@@ -31532,22 +31527,23 @@
   </style>
 
   <script>
+    // ENGINE DE ESTADO GLOBAL
     window.gameState = {
         coins: 0,
         init: function() {
             const saved = localStorage.getItem('kv_enterprise_coins');
             if (saved) this.coins = parseInt(saved);
             this.updateDisplay();
-            console.log("SISTEMA: Protocolos de memória carregados.");
+            console.log("SISTEMA: Memória carregada com sucesso.");
         },
         updateDisplay: function() {
             const el = document.getElementById('user-coins');
             if (el) el.textContent = this.coins.toLocaleString();
         },
         watchAd: function() {
-            console.log("Gatilho Ad_Protocol disparado...");
+            console.log("Iniciando requisição de Ad...");
             if (!window.CrazyGames || !window.CrazyGames.SDK) {
-                alert("Erro: SDK da CrazyGames não detectado. Desative AdBlockers.");
+                alert("Erro: SDK da CrazyGames não carregado. Verifique AdBlockers.");
                 return;
             }
             const sdk = window.CrazyGames.SDK;
@@ -31556,11 +31552,11 @@
                     this.coins += 1000;
                     localStorage.setItem('kv_enterprise_coins', this.coins);
                     this.updateDisplay();
-                    alert("PROTOCOL_SUCCESS: +1.000 Créditos Adicionados.");
+                    alert("PROTOCOL_SUCCESS: +1.000 Créditos.");
                 },
                 adError: (error) => {
                     console.error("Erro no SDK:", error);
-                    alert("Anúncio indisponível para o seu domínio ou região.");
+                    alert("Anúncio não disponível fora do portal oficial.");
                 }
             });
         }
@@ -31571,7 +31567,7 @@
  <body class="h-full flex flex-col overflow-auto">
   <header class="p-8 border-b border-white/5 flex justify-between items-end flex-wrap gap-4">
    <div>
-    <h1 class="orbitron text-4xl font-black tracking-tighter text-white">VISUAL STUDIO <span class="text-[#ff4655]">GAMES</span></h1>
+    <h1 class="orbitron text-4xl font-black tracking-tighter text-white uppercase">Visual Studio <span class="text-[#ff4655]">Games</span></h1>
     <p class="text-gray-500 text-xs tracking-[0.3em] uppercase mt-1">Experimental Development Unit // 2026</p>
    </div>
    <div class="flex flex-col items-end gap-1">
@@ -31591,18 +31587,18 @@
     <div class="game-card p-6 rounded-r-lg group">
      <div class="flex justify-between items-start mb-4">
       <h3 class="orbitron text-xl font-bold text-yellow-400">SPACE SHOOTER</h3>
-      <span class="text-[10px] bg-yellow-500/20 text-yellow-400 px-2 py-1 font-bold italic">ACTION / ARCADE</span>
+      <span class="text-[10px] bg-yellow-500/20 text-yellow-400 px-2 py-1 font-bold italic uppercase">Ação</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">Defenda o setor contra frotas inimigas. Suporte total a 60FPS.</p>
+     <p class="text-gray-400 text-sm mb-6">Defesa orbital ativa. Destrua frotas inimigas.</p>
      <a href="space-shooter.html" class="btn-play" style="background: linear-gradient(to right, #fbbf24, #f59e0b);">LAUNCH_SHOOTER</a>
     </div>
 
     <div class="game-card p-6 rounded-r-lg group">
      <div class="flex justify-between items-start mb-4">
       <h3 class="orbitron text-xl font-bold text-green-400">NEON_SNAKER</h3>
-      <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-1 font-bold italic">RETRO / CLASSIC</span>
+      <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-1 font-bold italic uppercase">Retro</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">Colete pacotes de dados no ciberespaço. (Verifique o nome do arquivo no GitHub!)</p>
+     <p class="text-gray-400 text-sm mb-6">Colete pacotes de dados. Verifique links 404.</p>
      <a href="snake-neon.html" class="btn-play" style="background: linear-gradient(to right, #22c55e, #10b981);">EXECUTE_NEON</a>
     </div>
    </div>
@@ -31611,32 +31607,29 @@
     <h2 class="orbitron text-sm font-bold text-gray-400 mb-8 flex items-center gap-2"><i data-lucide="terminal" class="w-4 h-4"></i> TERMINAL</h2>
     <div class="game-card p-6 rounded-r-lg">
      <div class="mono text-xs space-y-2 text-gray-500">
-      <p class="terminal-line">&gt; initializing visual_studio_games...</p>
+      <p class="terminal-line">&gt; initializing...</p>
       <p class="terminal-line">&gt; crazygames_sdk: <span class="text-cyan-400">v3.0_ready</span></p>
       <p class="terminal-line">&gt; operator: <span class="text-white">Guilherme Kovaliosky</span></p>
-      <p class="terminal-line">&gt; status: <span class="text-green-400">READY</span></p>
+      <p class="terminal-line">&gt; status: <span class="text-green-400">ONLINE</span></p>
      </div>
     </div>
 
     <div class="game-card p-6 rounded-r-lg border border-amber-500/30 bg-amber-500/5">
-        <h3 class="orbitron text-[10px] font-bold text-amber-500 mb-4 tracking-widest">FUNDING_PROTOCOL</h3>
-        <p class="text-gray-400 text-xs mb-4">Assista ao log de segurança para injetar 1.000 créditos na conta.</p>
+        <h3 class="orbitron text-[10px] font-bold text-amber-500 mb-4 tracking-widest uppercase">Funding Protocol</h3>
+        <p class="text-gray-400 text-xs mb-4">Sincronize anúncios para injetar créditos.</p>
         <button onclick="window.gameState.watchAd()" class="btn-play w-full text-center" style="background: #f59e0b; clip-path: none; color: black;">GET_1000_CREDITS</button>
     </div>
    </div>
   </main>
 
   <footer class="p-6 border-t border-white/5 text-center">
-   <p class="mono text-[10px] text-gray-600">© 2026 VISUAL_STUDIO_GAMES // KV'S ENTERPRISE // DOMAIN: GITHUB_PAGES</p>
+   <p class="mono text-[10px] text-gray-600">© 2026 VISUAL_STUDIO_GAMES // KV'S ENTERPRISE</p>
   </footer>
 
   <script>
-    // Inicialização Final
     window.onload = () => {
         window.gameState.init();
         lucide.createIcons();
-        
-        // Delay nas linhas do terminal
         document.querySelectorAll('.terminal-line').forEach((el, i) => {
             el.style.animationDelay = `${(i + 1) * 0.2}s`;
         });
