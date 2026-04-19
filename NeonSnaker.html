@@ -1,221 +1,167 @@
-<!doctype html>
-<html lang="pt-BR" class="h-full">
+<html lang="pt-br" class="h-full">
  <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visual Studio Games</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <title>Neon Snaker | Visual Studio Games</title>
+  <script src="/_sdk/element_sdk.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-
-    :root {
-      --valorant-red: #ff4655;
-    }
-
-    .orbitron { font-family: 'Orbitron', sans-serif; }
-    .mono { font-family: 'Courier New', monospace; }
-
-    body {
-      background: #0f1923;
-      color: #e5e7eb;
-      box-sizing: border-box;
-    }
-
-    .game-card {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-    }
-    .game-card:hover {
-      border-color: rgba(255, 255, 255, 0.2);
-      background: rgba(0, 0, 0, 0.5);
-    }
-
-    .btn-play {
-      background: var(--valorant-red);
-      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-      transition: 0.3s;
-      display: inline-block;
-      padding: 8px 32px;
-      font-size: 14px;
-      font-weight: 900;
-      font-style: italic;
-      color: white;
-      text-decoration: none;
-    }
-    .btn-play:hover {
-      filter: brightness(1.2);
-      padding-right: 48px;
-    }
-
-    .status-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      animation: pulse-dot 2s infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-
-    .terminal-line {
-      animation: type-in 0.5s ease forwards;
-      opacity: 0;
-    }
-    @keyframes type-in {
-      to { opacity: 1; }
-    }
-  </style>
+        html, body { height: 100%; margin: 0; }
+        body { background: #050505; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #00f3ff; font-family: 'Courier New', monospace; overflow: auto; }
+        canvas { border: 2px solid #00f3ff; box-shadow: 0 0 20px #00f3ff; background: #000; }
+        .score { font-size: 24px; margin-bottom: 10px; text-shadow: 0 0 10px #00f3ff; }
+        .info { font-size: 14px; margin-top: 10px; color: #00f3ff88; }
+        .game-over-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; }
+        .game-over-overlay h2 { color: #ff0055; font-size: 32px; text-shadow: 0 0 20px #ff0055; font-family: 'Courier New', monospace; margin-bottom: 10px; }
+        .game-over-overlay p { color: #00f3ff; font-family: 'Courier New', monospace; margin-bottom: 20px; }
+        .game-over-overlay button { background: transparent; border: 2px solid #00f3ff; color: #00f3ff; font-family: 'Courier New', monospace; font-size: 18px; padding: 10px 30px; cursor: pointer; text-shadow: 0 0 10px #00f3ff; box-shadow: 0 0 15px #00f3ff44; }
+        .game-over-overlay button:hover { background: #00f3ff22; }
+    </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="h-full flex flex-col overflow-auto">
-  <header class="p-8 border-b border-white/5 flex justify-between items-end flex-wrap gap-4">
-   <div>
-    <h1 id="site-title" class="orbitron text-4xl font-black tracking-tighter text-white">VISUAL STUDIO <span class="text-[#ff4655]">GAMES</span></h1>
-    <p id="site-subtitle" class="text-gray-500 text-xs tracking-[0.3em] uppercase mt-1">Experimental Development Unit // 2026</p>
-   </div>
-   <div class="flex items-center gap-2">
-    <div class="status-dot bg-green-500"></div><span class="mono text-[10px] text-green-500">SYSTEM ONLINE</span>
-   </div>
-  </header>
-  <main class="flex-grow max-w-6xl mx-auto w-full p-8 grid md:grid-cols-2 gap-12 items-start"><!-- Left Column: Game Cards -->
-   <div class="space-y-6">
-    <h2 class="orbitron text-sm font-bold text-gray-400 mb-8 flex items-center gap-2"><i data-lucide="layers" class="w-4 h-4"></i> PROTOCOLOS ATIVOS</h2><!-- Color Crush -->
-    <div class="game-card p-6 rounded-r-lg group">
-     <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold text-pink-500">COLOR CRUSH</h3><span class="text-[10px] bg-pink-500/20 text-pink-500 px-2 py-1 font-bold italic">ARCADE / MATCH-3</span>
-     </div>
-     <p class="text-gray-400 text-sm mb-6">Elimine grupos de blocos e alcance combos massivos neste puzzle explosivo de alta performance.</p><a href="color-crush.html" class="btn-play" style="background: linear-gradient(to right, #ec4899, #a855f7);">EXECUTE_CRUSH</a>
-    </div><!-- Valoranto -->
-    <div class="game-card p-6 rounded-r-lg group">
-     <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold">VALORANTO</h3><span class="text-[10px] bg-red-500/20 text-red-500 px-2 py-1 font-bold italic">STRATEGY / WORDLE</span>
-     </div>
-     <p class="text-gray-400 text-sm mb-6">Teste seus conhecimentos táticos. Adivinhe agentes, mapas e armas do universo Valorant.</p><a href="valoranto.html" class="btn-play">LAUNCH_GAME</a>
-    </div><!-- Graffiti -->
-    <div class="game-card p-6 rounded-r-lg group border-dashed border-white/5 bg-transparent">
-     <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold text-cyan-400">GRAFFITI</h3><span class="text-[10px] bg-cyan-500/20 text-cyan-400 px-2 py-1 font-bold italic">CREATIVE_CANVAS</span>
-     </div>
-     <p class="text-gray-400 text-sm mb-6">Ferramenta de design interativo com spray neon e suporte para dispositivos móveis.</p><a href="graffiti.html" class="btn-play" style="background: #00f2ff; color: #000;">OPEN_STUDIO</a>
-    </div><!-- Snake -->
-    <div class="game-card p-6 rounded-r-lg group">
-     <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold text-green-400">NEON_SNAKER</h3><span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-1 font-bold italic">RETRO / CLASSIC</span>
-     </div>
-     <p class="text-gray-400 text-sm mb-6">O clássico reimaginado com estética terminal. Colete pacotes de dados no ciberespaço.</p><a href="snake-neon.html" class="btn-play" style="background: linear-gradient(to right, #22c55e, #10b981);">EXECUTE_NEON</a>
-    </div>
-    <div class="game-card p-6 rounded-r-lg group">
-     <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold text-yellow-400">SPACE SHOOTER</h3><span class="text-[10px] bg-yellow-500/20 text-yellow-400 px-2 py-1 font-bold italic">ACTION / ARCADE</span>
-     </div>
-     <p class="text-gray-400 text-sm mb-6">Voe entre asteroides e destrua inimigos. Desbloqueie naves premium com suas moedas.</p><a href="space-shooter.html" class="btn-play" style="background: linear-gradient(to right, #fbbf24, #f59e0b);">LAUNCH_SHOOTER</a>
-    </div>
-   </div><!-- Right Column: Terminal / Info -->
-   <div class="space-y-6">
-    <h2 class="orbitron text-sm font-bold text-gray-400 mb-8 flex items-center gap-2"><i data-lucide="terminal" class="w-4 h-4"></i> TERMINAL DE ACESSO</h2>
-    <div class="game-card p-6 rounded-r-lg">
-     <div class="mono text-xs space-y-2 text-gray-500">
-      <p style="animation-delay: 0.1s" class="terminal-line">&gt; initializing visual_studio_games...</p>
-      <p style="animation-delay: 0.3s" class="terminal-line">&gt; loading protocols: <span class="text-green-400">4 active</span></p>
-      <p style="animation-delay: 0.5s" class="terminal-line">&gt; status: <span class="text-green-400">ALL SYSTEMS OPERATIONAL</span></p>
-      <p style="animation-delay: 0.7s" class="terminal-line">&gt; build: <span class="text-gray-400">v2.6.0-alpha</span></p>
-      <p style="animation-delay: 0.9s" class="terminal-line">&gt; awaiting user input...<span class="inline-block w-2 h-4 bg-white/70 ml-1 animate-pulse"></span></p>
-     </div>
-    </div><!-- Stats -->
-    <div class="game-card p-6 rounded-r-lg">
-     <h3 class="orbitron text-xs font-bold text-gray-400 mb-4">SYSTEM METRICS</h3>
-     <div class="grid grid-cols-2 gap-4">
-      <div>
-       <p class="text-2xl font-black text-white orbitron">4</p>
-       <p class="text-[10px] text-gray-500 uppercase tracking-wider">Jogos Ativos</p>
-      </div>
-      <div>
-       <p class="text-2xl font-black text-[#ff4655] orbitron">∞</p>
-       <p class="text-[10px] text-gray-500 uppercase tracking-wider">Partidas</p>
-      </div>
-      <div>
-       <p class="text-2xl font-black text-cyan-400 orbitron">0ms</p>
-       <p class="text-[10px] text-gray-500 uppercase tracking-wider">Latência</p>
-      </div>
-      <div>
-       <p class="text-2xl font-black text-green-400 orbitron">100%</p>
-       <p class="text-[10px] text-gray-500 uppercase tracking-wider">Uptime</p>
-      </div>
-     </div>
-    </div><!-- About -->
-    <div class="game-card p-6 rounded-r-lg border-dashed border-white/5 bg-transparent">
-     <h3 class="orbitron text-xs font-bold text-gray-400 mb-3">SOBRE O PROJETO</h3>
-     <p class="text-gray-500 text-xs leading-relaxed">Visual Studio Games é um laboratório experimental de jogos construídos inteiramente no navegador. Cada protocolo é um experimento independente de gameplay e design interativo.</p>
-    </div>
-   </div>
-  </main>
-  <footer class="p-6 border-t border-white/5 text-center">
-   <p class="mono text-[10px] text-gray-600">© 2026 VISUAL_STUDIO_GAMES // ALL PROTOCOLS EXPERIMENTAL // NO WARRANTY</p>
-  </footer>
+ <body>
+  <div class="score" id="titleDisplay">
+   DATA_COLLECTED: <span id="scoreVal">0</span>
+  </div>
+  <canvas id="snakeCanvas" width="400" height="400"></canvas>
+  <p class="info">Use as setas para coletar os pacotes de dados.</p>
+  <div id="gameOverOverlay" class="game-over-overlay" style="display:none;">
+   <h2>SYSTEM_CRASH</h2>
+   <p>Pacotes coletados: <span id="finalScore">0</span></p><button id="restartBtn">[ REINICIAR ]</button>
+  </div>
   <script>
-    // Terminal line animation delays
-    document.querySelectorAll('.terminal-line').forEach((el, i) => {
-      el.style.animationDelay = `${(i + 1) * 0.2}s`;
-    });
+        const defaultConfig = {
+            title_text: "DATA_COLLECTED",
+            primary_color: "#050505",
+            surface_color: "#000000",
+            text_color: "#00f3ff",
+            accent_color: "#ff0055",
+            secondary_color: "#005555",
+            font_family: "Courier New"
+        };
 
-    lucide.createIcons();
+        function applyConfig(config) {
+            const title = config.title_text || defaultConfig.title_text;
+            const score = document.getElementById('scoreVal').textContent;
+            document.getElementById('titleDisplay').innerHTML = title + ': <span id="scoreVal">' + score + '</span>';
+            const font = (config.font_family || defaultConfig.font_family) + ", monospace";
+            document.querySelectorAll('.score, .info, .game-over-overlay h2, .game-over-overlay p, .game-over-overlay button').forEach(el => el.style.fontFamily = font);
+            const tc = config.text_color || defaultConfig.text_color;
+            document.body.style.color = tc;
+            document.body.style.background = config.primary_color || defaultConfig.primary_color;
+            const canvas = document.getElementById('snakeCanvas');
+            canvas.style.borderColor = tc;
+            canvas.style.boxShadow = '0 0 20px ' + tc;
+        }
 
-    // Element SDK
-    const defaultConfig = {
-      site_title: 'VISUAL STUDIO GAMES',
-      site_subtitle: 'Experimental Development Unit // 2026',
-      background_color: '#0f1923',
-      accent_color: '#ff4655',
-      text_color: '#e5e7eb',
-      font_family: 'Orbitron'
-    };
+        window.elementSdk.init({
+            defaultConfig,
+            onConfigChange: async (config) => applyConfig(config),
+            mapToCapabilities: (config) => ({
+                recolorables: [
+                    { get: () => config.primary_color || defaultConfig.primary_color, set: v => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
+                    { get: () => config.surface_color || defaultConfig.surface_color, set: v => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+                    { get: () => config.text_color || defaultConfig.text_color, set: v => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+                    { get: () => config.accent_color || defaultConfig.accent_color, set: v => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } },
+                    { get: () => config.secondary_color || defaultConfig.secondary_color, set: v => { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } }
+                ],
+                borderables: [],
+                fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: v => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
+                fontSizeable: undefined
+            }),
+            mapToEditPanelValues: (config) => new Map([
+                ["title_text", config.title_text || defaultConfig.title_text]
+            ])
+        });
 
-    function applyConfig(config) {
-      const title = config.site_title || defaultConfig.site_title;
-      const parts = title.split(' ');
-      const last = parts.pop();
-      const titleEl = document.getElementById('site-title');
-      if (titleEl) {
-        titleEl.innerHTML = `${parts.join(' ')} <span style="color:${config.accent_color || defaultConfig.accent_color}">${last}</span>`;
-      }
+        // Game logic
+        const canvas = document.getElementById('snakeCanvas');
+        const ctx = canvas.getContext('2d');
+        const box = 20;
+        let score, snake, food, d, gameLoop, gameOver;
 
-      const subEl = document.getElementById('site-subtitle');
-      if (subEl) subEl.textContent = config.site_subtitle || defaultConfig.site_subtitle;
+        function initGame() {
+            score = 0;
+            document.getElementById('scoreVal').textContent = '0';
+            snake = [{ x: 9 * box, y: 10 * box }];
+            food = { x: Math.floor(Math.random() * 19 + 1) * box, y: Math.floor(Math.random() * 19 + 1) * box };
+            d = undefined;
+            gameOver = false;
+            document.getElementById('gameOverOverlay').style.display = 'none';
+            if (gameLoop) clearInterval(gameLoop);
+            gameLoop = setInterval(draw, 100);
+        }
 
-      document.body.style.background = config.background_color || defaultConfig.background_color;
-      document.body.style.color = config.text_color || defaultConfig.text_color;
+        document.addEventListener("keydown", function(event) {
+            if (event.keyCode == 37 && d != "RIGHT") d = "LEFT";
+            else if (event.keyCode == 38 && d != "DOWN") d = "UP";
+            else if (event.keyCode == 39 && d != "LEFT") d = "RIGHT";
+            else if (event.keyCode == 40 && d != "UP") d = "DOWN";
+        });
 
-      const font = config.font_family || defaultConfig.font_family;
-      document.querySelectorAll('.orbitron').forEach(el => {
-        el.style.fontFamily = `${font}, sans-serif`;
-      });
-    }
+        document.getElementById('restartBtn').addEventListener('click', initGame);
 
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (config) => { applyConfig(config); },
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
-            { get: () => config.accent_color || defaultConfig.accent_color, set: (v) => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } },
-            { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } }
-          ],
-          borderables: [],
-          fontEditable: {
-            get: () => config.font_family || defaultConfig.font_family,
-            set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
-          },
-          fontSizeable: undefined
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ['site_title', config.site_title || defaultConfig.site_title],
-          ['site_subtitle', config.site_subtitle || defaultConfig.site_subtitle]
-        ])
-      });
-    }
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ee95f7b071ba3f6',t:'MTc3NjU3NTExMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+        function collision(head, arr) {
+            for (let i = 0; i < arr.length; i++) {
+                if (head.x == arr[i].x && head.y == arr[i].y) return true;
+            }
+            return false;
+        }
+
+        function draw() {
+            if (gameOver) return;
+            const cfg = window.elementSdk.config || defaultConfig;
+            const surfaceColor = cfg.surface_color || defaultConfig.surface_color;
+            const textColor = cfg.text_color || defaultConfig.text_color;
+            const accentColor = cfg.accent_color || defaultConfig.accent_color;
+            const secondaryColor = cfg.secondary_color || defaultConfig.secondary_color;
+
+            ctx.shadowBlur = 0; ctx.shadowColor = 'transparent';
+            ctx.fillStyle = surfaceColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < snake.length; i++) {
+                ctx.fillStyle = (i == 0) ? textColor : secondaryColor;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = textColor;
+                ctx.fillRect(snake[i].x, snake[i].y, box, box);
+            }
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = accentColor;
+            ctx.fillRect(food.x, food.y, box, box);
+
+            if (!d) return;
+
+            let snakeX = snake[0].x;
+            let snakeY = snake[0].y;
+            if (d == "LEFT") snakeX -= box;
+            if (d == "UP") snakeY -= box;
+            if (d == "RIGHT") snakeX += box;
+            if (d == "DOWN") snakeY += box;
+
+            if (snakeX == food.x && snakeY == food.y) {
+                score++;
+                document.getElementById('scoreVal').textContent = score;
+                food = { x: Math.floor(Math.random() * 19 + 1) * box, y: Math.floor(Math.random() * 19 + 1) * box };
+            } else {
+                snake.pop();
+            }
+
+            let newHead = { x: snakeX, y: snakeY };
+
+            if (snakeX < 0 || snakeX >= canvas.width || snakeY < 0 || snakeY >= canvas.height || collision(newHead, snake)) {
+                clearInterval(gameLoop);
+                gameOver = true;
+                document.getElementById('finalScore').textContent = score;
+                document.getElementById('gameOverOverlay').style.display = 'flex';
+                return;
+            }
+
+            snake.unshift(newHead);
+        }
+
+        initGame();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ee8f2fa66f7646e',t:'MTc3NjU3MDY2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
