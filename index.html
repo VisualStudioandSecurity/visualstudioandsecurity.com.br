@@ -31470,9 +31470,6 @@
 
 
 
-
-
-
 <!doctype html>
 <html lang="pt-BR" class="h-full">
  <head>
@@ -31500,34 +31497,34 @@
   </style>
 
   <script>
+    // CORE ENGINE - DECLARAÇÃO GLOBAL IMEDIATA
     window.gameState = {
         coins: 0,
         init: function() {
             const saved = localStorage.getItem('kv_enterprise_coins');
             if (saved) this.coins = parseInt(saved);
             this.updateDisplay();
-            console.log("SISTEMA: Protocolos de memória carregados.");
         },
         updateDisplay: function() {
             const el = document.getElementById('user-coins');
             if (el) el.textContent = this.coins.toLocaleString();
         },
         watchAd: function() {
-            console.log("Iniciando requisição de Ad...");
+            console.log("Iniciando Protocolo de Recompensa...");
             if (!window.CrazyGames || !window.CrazyGames.SDK) {
-                alert("Erro: SDK da CrazyGames não carregado.");
+                console.error("SDK não encontrado.");
+                alert("Erro: SDK da CrazyGames não detectado. Desative AdBlockers.");
                 return;
             }
-            const sdk = window.CrazyGames.SDK;
-            sdk.ad.requestAd('rewarded', {
+            window.CrazyGames.SDK.ad.requestAd('rewarded', {
                 adFinished: () => {
                     this.coins += 1000;
                     localStorage.setItem('kv_enterprise_coins', this.coins);
                     this.updateDisplay();
-                    alert("PROTOCOL_SUCCESS: +1.000 Créditos.");
+                    alert("RECOMPENSA: +1.000 Créditos.");
                 },
                 adError: (error) => {
-                    console.error("Erro no SDK:", error);
+                    console.error("Erro no Ad:", error);
                     alert("Anúncio indisponível fora do portal CrazyGames.");
                 }
             });
@@ -31561,7 +31558,7 @@
       <h3 class="orbitron text-xl font-bold text-pink-500 uppercase">Color Crush</h3>
       <span class="text-[10px] bg-pink-500/20 text-pink-500 px-2 py-1 font-bold italic uppercase">Puzzle</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">Elimine blocos e alcance combos massivos em alta performance.</p>
+     <p class="text-gray-400 text-sm mb-6">Match-3 explosivo de alta performance.</p>
      <a href="color-crush.html" class="btn-play" style="background: linear-gradient(to right, #ec4899, #a855f7);">EXECUTE_CRUSH</a>
     </div>
 
@@ -31570,7 +31567,7 @@
       <h3 class="orbitron text-xl font-bold text-red-500 uppercase">Valoranto</h3>
       <span class="text-[10px] bg-red-500/20 text-red-500 px-2 py-1 font-bold italic uppercase">Strategy</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">Adivinhe agentes, mapas e armas do universo Valorant.</p>
+     <p class="text-gray-400 text-sm mb-6">Teste tático do universo Valorant.</p>
      <a href="valoranto.html" class="btn-play">LAUNCH_GAME</a>
     </div>
 
@@ -31579,7 +31576,7 @@
       <h3 class="orbitron text-xl font-bold text-cyan-400 uppercase">Graffiti</h3>
       <span class="text-[10px] bg-cyan-500/20 text-cyan-400 px-2 py-1 font-bold italic uppercase">Creative</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">Ferramenta de design interativo com spray neon e suporte mobile.</p>
+     <p class="text-gray-400 text-sm mb-6">Design interativo com spray neon.</p>
      <a href="graffiti.html" class="btn-play" style="background: #00f2ff; color: #000;">OPEN_STUDIO</a>
     </div>
 
@@ -31588,7 +31585,7 @@
       <h3 class="orbitron text-xl font-bold text-green-400 uppercase">Neon_Snaker</h3>
       <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-1 font-bold italic uppercase">Retro</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">O clássico reimaginado com estética terminal ciberespaço.</p>
+     <p class="text-gray-400 text-sm mb-6">O clássico reimaginado no ciberespaço.</p>
      <a href="snake-neon.html" class="btn-play" style="background: linear-gradient(to right, #22c55e, #10b981);">EXECUTE_NEON</a>
     </div>
 
@@ -31597,7 +31594,7 @@
       <h3 class="orbitron text-xl font-bold text-yellow-400 uppercase">Space Shooter</h3>
       <span class="text-[10px] bg-yellow-500/20 text-yellow-400 px-2 py-1 font-bold italic uppercase">Action</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">Destrua naves inimigas e desbloqueie upgrades premium.</p>
+     <p class="text-gray-400 text-sm mb-6">Destrua naves e desbloqueie upgrades.</p>
      <a href="space-shooter.html" class="btn-play" style="background: linear-gradient(to right, #fbbf24, #f59e0b);">LAUNCH_SHOOTER</a>
     </div>
    </div>
@@ -31606,23 +31603,21 @@
     <h2 class="orbitron text-sm font-bold text-gray-400 mb-8 flex items-center gap-2"><i data-lucide="terminal" class="w-4 h-4"></i> TERMINAL</h2>
     <div class="game-card p-6 rounded-r-lg">
      <div class="mono text-xs space-y-2 text-gray-500">
-      <p class="terminal-line">&gt; initializing visual_studio_games...</p>
-      <p class="terminal-line">&gt; crazygames_sdk: <span class="text-cyan-400">v3.0_ready</span></p>
-      <p class="terminal-line">&gt; operator: <span class="text-white">Guilherme Kovaliosky</span></p>
-      <p class="terminal-line">&gt; status: <span class="text-green-400">READY_FOR_DEPLOY</span></p>
+      <p class="terminal-line">&gt; crazygames_sdk: <span class="text-cyan-400">ready</span></p>
+      <p class="terminal-line">&gt; operator: <span class="text-white">G. Kovaliosky</span></p>
+      <p class="terminal-line">&gt; status: <span class="text-green-400">ONLINE</span></p>
      </div>
     </div>
 
     <div class="game-card p-6 rounded-r-lg border border-amber-500/30 bg-amber-500/5">
         <h3 class="orbitron text-[10px] font-bold text-amber-500 mb-4 tracking-widest uppercase">Funding Protocol</h3>
-        <p class="text-gray-400 text-xs mb-4">Sincronize anúncios para injetar 1.000 créditos na conta.</p>
         <button onclick="window.gameState.watchAd()" class="btn-play w-full text-center" style="background: #f59e0b; clip-path: none; color: black;">GET_1000_CREDITS</button>
     </div>
    </div>
   </main>
 
   <footer class="p-6 border-t border-white/5 text-center">
-   <p class="mono text-[10px] text-gray-600">© 2026 VISUAL_STUDIO_GAMES // KV'S ENTERPRISE // RONDÔNIA_BRAZIL</p>
+   <p class="mono text-[10px] text-gray-600">© 2026 VISUAL_STUDIO_GAMES // RONDÔNIA_BR</p>
   </footer>
 
   <script>
@@ -31636,11 +31631,6 @@
   </script>
  </body>
 </html>
-
-
-
-
-
 
 
 
