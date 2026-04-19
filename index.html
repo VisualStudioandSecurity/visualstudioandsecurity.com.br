@@ -31497,7 +31497,6 @@
   </style>
 
   <script>
-    // CORE ENGINE - DECLARAÇÃO GLOBAL IMEDIATA
     window.gameState = {
         coins: 0,
         init: function() {
@@ -31512,8 +31511,7 @@
         watchAd: function() {
             console.log("Iniciando Protocolo de Recompensa...");
             if (!window.CrazyGames || !window.CrazyGames.SDK) {
-                console.error("SDK não encontrado.");
-                alert("Erro: SDK da CrazyGames não detectado. Desative AdBlockers.");
+                alert("Erro: SDK não carregado. Verifique AdBlockers.");
                 return;
             }
             window.CrazyGames.SDK.ad.requestAd('rewarded', {
@@ -31524,8 +31522,7 @@
                     alert("RECOMPENSA: +1.000 Créditos.");
                 },
                 adError: (error) => {
-                    console.error("Erro no Ad:", error);
-                    alert("Anúncio indisponível fora do portal CrazyGames.");
+                    alert("Anúncio indisponível fora do portal oficial.");
                 }
             });
         }
@@ -31597,6 +31594,15 @@
      <p class="text-gray-400 text-sm mb-6">Destrua naves e desbloqueie upgrades.</p>
      <a href="space-shooter.html" class="btn-play" style="background: linear-gradient(to right, #fbbf24, #f59e0b);">LAUNCH_SHOOTER</a>
     </div>
+
+    <div class="game-card p-6 rounded-r-lg group border-l-4 border-orange-600 bg-orange-600/5">
+     <div class="flex justify-between items-start mb-4">
+      <h3 class="orbitron text-xl font-bold text-orange-500 uppercase">TcK10: MEGA TROLL</h3>
+      <span class="text-[10px] bg-orange-500/20 text-orange-500 px-2 py-1 font-bold italic uppercase">Absurdo / Quiz</span>
+     </div>
+     <p class="text-gray-400 text-sm mb-6">Regra: A lógica é sua inimiga. O absurdo é sua salvação.</p>
+     <a href="tck-troll.html" class="btn-play" style="background: linear-gradient(to right, #ea580c, #f97316);">EXECUTE_BICEPS</a>
+    </div>
    </div>
 
    <div class="space-y-6">
@@ -31605,6 +31611,7 @@
      <div class="mono text-xs space-y-2 text-gray-500">
       <p class="terminal-line">&gt; crazygames_sdk: <span class="text-cyan-400">ready</span></p>
       <p class="terminal-line">&gt; operator: <span class="text-white">G. Kovaliosky</span></p>
+      <p class="terminal-line">&gt; tck10_protocol: <span class="text-orange-500">loaded</span></p>
       <p class="terminal-line">&gt; status: <span class="text-green-400">ONLINE</span></p>
      </div>
     </div>
@@ -31628,18 +31635,9 @@
             el.style.animationDelay = `${(i + 1) * 0.2}s`;
         });
     };
-   <div class="game-card p-6 rounded-r-lg group border-l-4 border-orange-600 bg-orange-600/5">
-     <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold text-orange-500 uppercase">TcK10: MEGA TROLL</h3>
-      <span class="text-[10px] bg-orange-500/20 text-orange-500 px-2 py-1 font-bold italic uppercase">Absurdo / Quiz</span>
-     </div>
-     <p class="text-gray-400 text-sm mb-6">Regra: A lógica é sua inimiga. O absurdo é sua salvação. Rank: Radiante ou Ferro?</p>
-     <a href="tck-troll.html" class="btn-play" style="background: linear-gradient(to right, #ea580c, #f97316);">EXECUTE_BICEPS</a>
-    </div>
   </script>
  </body>
 </html>
-
 
 
 
