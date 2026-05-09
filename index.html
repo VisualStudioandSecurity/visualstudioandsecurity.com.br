@@ -31483,16 +31483,83 @@
   
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-    :root { --valorant-red: #ff4655; }
+    
+    :root { 
+      --valorant-red: #ff4655; 
+      --geometry-emerald: #10b981;
+    }
+
     .orbitron { font-family: 'Orbitron', sans-serif; }
     .mono { font-family: 'Courier New', monospace; }
-    body { background: #0f1923; color: #e5e7eb; margin: 0; }
-    .game-card { border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.3); transition: all 0.3s ease; }
-    .game-card:hover { border-color: var(--valorant-red); background: rgba(0, 0, 0, 0.5); }
-    .btn-play { background: var(--valorant-red); clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); transition: 0.3s; display: inline-block; padding: 8px 32px; font-size: 14px; font-weight: 900; font-style: italic; color: white; text-decoration: none; cursor: pointer; border: none; }
-    .btn-play:hover { filter: brightness(1.2); padding-right: 48px; }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; animation: pulse-dot 2s infinite; }
+
+    body { 
+      background: #0f1923; 
+      color: #e5e7eb; 
+      margin: 0; 
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Efeito de Scanner de Tela */
+    body::after {
+      content: "";
+      position: fixed;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(to bottom, transparent, rgba(255, 70, 85, 0.05), transparent);
+      animation: scan 8s linear infinite;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    @keyframes scan {
+      0% { top: -100%; }
+      100% { top: 200%; }
+    }
+
+    .game-card { 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+      background: rgba(0, 0, 0, 0.3); 
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    }
+
+    .game-card:hover { 
+      border-color: var(--valorant-red); 
+      background: rgba(0, 0, 0, 0.5);
+      transform: translateX(8px);
+      box-shadow: -10px 0 20px rgba(255, 70, 85, 0.1);
+    }
+
+    .btn-play { 
+      background: var(--valorant-red); 
+      clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); 
+      transition: 0.3s; 
+      display: inline-block; 
+      padding: 8px 32px; 
+      font-size: 14px; 
+      font-weight: 900; 
+      font-style: italic; 
+      color: white; 
+      text-decoration: none; 
+      cursor: pointer; 
+      border: none; 
+    }
+
+    .btn-play:hover { 
+      filter: brightness(1.2); 
+      padding-right: 48px; 
+    }
+
+    .status-dot { 
+      width: 6px; height: 6px; 
+      border-radius: 50%; 
+      animation: pulse-dot 2s infinite; 
+    }
+
     @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    
     .terminal-line { opacity: 0; animation: type-in 0.5s ease forwards; }
     @keyframes type-in { to { opacity: 1; } }
   </style>
@@ -31510,7 +31577,6 @@
             if (el) el.textContent = this.coins.toLocaleString();
         },
         watchAd: function() {
-            console.log("Iniciando Protocolo de Recompensa...");
             if (!window.CrazyGames || !window.CrazyGames.SDK) {
                 alert("Erro: SDK não carregado. Verifique AdBlockers.");
                 return;
@@ -31520,18 +31586,15 @@
                     this.coins += 1000;
                     localStorage.setItem('kv_enterprise_coins', this.coins);
                     this.updateDisplay();
-                    alert("RECOMPENSA: +1.000 Créditos.");
                 },
-                adError: (error) => {
-                    alert("Anúncio indisponível fora do portal oficial.");
-                }
+                adError: (error) => alert("Anúncio indisponível fora do portal oficial.")
             });
         }
     };
   </script>
  </head>
 
- <body class="h-full flex flex-col overflow-auto">
+ <body class="h-full flex flex-col">
   <header class="p-8 border-b border-white/5 flex justify-between items-end flex-wrap gap-4">
    <div>
     <h1 class="orbitron text-4xl font-black tracking-tighter text-white uppercase">Visual Studio <span class="text-[#ff4655]">Games</span></h1>
@@ -31547,19 +31610,21 @@
    </div>
   </header>
 
-  <main class="flex-grow max-w-6xl mx-auto w-full p-8 grid md:grid-cols-2 gap-12 items-start">
+  <main class="flex-grow max-w-6xl mx-auto w-full p-8 grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-12 items-start">
    <div class="space-y-6">
     <h2 class="orbitron text-sm font-bold text-gray-400 mb-8 flex items-center gap-2"><i data-lucide="layers" class="w-4 h-4"></i> PROTOCOLOS ATIVOS</h2>
     
-    <div class="game-card p-6 rounded-r-lg group">
+    <!-- NOVO: GEOMETRY RUSH -->
+    <div class="game-card p-6 rounded-r-lg group border-l-4 border-emerald-500 bg-emerald-500/5">
      <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold text-pink-500 uppercase">Color Crush</h3>
-      <span class="text-[10px] bg-pink-500/20 text-pink-500 px-2 py-1 font-bold italic uppercase">Puzzle</span>
+      <h3 class="orbitron text-xl font-bold text-emerald-400 uppercase">Geometry Rush</h3>
+      <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 font-bold italic uppercase">Hardcore / Runner</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">Match-3 explosivo de alta performance.</p>
-     <a href="color-crush.html" class="btn-play" style="background: linear-gradient(to right, #ec4899, #a855f7);">EXECUTE_CRUSH</a>
+     <p class="text-gray-400 text-sm mb-6">Sobreviva à jornada geométrica em 5 dimensões rítmicas.</p>
+     <a href="geometry-rush.html" class="btn-play" style="background: linear-gradient(to right, #10b981, #06b6d4);">EXECUTE_RUSH</a>
     </div>
 
+    <!-- VALORANTO -->
     <div class="game-card p-6 rounded-r-lg group">
      <div class="flex justify-between items-start mb-4">
       <h3 class="orbitron text-xl font-bold text-red-500 uppercase">Valoranto</h3>
@@ -31569,50 +31634,35 @@
      <a href="valoranto.html" class="btn-play">LAUNCH_GAME</a>
     </div>
 
-    <div class="game-card p-6 rounded-r-lg group border-dashed border-white/10 bg-transparent">
-     <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold text-cyan-400 uppercase">Graffiti</h3>
-      <span class="text-[10px] bg-cyan-500/20 text-cyan-400 px-2 py-1 font-bold italic uppercase">Creative</span>
-     </div>
-     <p class="text-gray-400 text-sm mb-6">Design interativo com spray neon.</p>
-     <a href="graffiti.html" class="btn-play" style="background: #00f2ff; color: #000;">OPEN_STUDIO</a>
-    </div>
-
+    <!-- COLOR CRUSH -->
     <div class="game-card p-6 rounded-r-lg group">
      <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold text-green-400 uppercase">Neon_Snaker</h3>
-      <span class="text-[10px] bg-green-500/20 text-green-400 px-2 py-1 font-bold italic uppercase">Retro</span>
+      <h3 class="orbitron text-xl font-bold text-pink-500 uppercase">Color Crush</h3>
+      <span class="text-[10px] bg-pink-500/20 text-pink-500 px-2 py-1 font-bold italic uppercase">Puzzle</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">O clássico reimaginado no ciberespaço.</p>
-     <a href="snake-neon.html" class="btn-play" style="background: linear-gradient(to right, #22c55e, #10b981);">EXECUTE_NEON</a>
+     <p class="text-gray-400 text-sm mb-6">Match-3 explosivo de alta performance.</p>
+     <a href="color-crush.html" class="btn-play" style="background: linear-gradient(to right, #ec4899, #a855f7);">EXECUTE_CRUSH</a>
     </div>
 
-    <div class="game-card p-6 rounded-r-lg group">
-     <div class="flex justify-between items-start mb-4">
-      <h3 class="orbitron text-xl font-bold text-yellow-400 uppercase">Space Shooter</h3>
-      <span class="text-[10px] bg-yellow-500/20 text-yellow-400 px-2 py-1 font-bold italic uppercase">Action</span>
-     </div>
-     <p class="text-gray-400 text-sm mb-6">Destrua naves e desbloqueie upgrades.</p>
-     <a href="space-shooter.html" class="btn-play" style="background: linear-gradient(to right, #fbbf24, #f59e0b);">LAUNCH_SHOOTER</a>
-    </div>
-
+    <!-- TCK TROLL -->
     <div class="game-card p-6 rounded-r-lg group border-l-4 border-orange-600 bg-orange-600/5">
      <div class="flex justify-between items-start mb-4">
       <h3 class="orbitron text-xl font-bold text-orange-500 uppercase">TcK10: MEGA TROLL</h3>
-      <span class="text-[10px] bg-orange-500/20 text-orange-500 px-2 py-1 font-bold italic uppercase">Absurdo / Quiz</span>
+      <span class="text-[10px] bg-orange-500/20 text-orange-500 px-2 py-1 font-bold italic uppercase">Quiz</span>
      </div>
-     <p class="text-gray-400 text-sm mb-6">Regra: A lógica é sua inimiga. O absurdo é sua salvação.</p>
+     <p class="text-gray-400 text-sm mb-6">A lógica é sua inimiga. O absurdo é sua salvação.</p>
      <a href="tck-troll.html" class="btn-play" style="background: linear-gradient(to right, #ea580c, #f97316);">EXECUTE_BICEPS</a>
     </div>
    </div>
 
-   <div class="space-y-6">
+   <!-- BARRA LATERAL / TERMINAL -->
+   <div class="space-y-6 sticky top-8">
     <h2 class="orbitron text-sm font-bold text-gray-400 mb-8 flex items-center gap-2"><i data-lucide="terminal" class="w-4 h-4"></i> TERMINAL</h2>
     <div class="game-card p-6 rounded-r-lg">
      <div class="mono text-xs space-y-2 text-gray-500">
       <p class="terminal-line">&gt; crazygames_sdk: <span class="text-cyan-400">ready</span></p>
       <p class="terminal-line">&gt; operator: <span class="text-white">G. Kovaliosky</span></p>
-      <p class="terminal-line">&gt; tck10_protocol: <span class="text-orange-500">loaded</span></p>
+      <p class="terminal-line">&gt; geometry_rush: <span class="text-emerald-500">loaded_v2</span></p>
       <p class="terminal-line">&gt; status: <span class="text-green-400">ONLINE</span></p>
      </div>
     </div>
@@ -31624,7 +31674,7 @@
    </div>
   </main>
 
-  <footer class="p-6 border-t border-white/5 text-center">
+  <footer class="p-6 border-t border-white/5 text-center mt-auto">
    <p class="mono text-[10px] text-gray-600">© 2026 VISUAL_STUDIO_GAMES // RONDÔNIA_BR</p>
   </footer>
 
@@ -31639,6 +31689,5 @@
   </script>
  </body>
 </html>
-
 
 
