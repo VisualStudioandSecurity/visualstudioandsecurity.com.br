@@ -32,8 +32,8 @@ Todos os jogos abaixo foram desenvolvidos com foco em performance e estética Ne
 | **Breakout** | Destrua blocos em um ambiente de alta velocidade. | [Jogar](https://www.visualstudioandsecurity.com.br/breakout/) |
 | **Space Shooter** | Destrua naves e protega a sua  | [Jogar](https://www.visualstudioandsecurity.com.br/space-shooter.html) |
   **neon breakout** | Destrua blocos e alcançe o topo| [Jogar](https://visualstudioandsecurity.com.br/neon-breakout.html)|
-|
-
+| **geometry rush** | avançe fases, conquiste pontos|  [Jogar]( https://visualstudioandsecurity.com.br/geometry-)|                                                        
+| **geometry rush** | avançe fases, conquiste pontos|  [Jogar]( https://visualstudioandsecurity.com.br/geometry-)| 
 ---
 
 ## 🛠️ Tecnologias & Ferramentas
