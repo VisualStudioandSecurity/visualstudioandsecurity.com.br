@@ -31,6 +31,7 @@ Todos os jogos abaixo foram desenvolvidos com foco em performance e estética Ne
 | **Cyber Defense** | Defenda o sistema contra invasões maliciosas. | [Jogar](https://www.visualstudioandsecurity.com.br/cyber-defense/) |
 | **Breakout** | Destrua blocos em um ambiente de alta velocidade. | [Jogar](https://www.visualstudioandsecurity.com.br/breakout/) |
 | **Space Shooter** | Destrua naves e protega a sua  | [Jogar](https://www.visualstudioandsecurity.com.br/space-shooter.html) |
+  **neon breakout** | Destrua blocos e alcançe o topo| [Jogar]
 |
 
 ---
@@ -53,7 +54,7 @@ Todos os jogos abaixo foram desenvolvidos com foco em performance e estética Ne
 
 ## 💬 Contato
 - **GitHub:** [@VisualStudioAndSecurity](https://github.com/VisualStudioAndSecurity)
-- **Branding:** GuiTrader / Kovaliosky DeV
+- **Branding:**  Kovaliosky DeV
 
 ---
 > [!IMPORTANT]
