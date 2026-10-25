@@ -36,7 +36,7 @@ Bem-vindo ao repositório central da **Visual Studio Games**. Aqui hospedo meus 
 ---
 
 ## 💬 Contato
-- **GitHub:** [@VisualStudioAndSecurity](https://visualstudioandsecurity.com.br/)
+- **GitHub:**(https://visualstudioandsecurity.com.br/)
 - **Branding:**  Kovaliosky DeV
 
 ---
