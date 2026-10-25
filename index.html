@@ -12,21 +12,18 @@
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         <style>
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        /* Proporção 16:9 responsiva para o jogo */
-        .game-container {
-            position: relative;
-            width: 250%;
-            padding-bottom: 150%; /* Mantém a proporção exata de 16:9 em qualquer ecrã */
-            height: 0;
-        }
-        .game-container iframe {
-            position: absolute;
-            top: 150;
-            left: 150;
-            width: 200%;
-            height: 200%;
-            border: 0;
-        }
+        </h1>
+        <button onclick="openFullscreen()" class="px-2.5 py-1 bg-[#ff4655] hover:bg-[#e03e4d] text-white font-bold rounded text-xs transition-colors cursor-pointer font-mono">
+            ⛶ Tela Cheia
+        </button>
+    </header>
+
+    <!-- Conteúdo Principal Otimizado para Ocupar a Altura Máxima -->
+    <main class="w-full flex-grow flex items-center justify-center py-1 overflow-hidden">
+        <!-- Container com altura máxima de 88vh e largura automática adaptável -->
+        <div class="h-full max-h-[88vh] aspect-[9/16] md:aspect-[4/3] w-auto max-w-full bg-gray-900 rounded-lg overflow-hidden border border-white/10 shadow-2xl relative flex items-center justify-center">
+            <iframe id="game-iframe" src="" class="w-full h-full border-0" allowfullscreen></iframe>
+        </div>
     </style>
 </head>
 <body class="bg-black text-white flex flex-col min-h-screen justify-between selection:bg-[#ff4655] selection:text-white">
