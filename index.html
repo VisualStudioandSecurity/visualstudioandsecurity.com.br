@@ -128,9 +128,35 @@
                 container.innerHTML = `<p class="col-span-full text-center font-mono text-red-500 text-xs">Erro ao carregar os jogos do feed. Verifica o link do feed.</p>`;
             }
         }
+        function openFullscreen() {
+            const iframe = document.getElementById('game-iframe');
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.webkitRequestFullscreen) { /* Safari */
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { /* IE11 */
+                iframe.msRequestFullscreen();
+            }
+        }
 
-        // Executa ao carregar a página
-        carregarJogosDoFeed();
+        // Função para alternar a altura do container (Expansão / Padrão)
+        let isExpanded = false;
+        function toggleSize() {
+            const wrapper = document.getElementById('game-wrapper');
+            const btn = document.getElementById('btn-resize');
+
+            if (!isExpanded) {
+                wrapper.classList.remove('h-[600px]');
+                wrapper.classList.add('h-[800px]');
+                btn.innerText = "↘ Tamanho Padrão";
+                isExpanded = true;
+            } else {
+                wrapper.classList.remove('h-[800px]');
+                wrapper.classList.add('h-[600px]');
+                btn.innerText = "↔ Expansão Cinema";
+                isExpanded = false;
+            }
+        }
     </script>
 </body>
 </html>
