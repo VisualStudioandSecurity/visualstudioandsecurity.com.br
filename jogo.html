@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="game-title">Carregando Jogo... - Visual Studio and Security</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white flex flex-col min-h-screen items-center justify-between p-4">
+
+    <!-- Título do Jogo -->
+    <h1 id="title-display" class="text-2xl font-bold mb-4 uppercase tracking-wider text-center">
+        A carregar...
+    </h1>
+
+    <!-- Player do Jogo DInâmico -->
+    <div class="w-full max-w-5xl h-[650px] bg-gray-900 rounded-lg overflow-hidden border border-white/10 shadow-2xl">
+        <iframe id="game-iframe" src="" class="w-full h-full border-0" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        // Pega os parâmetros passados pelo URL (ex: jogo.html?title=...&url=...)
+        const params = new URLSearchParams(window.location.search);
+        const gameUrl = params.get('url');
+        const gameTitle = params.get('title');
+
+        if (gameUrl) {
+            document.getElementById('game-iframe').src = gameUrl;
+            document.getElementById('title-display').innerText = gameTitle || "Jogo Web";
+            document.getElementById('game-title').innerText = `${gameTitle} - Visual Studio and Security`;
+        } else {
+            document.getElementById('title-display').innerText = "Jogo não encontrado.";
+        }
+    </script>
+</body>
+</html>
