@@ -19,23 +19,6 @@ Bem-vindo ao repositório central da **Visual Studio Games**. Aqui hospedo meus 
 ## 🚀 Acesso Rápido
 🔗 **Site Oficial:** https://visualstudioandsecurity.github.io/visualstudioandsecurity.com.br/
 
----
-
-## 🎮 Galeria de Jogos (Web)
-Todos os jogos abaixo foram desenvolvidos com foco em performance e estética Neon/Cyber.
-
-| Jogo | Descrição | Link |
-| :--- | :--- | :--- |
-| **Graffiti Canvas** | Mural interativo com gestão de tinta. | [Jogar](https://www.visualstudioandsecurity.com.br/graffiti-canvas/) |
-| **Neon Snaker** | O clássico Snake com visual retro-futurista. | [Jogar](https://www.visualstudioandsecurity.com.br/neon-snaker/) |
-| **Cyber Defense** | Defenda o sistema contra invasões maliciosas. | [Jogar](https://www.visualstudioandsecurity.com.br/cyber-defense/) |
-| **Breakout** | Destrua blocos em um ambiente de alta velocidade. | [Jogar](https://www.visualstudioandsecurity.com.br/breakout/) |
-| **Space Shooter** | Destrua naves e protega a sua  | [Jogar](https://www.visualstudioandsecurity.com.br/space-shooter.html) |
-  **neon breakout** | Destrua blocos e alcançe o topo| [Jogar](https://visualstudioandsecurity.com.br/neon-breakout.html)|
-| **geometry rush** | avançe fases, conquiste pontos|  [Jogar]( https://visualstudioandsecurity.com.br/geometry-)|                                                        
-| **geometry rush** | avançe fases, conquiste pontos|  [Jogar]( https://visualstudioandsecurity.com.br/geometry-)| 
----
-
 ## 🛠️ Tecnologias & Ferramentas
 - **GDevelop:** Core engine para lógica de jogos.
 - **Cybersecurity:** Pentesting, Auditoria de Código e Segurança Web.
