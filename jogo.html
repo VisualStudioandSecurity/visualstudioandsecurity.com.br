@@ -24,12 +24,25 @@
         const gameUrl = params.get('url');
         const gameTitle = params.get('title');
 
-        if (gameUrl) {
-            document.getElementById('game-iframe').src = gameUrl;
+        const allowedGameOrigins = [
+            window.location.origin
+        ];
+
+        function isAllowedGameUrl(rawUrl) {
+            try {
+                const parsedUrl = new URL(rawUrl, window.location.origin);
+                return parsedUrl.protocol === 'https:' && allowedGameOrigins.includes(parsedUrl.origin);
+            } catch (e) {
+                return false;
+            }
+        }
+
+        if (gameUrl && isAllowedGameUrl(gameUrl)) {
+            document.getElementById('game-iframe').src = new URL(gameUrl, window.location.origin).toString();
             document.getElementById('title-display').innerText = gameTitle || "Jogo Web";
-            document.getElementById('game-title').innerText = `${gameTitle} - Visual Studio and Security`;
+            document.getElementById('game-title').innerText = `${gameTitle || "Jogo Web"} - Visual Studio and Security`;
         } else {
-            document.getElementById('title-display').innerText = "Jogo não encontrado.";
+            document.getElementById('title-display').innerText = "Jogo não encontrado ou URL inválida.";
         }
     </script>
 </body>
