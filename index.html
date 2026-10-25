@@ -81,107 +81,86 @@
         </div>
     </footer>
 
-    <!-- Script de Integração Automática do Feed GameMonetize -->
     <script>
-        // Variável global para guardar todos os jogos carregados
-let todosOsJogos = [];
+    let todosOsJogos = [];
+    const searchInput = document.getElementById("search-input");
 
-// Dentro da tua função carregarJogosDoFeed, substitui a linha `jogos.forEach` por:
-todosOsJogos = jogos;
-renderizarJogos(todosOsJogos);
+    function renderizarJogos(lista) {
+        const container = document.getElementById("lista-de-jogos");
+        container.innerHTML = "";
 
-// Função para desenhar os jogos no ecrã
-function renderizarJogos(lista) {
-    const container = document.getElementById("lista-de-jogos");
-    container.innerHTML = "";
-
-    if (lista.length === 0) {
-        container.innerHTML = `<p class="col-span-full text-center font-mono text-gray-500 text-xs py-10">Nenhum jogo encontrado.</p>`;
-        return;
-    }
-
-    lista.forEach(jogo => {
-        const card = document.createElement("a");
-        card.href = `jogo.html?title=${encodeURIComponent(jogo.title)}&url=${encodeURIComponent(jogo.url)}`;
-        card.className = "group bg-gray-900/40 border border-white/10 rounded-lg overflow-hidden hover:border-[#ff4655] transition-all duration-300 flex flex-col justify-between hover:scale-[1.02]";
-
-        card.innerHTML = `
-            <div class="w-full h-36 overflow-hidden relative bg-black/50">
-                <img src="${jogo.thumb}" alt="${jogo.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
-            </div>
-            <div class="p-3 flex flex-col justify-between flex-grow bg-black/40">
-                <h3 class="text-xs font-bold text-gray-200 group-hover:text-[#ff4655] transition-colors line-clamp-2 uppercase tracking-wide font-orbitron">
-                    ${jogo.title}
-                </h3>
-                <div class="mt-3 flex items-center justify-between text-[10px] text-gray-500 font-mono">
-                    <span>PLAY</span>
-                    <span class="text-[#ff4655]">▶</span>
-                </div>
-            </div>
-        `;
-        container.appendChild(card);
-    });
-}
-
-// Evento de escuta para a barra de pesquisa
-document.getElementById("search-input").addEventListener("input", (e) => {
-    const termo = e.target.value.toLowerCase();
-    const jogosFiltrados = todosOsJogos.filter(jogo => jogo.title.toLowerCase().includes(termo));
-    renderizarJogos(jogosFiltrados);
-});
-        // URL do teu feed JSON gerado na GameMonetize
-        const FEED_URL = "https://gamemonetize.com/feed.php?format=0&category=12&page=1";
-
-        async function carregarJogosDoFeed() {
-            const container = document.getElementById("lista-de-jogos");
-            const countDisplay = document.getElementById("game-count");
-
-            try {
-                const response = await fetch(FEED_URL);
-                const jogos = await response.json();
-
-                if (!jogos || jogos.length === 0) {
-                    container.innerHTML = `<p class="col-span-full text-center font-mono text-red-500 text-xs">Nenhum jogo encontrado no feed.</p>`;
-                    return;
-                }
-
-                // Limpa o loader
-                container.innerHTML = "";
-                countDisplay.innerText = `${jogos.length} JOGOS DISPONÍVEIS`;
-
-                // Renderiza cada jogo do feed
-                jogos.forEach(jogo => {
-                    const card = document.createElement("a");
-                    // Redireciona para o jogo.html passando a URL e o Título via Query Params
-                    card.href = `jogo.html?title=${encodeURIComponent(jogo.title)}&url=${encodeURIComponent(jogo.url)}`;
-                    card.className = "group bg-gray-900/40 border border-white/10 rounded-lg overflow-hidden hover:border-[#ff4655] transition-all duration-300 flex flex-col justify-between hover:scale-[1.02]";
-
-                    card.innerHTML = `
-                        <div class="w-full h-36 overflow-hidden relative bg-black/50">
-                            <img src="${jogo.thumb}" alt="${jogo.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
-                        </div>
-                        <div class="p-3 flex flex-col justify-between flex-grow bg-black/40">
-                            <h3 class="text-xs font-bold text-gray-200 group-hover:text-[#ff4655] transition-colors line-clamp-2 uppercase tracking-wide font-orbitron">
-                                ${jogo.title}
-                            </h3>
-                            <div class="mt-3 flex items-center justify-between text-[10px] text-gray-500 font-mono">
-                                <span>PLAY</span>
-                                <span class="text-[#ff4655]">▶</span>
-                            </div>
-                        </div>
-                    `;
-
-                    container.appendChild(card);
-                });
-
-            } catch (error) {
-                console.error("Erro ao carregar o feed:", error);
-                container.innerHTML = `<p class="col-span-full text-center font-mono text-red-500 text-xs">Erro ao carregar os jogos do feed. Verifica o link do feed.</p>`;
-            }
+        if (!lista || lista.length === 0) {
+            container.innerHTML = `<p class="col-span-full text-center font-mono text-gray-500 text-xs py-10">Nenhum jogo encontrado.</p>`;
+            return;
         }
 
-        // Executa ao carregar a página
-        carregarJogosDoFeed();
+        lista.forEach((jogo) => {
+            const card = document.createElement("a");
+            card.href = `jogo.html?title=${encodeURIComponent(jogo.title || "Jogo")}&url=${encodeURIComponent(jogo.url || "")}`;
+            card.className = "group bg-gray-900/40 border border-white/10 rounded-lg overflow-hidden hover:border-[#ff4655] transition-all duration-300 flex flex-col justify-between hover:scale-[1.02]";
+
+            const thumb = document.createElement("div");
+            thumb.className = "w-full h-36 overflow-hidden relative bg-black/50";
+
+            const img = document.createElement("img");
+            img.src = jogo.thumb || "";
+            img.alt = jogo.title || "Game";
+            img.className = "w-full h-full object-cover group-hover:scale-110 transition-transform duration-500";
+            img.loading = "lazy";
+
+            const body = document.createElement("div");
+            body.className = "p-3 flex flex-col justify-between flex-grow bg-black/40";
+
+            const title = document.createElement("h3");
+            title.className = "text-xs font-bold text-gray-200 group-hover:text-[#ff4655] transition-colors line-clamp-2 uppercase tracking-wide font-orbitron";
+            title.textContent = jogo.title || "Jogo";
+
+            const footer = document.createElement("div");
+            footer.className = "mt-3 flex items-center justify-between text-[10px] text-gray-500 font-mono";
+            footer.innerHTML = `<span>PLAY</span><span class="text-[#ff4655]">▶</span>`;
+
+            thumb.appendChild(img);
+            body.appendChild(title);
+            body.appendChild(footer);
+            card.appendChild(thumb);
+            card.appendChild(body);
+
+            container.appendChild(card);
+        });
+    }
+
+    searchInput?.addEventListener("input", (e) => {
+        const termo = (e.target.value || "").toLowerCase().trim();
+        const jogosFiltrados = todosOsJogos.filter((jogo) =>
+            (jogo.title || "").toLowerCase().includes(termo)
+        );
+        renderizarJogos(jogosFiltrados);
+    });
+
+    const FEED_URL = "https://gamemonetize.com/feed.php?format=0&category=12&page=1";
+
+    async function carregarJogosDoFeed() {
+        const container = document.getElementById("lista-de-jogos");
+        const countDisplay = document.getElementById("game-count");
+
+        try {
+            const response = await fetch(FEED_URL);
+            const jogos = await response.json();
+
+            todosOsJogos = Array.isArray(jogos) ? jogos : [];
+            renderizarJogos(todosOsJogos);
+
+            if (countDisplay) {
+                countDisplay.textContent = `${todosOsJogos.length} JOGOS DISPONÍVEIS`;
+            }
+        } catch (error) {
+            console.error("Erro ao carregar o feed:", error);
+            container.innerHTML = `<p class="col-span-full text-center font-mono text-red-500 text-xs">Erro ao carregar os jogos do feed. Verifica o link do feed.</p>`;
+        }
+    }
+
+    carregarJogosDoFeed();
+</script>
     </script>
 </body>
 </html>
