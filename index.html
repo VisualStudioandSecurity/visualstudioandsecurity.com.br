@@ -3,14 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</a>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Fonte Orbitron e Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Studio and Security // Jogos & Artigos</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Fonte Orbitron e Inter -->
@@ -19,18 +12,18 @@
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-inter { font-family: 'Inter', sans-serif; }
 
-        /* Animação para o nome brilhar e alternar cores */
+        /* Animação de néon brilhante para o título */
         @keyframes colorGlow {
             0% {
-                color: #ff4655; /* Vermelho/Rosa Valorsan */
+                color: #ff4655;
                 text-shadow: 0 0 8px rgba(255, 70, 85, 0.6), 0 0 20px rgba(255, 70, 85, 0.3);
             }
             33% {
-                color: #00f0ff; /* Azul Ciano Neon */
+                color: #00f0ff;
                 text-shadow: 0 0 8px rgba(0, 240, 255, 0.6), 0 0 20px rgba(0, 240, 255, 0.3);
             }
             66% {
-                color: #a855f7; /* Roxo Neon */
+                color: #a855f7;
                 text-shadow: 0 0 8px rgba(168, 85, 247, 0.6), 0 0 20px rgba(168, 85, 247, 0.3);
             }
             100% {
@@ -44,13 +37,14 @@
         }
     </style>
 </head>
-</head>
 <body class="bg-gray-100 text-gray-900 font-inter min-h-screen flex flex-col selection:bg-[#ff4655] selection:text-white">
 
     <!-- Cabeçalho Fixo -->
     <header class="w-full border-b border-gray-200 p-6 bg-white/90 backdrop-blur sticky top-0 z-50 shadow-sm">
-        <a href="index.html" class="text-xl font-orbitron font-bold tracking-wider neon-glow-animado transition-colors">
-    VISUAL STUDIO AND SECURITY
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <a href="index.html" class="text-xl font-orbitron font-bold tracking-wider neon-glow-animado transition-colors">
+                VISUAL STUDIO AND SECURITY
+            </a>
             <nav class="flex flex-wrap justify-center gap-6 text-xs font-mono uppercase tracking-wider">
                 <a href="privacidade.html" class="text-gray-600 hover:text-[#ff4655] transition-colors">Privacidade</a>
                 <a href="sobre.html" class="text-gray-600 hover:text-[#ff4655] transition-colors">Sobre</a>
@@ -61,19 +55,25 @@
     <!-- Estrutura Principal com Espaços Laterais para Anúncios -->
     <div class="w-full flex justify-center items-start flex-grow p-2 sm:p-6 max-w-[1600px] mx-auto">
         
-        <!-- Anúncio Lateral Esquerdo (Visível apenas em Desktop/Monitores largos) -->
+        <!-- Anúncio Lateral Esquerdo (Desktop) -->
         <aside class="hidden xl:flex w-[160px] min-w-[160px] h-[600px] bg-gray-200 border border-gray-300 rounded-lg mr-4 justify-center items-center sticky top-28 text-center p-2">
-            <!-- Cole aqui o código do seu anúncio AdSense 160x600 no futuro -->
             <span class="text-xs text-gray-400 font-mono font-bold">ESPAÇO ANÚNCIO<br>160 x 600</span>
         </aside>
 
-        <!-- Bloco Central do Site (Catálogo) -->
+        <!-- Bloco Central do Site -->
         <main class="w-full max-w-7xl bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col min-h-[80vh] justify-between">
             <div>
-                <!-- Barra de Pesquisa de Jogos -->
-                <div class="mb-6">
+                <!-- Barra de Pesquisa e Filtros de Categorias -->
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
                     <input type="text" id="search-input" placeholder="Pesquisar jogos por nome..." 
                            class="w-full md:w-96 px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#ff4655] transition-colors font-mono" />
+                    
+                    <!-- Categorias Rápidas estilo Poki -->
+                    <div class="flex flex-wrap gap-2 text-xs font-mono">
+                        <button onclick="filtrarCategoria('all')" class="px-3 py-1.5 bg-gray-900 text-white rounded-lg hover:bg-[#ff4655] transition-colors">Todos</button>
+                        <button onclick="filtrarCategoria('action')" class="px-3 py-1.5 bg-gray-100 text-gray-700 border border-gray-200 rounded-lg hover:border-[#ff4655] transition-colors">Ação</button>
+                        <button onclick="filtrarCategoria('racing')" class="px-3 py-1.5 bg-gray-100 text-gray-700 border border-gray-200 rounded-lg hover:border-[#ff4655] transition-colors">Corrida</button>
+                    </div>
                 </div>
                     
                 <!-- Título da Secção -->
@@ -87,30 +87,28 @@
                     </span>
                 </div>
 
-                <!-- Grid Onde Os Jogos Serão Injetados Automaticamente -->
+                <!-- Grid de Jogos -->
                 <div id="lista-de-jogos" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    <!-- Loader visual enquanto busca os dados do feed -->
                     <div class="col-span-full py-20 text-center font-mono text-gray-400 text-sm animate-pulse">
                         A carregar os jogos do servidor...
                     </div>
                 </div>
             </div>
 
-            <!-- Rodapé interno do container central -->
+            <!-- Rodapé interno -->
             <footer class="mt-12 pt-6 border-t border-gray-200 text-center text-xs text-gray-500 font-mono">
                 &copy; 2026 VISUAL STUDIO AND SECURITY // BR
             </footer>
         </main>
 
-        <!-- Anúncio Lateral Direito (Visível apenas em Desktop/Monitores largos) -->
+        <!-- Anúncio Lateral Direito (Desktop) -->
         <aside class="hidden xl:flex w-[160px] min-w-[160px] h-[600px] bg-gray-200 border border-gray-300 rounded-lg ml-4 justify-center items-center sticky top-28 text-center p-2">
-            <!-- Cole aqui o código do seu anúncio AdSense 160x600 no futuro -->
             <span class="text-xs text-gray-400 font-mono font-bold">ESPAÇO ANÚNCIO<br>160 x 600</span>
         </aside>
 
     </div>
 
-    <!-- Script de Gestão e Consumo do Feed -->
+    <!-- Script de Gestão -->
     <script>
         let todosOsJogos = [];
         const searchInput = document.getElementById("search-input");
@@ -167,6 +165,18 @@
             renderizarJogos(jogosFiltrados);
         });
 
+        function filtrarCategoria(cat) {
+            if(cat === 'all') {
+                renderizarJogos(todosOsJogos);
+            } else {
+                const filtrados = todosOsJogos.filter(jogo => 
+                    (jogo.category || "").toLowerCase().includes(cat) || 
+                    (jogo.title || "").toLowerCase().includes(cat)
+                );
+                renderizarJogos(filtrados);
+            }
+        }
+
         const FEED_URL = "https://gamemonetize.com/feed.php?format=0&category=12&page=1";
 
         async function carregarJogosDoFeed() {
@@ -185,7 +195,7 @@
                 }
             } catch (error) {
                 console.error("Erro ao carregar o feed:", error);
-                container.innerHTML = `<p class="col-span-full text-center font-mono text-red-500 text-xs">Erro ao carregar os jogos do feed. Verifica o link do feed.</p>`;
+                container.innerHTML = `<p class="col-span-full text-center font-mono text-red-500 text-xs">Erro ao carregar os jogos do feed.</p>`;
             }
         }
 
