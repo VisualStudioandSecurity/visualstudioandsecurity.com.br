@@ -261,6 +261,133 @@
                 const response = await fetch(FEED_URL);
                 const jogos = await response.json();
 
+                <!-- Script de Gestão Atualizado -->
+    <script>
+        let todosOsJogos = [];
+        const searchInput = document.getElementById("search-input");
+
+        // Objeto do Jogo Fixo com a miniatura oficial
+        const jogoFixoHazmob = {
+            title: "Hazmob FPS: Online Shooter",
+            url: "https://playgama.com/export/game/hazmob-fps-online-shooter",
+            thumb: "https://img.gamemonetize.com/d9j8v2f4v15qj74k3p6h9z2x1_512x384.jpg",
+            isFixed: true
+        };
+
+        function criarCardJogo(jogo, ehDestaque = false) {
+            const card = document.createElement("a");
+            card.href = `jogo.html?title=${encodeURIComponent(jogo.title || "Jogo")}&url=${encodeURIComponent(jogo.url || "")}`;
+            
+            if (ehDestaque) {
+                card.className = "card-game-hover group relative bg-gray-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-48 flex flex-col justify-end p-4 border border-gray-800 hover:border-[#ff4655]";
+            } else {
+                card.className = "card-game-hover group bg-gray-50 border border-gray-200 rounded-lg overflow-hidden hover:border-[#ff4655] transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] shadow-sm";
+            }
+
+            const thumb = document.createElement("div");
+            thumb.className = ehDestaque ? "absolute inset-0 w-full h-full bg-gray-800" : "w-full h-36 overflow-hidden relative bg-gray-200";
+
+            if (jogo.thumb) {
+                const img = document.createElement("img");
+                img.src = jogo.thumb;
+                img.alt = jogo.title || "Game";
+                img.className = `game-thumb-img w-full h-full object-cover transition-all duration-500 ${ehDestaque ? 'opacity-60 group-hover:opacity-80' : ''}`;
+                img.loading = "lazy";
+                thumb.appendChild(img);
+            }
+
+            if (ehDestaque) {
+                const overlay = document.createElement("div");
+                overlay.className = "relative z-10 flex flex-col justify-end h-full";
+                overlay.innerHTML = `
+                    <span class="bg-[#ff4655] text-white text-[9px] font-mono font-bold px-2 py-0.5 rounded w-max mb-1 uppercase">DESTAQUE FIXO</span>
+                    <h3 class="text-sm font-bold text-white group-hover:text-[#ff4655] transition-colors uppercase font-orbitron line-clamp-1">${jogo.title || "Jogo"}</h3>
+                    <div class="mt-1 flex items-center justify-between text-[10px] text-gray-300 font-mono">
+                        <span>JOGAR AGORA</span>
+                        <span class="text-[#ff4655]">▶</span>
+                    </div>
+                `;
+                card.appendChild(thumb);
+                card.appendChild(overlay);
+            } else {
+                const body = document.createElement("div");
+                body.className = "p-3 flex flex-col justify-between flex-grow bg-white";
+
+                const title = document.createElement("h3");
+                title.className = "text-xs font-bold text-gray-800 group-hover:text-[#ff4655] transition-colors line-clamp-2 uppercase tracking-wide font-orbitron";
+                title.textContent = jogo.title || "Jogo";
+
+                const footer = document.createElement("div");
+                footer.className = "mt-3 flex items-center justify-between text-[10px] text-gray-500 font-mono";
+                footer.innerHTML = `<span>PLAY</span><span class="text-[#ff4655]">▶</span>`;
+
+                body.appendChild(title);
+                body.appendChild(footer);
+                card.appendChild(thumb);
+                card.appendChild(body);
+            }
+
+            return card;
+        }
+
+        function renderizarJogos(lista) {
+            const container = document.getElementById("lista-de-jogos");
+            const gridDestaques = document.getElementById("grid-destaques");
+            const seccaoDestaques = document.getElementById("seccao-destaques");
+            
+            if (!container) return;
+            container.innerHTML = "";
+            if (gridDestaques) gridDestaques.innerHTML = "";
+
+            const estaFiltrando = searchInput && searchInput.value.trim() !== "";
+
+            if (!estaFiltrando && seccaoDestaques && gridDestaques) {
+                seccaoDestaques.style.display = "block";
+                
+                // Inserir o Hazmob FPS em primeiro nos destaques
+                gridDestaques.appendChild(criarCardJogo(jogoFixoHazmob, true));
+
+                // Completar com mais 2 do feed
+                const outrosDestaques = lista.slice(0, 2);
+                outrosDestaques.forEach(jogo => gridDestaques.appendChild(criarCardJogo(jogo, true)));
+            } else if (seccaoDestaques) {
+                seccaoDestaques.style.display = "none";
+            }
+
+            const jogosParaGrid = (!estaFiltrando) ? lista.slice(2) : lista;
+            jogosParaGrid.forEach(jogo => container.appendChild(criarCardJogo(jogo, false)));
+        }
+
+        searchInput?.addEventListener("input", (e) => {
+            const termo = (e.target.value || "").toLowerCase().trim();
+            const jogosFiltrados = todosOsJogos.filter((jogo) =>
+                (jogo.title || "").toLowerCase().includes(termo)
+            );
+            renderizarJogos(jogosFiltrados);
+        });
+
+        function filtrarCategoria(cat) {
+            if (cat === 'all') {
+                renderizarJogos(todosOsJogos);
+            } else {
+                const filtrados = todosOsJogos.filter(jogo => 
+                    (jogo.category || "").toLowerCase().includes(cat) || 
+                    (jogo.title || "").toLowerCase().includes(cat)
+                );
+                renderizarJogos(filtrados);
+            }
+        }
+
+        const FEED_URL = "https://gamemonetize.com/feed.php?format=0&category=12&page=1";
+
+        async function carregarJogosDoFeed() {
+            const container = document.getElementById("lista-de-jogos");
+            const countDisplay = document.getElementById("game-count");
+
+            try {
+                const response = await fetch(FEED_URL);
+                const jogos = await response.json();
+
                 todosOsJogos = Array.isArray(jogos) ? jogos : [];
                 renderizarJogos(todosOsJogos);
 
@@ -275,19 +402,23 @@
                     const resProxy = await fetch(proxyUrl);
                     const jogosProxy = await resProxy.json();
 
-                   <script>
-        let todosOsJogos = [];
-        const searchInput = document.getElementById("search-input");
+                    todosOsJogos = Array.isArray(jogosProxy) ? jogosProxy : [];
+                    renderizarJogos(todosOsJogos);
 
-        // Objeto do Jogo Fixo com a miniatura oficial dentro do script
-        const jogoFixoHazmob = {
-            title: "Hazmob FPS: Online Shooter",
-            url: "https://playgama.com/export/game/hazmob-fps-online-shooter",
-            thumb: "https://img.gamemonetize.com/d9j8v2f4v15qj74k3p6h9z2x1_512x384.jpg",
-            isFixed: true
-        };
-        
-        // ... restante código ...
+                    if (countDisplay) {
+                        countDisplay.textContent = `${todosOsJogos.length + 1} JOGOS DISPONÍVEIS`;
+                    }
+                } catch (err2) {
+                    console.error("Erro total:", err2);
+                    if (container) {
+                        container.innerHTML = `<p class="col-span-full text-center font-mono text-red-500 text-xs py-10">Erro ao carregar os jogos do servidor.</p>`;
+                    }
+                }
+            }
+        }
+
+        carregarJogosDoFeed();
+    </script>
     </script>
 </body>
 </html>
