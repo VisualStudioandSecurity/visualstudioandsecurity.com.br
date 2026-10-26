@@ -133,10 +133,18 @@
 
     </div>
 
-    <!-- Script de Gestão Seguro -->
+   <!-- Script de Gestão Atualizado para Destaque Fixo -->
     <script>
         let todosOsJogos = [];
         const searchInput = document.getElementById("search-input");
+
+        // Objeto do Jogo Fixo (Hazmob FPS)
+        const jogoFixoHazmob = {
+            title: "Hazmob FPS: Online Shooter",
+            url: "https://playgama.com/export/game/hazmob-fps-online-shooter",
+            thumb: "https://playgama.com/export/game/hazmob-fps-online-shooter", // Podes alterar a imagem de fundo se preferires
+            isFixed: true
+        };
 
         function criarCardJogo(jogo, ehDestaque = false) {
             const card = document.createElement("a");
@@ -149,20 +157,22 @@
             }
 
             const thumb = document.createElement("div");
-            thumb.className = ehDestaque ? "absolute inset-0 w-full h-full" : "w-full h-36 overflow-hidden relative bg-gray-200";
+            thumb.className = ehDestaque ? "absolute inset-0 w-full h-full bg-gray-800" : "w-full h-36 overflow-hidden relative bg-gray-200";
 
-            const img = document.createElement("img");
-            img.src = jogo.thumb || "";
-            img.alt = jogo.title || "Game";
-            img.className = `game-thumb-img w-full h-full object-cover transition-all duration-500 ${ehDestaque ? 'opacity-60 group-hover:opacity-80' : ''}`;
-            img.loading = "lazy";
-            thumb.appendChild(img);
+            if (jogo.thumb) {
+                const img = document.createElement("img");
+                img.src = jogo.thumb;
+                img.alt = jogo.title || "Game";
+                img.className = `game-thumb-img w-full h-full object-cover transition-all duration-500 ${ehDestaque ? 'opacity-60 group-hover:opacity-80' : ''}`;
+                img.loading = "lazy";
+                thumb.appendChild(img);
+            }
 
             if (ehDestaque) {
                 const overlay = document.createElement("div");
                 overlay.className = "relative z-10 flex flex-col justify-end h-full";
                 overlay.innerHTML = `
-                    <span class="bg-[#ff4655] text-white text-[9px] font-mono font-bold px-2 py-0.5 rounded w-max mb-1 uppercase">POPULAR</span>
+                    <span class="bg-[#ff4655] text-white text-[9px] font-mono font-bold px-2 py-0.5 rounded w-max mb-1 uppercase">DESTAQUE FIXO</span>
                     <h3 class="text-sm font-bold text-white group-hover:text-[#ff4655] transition-colors uppercase font-orbitron line-clamp-1">${jogo.title || "Jogo"}</h3>
                     <div class="mt-1 flex items-center justify-between text-[10px] text-gray-300 font-mono">
                         <span>JOGAR AGORA</span>
@@ -201,22 +211,24 @@
             container.innerHTML = "";
             if (gridDestaques) gridDestaques.innerHTML = "";
 
-            if (!lista || lista.length === 0) {
-                if (seccaoDestaques) seccaoDestaques.style.display = "none";
-                container.innerHTML = `<p class="col-span-full text-center font-mono text-gray-500 text-xs py-10">Nenhum jogo encontrado.</p>`;
-                return;
-            }
-
             const estaFiltrando = searchInput && searchInput.value.trim() !== "";
-            if (!estaFiltrando && lista.length >= 3 && seccaoDestaques && gridDestaques) {
+
+            // Inserir os destaques (Hazmob FPS primeiro + 2 jogos do feed)
+            if (!estaFiltrando && seccaoDestaques && gridDestaques) {
                 seccaoDestaques.style.display = "block";
-                const destaques = lista.slice(0, 3);
-                destaques.forEach(jogo => gridDestaques.appendChild(criarCardJogo(jogo, true)));
+                
+                // 1. Adicionar o Hazmob FPS em primeiro lugar
+                gridDestaques.appendChild(criarCardJogo(jogoFixoHazmob, true));
+
+                // 2. Adicionar mais 2 jogos do feed para completar os 3 destaques
+                const outrosDestaques = lista.slice(0, 2);
+                outrosDestaques.forEach(jogo => gridDestaques.appendChild(criarCardJogo(jogo, true)));
             } else if (seccaoDestaques) {
                 seccaoDestaques.style.display = "none";
             }
 
-            const jogosParaGrid = (!estaFiltrando && lista.length >= 3) ? lista.slice(3) : lista;
+            // Renderizar o restante catálogo no grid principal
+            const jogosParaGrid = (!estaFiltrando) ? lista.slice(2) : lista;
             jogosParaGrid.forEach(jogo => container.appendChild(criarCardJogo(jogo, false)));
         }
 
@@ -254,12 +266,11 @@
                 renderizarJogos(todosOsJogos);
 
                 if (countDisplay) {
-                    countDisplay.textContent = `${todosOsJogos.length} JOGOS DISPONÍVEIS`;
+                    countDisplay.textContent = `${todosOsJogos.length + 1} JOGOS DISPONÍVEIS`;
                 }
             } catch (error) {
                 console.error("Erro ao carregar o feed diretamente, a tentar alternativa...", error);
                 
-                // Segunda tentativa com Proxy caso o CORS bloqueie diretamente
                 try {
                     const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(FEED_URL);
                     const resProxy = await fetch(proxyUrl);
@@ -269,7 +280,7 @@
                     renderizarJogos(todosOsJogos);
 
                     if (countDisplay) {
-                        countDisplay.textContent = `${todosOsJogos.length} JOGOS DISPONÍVEIS`;
+                        countDisplay.textContent = `${todosOsJogos.length + 1} JOGOS DISPONÍVEIS`;
                     }
                 } catch (err2) {
                     console.error("Erro total:", err2);
@@ -281,6 +292,7 @@
         }
 
         carregarJogosDoFeed();
+    </script>
     </script>
 </body>
 </html>
