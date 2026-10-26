@@ -3,66 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="game-title">Jogo - Visual Studio and Security</title>
+    <title>Visual Studio and Security // Jogar</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Fonte Orbitron e Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+
+        /* Animação de néon brilhante para o título */
+        @keyframes colorGlow {
+            0% {
+                color: #ff4655;
+                text-shadow: 0 0 8px rgba(255, 70, 85, 0.6), 0 0 20px rgba(255, 70, 85, 0.3);
+            }
+            33% {
+                color: #00f0ff;
+                text-shadow: 0 0 8px rgba(0, 240, 255, 0.6), 0 0 20px rgba(0, 240, 255, 0.3);
+            }
+            66% {
+                color: #a855f7;
+                text-shadow: 0 0 8px rgba(168, 85, 247, 0.6), 0 0 20px rgba(168, 85, 247, 0.3);
+            }
+            100% {
+                color: #ff4655;
+                text-shadow: 0 0 8px rgba(255, 70, 85, 0.6), 0 0 20px rgba(255, 70, 85, 0.3);
+            }
+        }
+
+        .neon-glow-animado {
+            animation: colorGlow 6s infinite ease-in-out;
+        }
     </style>
 </head>
-<body class="bg-black text-white flex flex-col h-screen justify-between p-2 md:p-3 font-sans overflow-hidden">
+<body class="bg-gray-100 text-gray-900 font-inter min-h-screen flex flex-col justify-between selection:bg-[#ff4655] selection:text-white">
 
-    <!-- Cabeçalho compacto -->
-    <header class="w-full max-w-7xl mx-auto flex justify-between items-center py-1 border-b border-white/10 shrink-0">
-        <a href="index.html" class="text-xs uppercase tracking-wider text-gray-400 hover:text-[#ff4655] transition-colors font-mono">
-            ← Voltar ao Catálogo
-        </a>
-        <h1 id="title-display" class="text-xs md:text-sm font-bold font-orbitron uppercase tracking-wide text-white truncate max-w-[50%] text-center">
-            A carregar...
-        </h1>
-        <button onclick="openFullscreen()" class="px-2.5 py-1 bg-[#ff4655] hover:bg-[#e03e4d] text-white font-bold rounded text-xs transition-colors cursor-pointer font-mono">
-            ⛶ Tela Cheia
-        </button>
+    <!-- Cabeçalho Fixo -->
+    <header class="w-full border-b border-gray-200 p-4 bg-white/90 backdrop-blur sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-lg md:text-xl font-orbitron font-bold tracking-wider neon-glow-animado transition-colors">
+                VISUAL STUDIO AND SECURITY
+            </a>
+            <div class="flex items-center gap-4">
+                <button onclick="openFullscreen()" class="px-3 py-1.5 bg-[#ff4655] hover:bg-[#e03e4d] text-white font-bold rounded text-xs transition-colors cursor-pointer font-mono shadow-sm">
+                    ⛶ Tela Cheia
+                </button>
+                <a href="index.html" class="text-xs font-mono text-gray-600 hover:text-[#ff4655] transition-colors">← Voltar</a>
+            </div>
+        </div>
     </header>
 
-    <!-- Conteúdo Principal Otimizado para Ocupar a Altura Máxima -->
-    <main class="w-full flex-grow flex items-center justify-center py-1 overflow-hidden">
-        <!-- Container com altura máxima de 88vh e largura automática adaptável -->
-        <div class="h-full max-h-[88vh] aspect-[9/16] md:aspect-[4/3] w-auto max-w-full bg-gray-900 rounded-lg overflow-hidden border border-white/10 shadow-2xl relative flex items-center justify-center">
-            <iframe id="game-iframe" src="" class="w-full h-full border-0" allowfullscreen></iframe>
-        </div>
-    </main>
+    <!-- Estrutura Principal com Anúncios Laterais -->
+    <div class="w-full flex justify-center items-start flex-grow p-2 sm:p-6 max-w-[1600px] mx-auto">
+        
+        <!-- Anúncio Lateral Esquerdo (Desktop) -->
+        <aside class="hidden xl:flex w-[160px] min-w-[160px] h-[600px] bg-gray-200 border border-gray-300 rounded-lg mr-4 justify-center items-center sticky top-28 text-center p-2">
+            <span class="text-xs text-gray-400 font-mono font-bold">ESPAÇO ANÚNCIO<br>160 x 600</span>
+        </aside>
 
-    <!-- Rodapé compacto -->
-    <footer class="w-full max-w-7xl mx-auto text-center py-1 text-[10px] text-gray-600 border-t border-white/10 font-mono shrink-0">
+        <!-- Bloco Central do Jogo -->
+        <main class="w-full max-w-5xl bg-white p-4 rounded-xl border border-gray-200 shadow-sm flex flex-col items-center">
+            
+            <!-- Título do Jogo Dinâmico -->
+            <div class="w-full mb-4 flex justify-between items-center border-b border-gray-200 pb-3">
+                <h1 id="game-title" class="text-base md:text-lg font-orbitron font-bold text-gray-800 uppercase tracking-wide">A carregar jogo...</h1>
+                <span class="text-[10px] font-mono text-gray-500 bg-gray-100 px-2 py-1 rounded">HTML5 GAME</span>
+            </div>
+
+            <!-- Contentor do Iframe do Jogo -->
+            <div id="game-container" class="w-full max-h-[75vh] aspect-[16/9] bg-black rounded-lg overflow-hidden border border-gray-300 shadow-inner relative flex items-center justify-center">
+                <iframe id="game-iframe" src="" class="w-full h-full border-0" allowfullscreen></iframe>
+            </div>
+
+        </main>
+
+        <!-- Anúncio Lateral Direito (Desktop) -->
+        <aside class="hidden xl:flex w-[160px] min-w-[160px] h-[600px] bg-gray-200 border border-gray-300 rounded-lg ml-4 justify-center items-center sticky top-28 text-center p-2">
+            <span class="text-xs text-gray-400 font-mono font-bold">ESPAÇO ANÚNCIO<br>160 x 600</span>
+        </aside>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="p-6 border-t border-gray-200 bg-white text-center text-xs text-gray-500 font-mono">
         &copy; 2026 VISUAL STUDIO AND SECURITY // BR
     </footer>
 
+    <!-- Script para Capturar Parâmetros da URL e Tela Cheia -->
     <script>
-        const params = new URLSearchParams(window.location.search);
-        const gameUrl = params.get('url');
-        const gameTitle = params.get('title');
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameTitle = urlParams.get('title');
+        const gameUrl = urlParams.get('url');
+
+        if (gameTitle) {
+            document.getElementById('game-title').textContent = decodeURIComponent(gameTitle);
+            document.title = `${decodeURIComponent(gameTitle)} // Visual Studio and Security`;
+        }
 
         if (gameUrl) {
             document.getElementById('game-iframe').src = decodeURIComponent(gameUrl);
-            const decodedTitle = decodeURIComponent(gameTitle || "Jogo Web");
-            document.getElementById('title-display').innerText = decodedTitle;
-            document.getElementById('game-title').innerText = `${decodedTitle} - Visual Studio and Security`;
         } else {
-            document.getElementById('title-display').innerText = "Jogo não encontrado";
+            document.getElementById('game-container').innerHTML = `<p class="font-mono text-red-500 text-xs">Erro: URL do jogo não encontrada.</p>`;
         }
 
         function openFullscreen() {
-            const iframe = document.getElementById('game-iframe');
-            if (iframe.requestFullscreen) {
-                iframe.requestFullscreen();
-            } else if (iframe.webkitRequestFullscreen) {
-                iframe.webkitRequestFullscreen();
-            } else if (iframe.msRequestFullscreen) {
-                iframe.msRequestFullscreen();
+            const elem = document.getElementById("game-container");
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { /* Safari */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE11 */
+                elem.msRequestFullscreen();
             }
         }
     </script>
 </body>
 </html>
-
