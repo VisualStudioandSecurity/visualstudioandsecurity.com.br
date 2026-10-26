@@ -35,6 +35,12 @@
         .neon-glow-animado {
             animation: colorGlow 6s infinite ease-in-out;
         }
+
+        /* Animação para brilho/zoom dinâmico do thumbnail */
+        .card-game-hover:hover .game-thumb-img {
+            transform: scale(1.12);
+            filter: brightness(1.15) contrast(1.05);
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-inter min-h-screen flex flex-col selection:bg-[#ff4655] selection:text-white">
@@ -64,7 +70,7 @@
         <main class="w-full max-w-7xl bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex flex-col min-h-[80vh] justify-between">
             <div>
                 <!-- Barra de Pesquisa e Filtros de Categorias -->
-                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
                     <input type="text" id="search-input" placeholder="Pesquisar jogos por nome..." 
                            class="w-full md:w-96 px-4 py-2 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#ff4655] transition-colors font-mono" />
                     
@@ -75,11 +81,22 @@
                         <button onclick="filtrarCategoria('racing')" class="px-3 py-1.5 bg-gray-100 text-gray-700 border border-gray-200 rounded-lg hover:border-[#ff4655] transition-colors">Corrida</button>
                     </div>
                 </div>
+
+                <!-- SECÇÃO EM DESTAQUE / POPULARES -->
+                <div id="seccao-destaques" class="mb-10">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-[#ff4655] text-lg">🔥</span>
+                        <h2 class="text-lg font-orbitron font-bold text-gray-900 uppercase tracking-wide">JOGOS EM DESTAQUE</h2>
+                    </div>
+                    <div id="grid-destaques" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Jogos Populares Injetados Via JS -->
+                    </div>
+                </div>
                     
-                <!-- Título da Secção -->
-                <div class="mb-8 border-b border-gray-200 pb-4 flex justify-between items-end">
+                <!-- Título da Secção Geral -->
+                <div class="mb-6 border-b border-gray-200 pb-4 flex justify-between items-end">
                     <div>
-                        <h1 class="text-2xl font-orbitron font-bold text-gray-900 tracking-wide">CATÁLOGO DE JOGOS WEB</h1>
+                        <h2 class="text-xl font-orbitron font-bold text-gray-900 tracking-wide">CATÁLOGO COMPLETO</h2>
                         <p class="text-xs text-gray-500 font-mono mt-1">// JOGOS EM HTML5 AUTOMATICAMENTE ATUALIZADOS</p>
                     </div>
                     <span id="game-count" class="text-xs font-mono text-gray-600 bg-gray-100 px-3 py-1 rounded border border-gray-200">
@@ -87,7 +104,7 @@
                     </span>
                 </div>
 
-                <!-- Grid de Jogos -->
+                <!-- Grid Completo de Jogos -->
                 <div id="lista-de-jogos" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     <div class="col-span-full py-20 text-center font-mono text-gray-400 text-sm animate-pulse">
                         A carregar os jogos do servidor...
@@ -113,29 +130,40 @@
         let todosOsJogos = [];
         const searchInput = document.getElementById("search-input");
 
-        function renderizarJogos(lista) {
-            const container = document.getElementById("lista-de-jogos");
-            container.innerHTML = "";
-
-            if (!lista || lista.length === 0) {
-                container.innerHTML = `<p class="col-span-full text-center font-mono text-gray-500 text-xs py-10">Nenhum jogo encontrado.</p>`;
-                return;
+        function criarCardJogo(jogo, ehDestaque = false) {
+            const card = document.createElement("a");
+            card.href = `jogo.html?title=${encodeURIComponent(jogo.title || "Jogo")}&url=${encodeURIComponent(jogo.url || "")}`;
+            
+            if (ehDestaque) {
+                card.className = "card-game-hover group relative bg-gray-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-48 flex flex-col justify-end p-4 border border-gray-800 hover:border-[#ff4655]";
+            } else {
+                card.className = "card-game-hover group bg-gray-50 border border-gray-200 rounded-lg overflow-hidden hover:border-[#ff4655] transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] shadow-sm";
             }
 
-            lista.forEach((jogo) => {
-                const card = document.createElement("a");
-                card.href = `jogo.html?title=${encodeURIComponent(jogo.title || "Jogo")}&url=${encodeURIComponent(jogo.url || "")}`;
-                card.className = "group bg-gray-50 border border-gray-200 rounded-lg overflow-hidden hover:border-[#ff4655] transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] shadow-sm";
+            const thumb = document.createElement("div");
+            thumb.className = ehDestaque ? "absolute inset-0 w-full h-full" : "w-full h-36 overflow-hidden relative bg-gray-200";
 
-                const thumb = document.createElement("div");
-                thumb.className = "w-full h-36 overflow-hidden relative bg-gray-200";
+            const img = document.createElement("img");
+            img.src = jogo.thumb || "";
+            img.alt = jogo.title || "Game";
+            img.className = `game-thumb-img w-full h-full object-cover transition-all duration-500 ${ehDestaque ? 'opacity-60 group-hover:opacity-80' : ''}`;
+            img.loading = "lazy";
+            thumb.appendChild(img);
 
-                const img = document.createElement("img");
-                img.src = jogo.thumb || "";
-                img.alt = jogo.title || "Game";
-                img.className = "w-full h-full object-cover group-hover:scale-110 transition-transform duration-500";
-                img.loading = "lazy";
-
+            if (ehDestaque) {
+                const overlay = document.createElement("div");
+                overlay.className = "relative z-10 flex flex-col justify-end h-full";
+                overlay.innerHTML = `
+                    <span class="bg-[#ff4655] text-white text-[9px] font-mono font-bold px-2 py-0.5 rounded w-max mb-1 uppercase">POPULAR</span>
+                    <h3 class="text-sm font-bold text-white group-hover:text-[#ff4655] transition-colors uppercase font-orbitron line-clamp-1">${jogo.title || "Jogo"}</h3>
+                    <div class="mt-1 flex items-center justify-between text-[10px] text-gray-300 font-mono">
+                        <span>JOGAR AGORA</span>
+                        <span class="text-[#ff4655]">▶</span>
+                    </div>
+                `;
+                card.appendChild(thumb);
+                card.appendChild(overlay);
+            } else {
                 const body = document.createElement("div");
                 body.className = "p-3 flex flex-col justify-between flex-grow bg-white";
 
@@ -147,14 +175,42 @@
                 footer.className = "mt-3 flex items-center justify-between text-[10px] text-gray-500 font-mono";
                 footer.innerHTML = `<span>PLAY</span><span class="text-[#ff4655]">▶</span>`;
 
-                thumb.appendChild(img);
                 body.appendChild(title);
                 body.appendChild(footer);
                 card.appendChild(thumb);
                 card.appendChild(body);
+            }
 
-                container.appendChild(card);
-            });
+            return card;
+        }
+
+        function renderizarJogos(lista) {
+            const container = document.getElementById("lista-de-jogos");
+            const gridDestaques = document.getElementById("grid-destaques");
+            const seccaoDestaques = document.getElementById("seccao-destaques");
+            
+            container.innerHTML = "";
+            gridDestaques.innerHTML = "";
+
+            if (!lista || lista.length === 0) {
+                seccaoDestaques.style.display = "none";
+                container.innerHTML = `<p class="col-span-full text-center font-mono text-gray-500 text-xs py-10">Nenhum jogo encontrado.</p>`;
+                return;
+            }
+
+            // Exibir Destaques apenas se não estiver pesquisando/filtrando
+            const estaFiltrando = searchInput && searchInput.value.trim() !== "";
+            if (!estaFiltrando && lista.length >= 3) {
+                seccaoDestaques.style.display = "block";
+                const destaques = lista.slice(0, 3);
+                destaques.forEach(jogo => gridDestaques.appendChild(criarCardJogo(jogo, true)));
+            } else {
+                seccaoDestaques.style.display = "none";
+            }
+
+            // Renderizar Lista Geral
+            const jogosParaGrid = (!estaFiltrando && lista.length >= 3) ? lista.slice(3) : lista;
+            jogosParaGrid.forEach(jogo => container.appendChild(criarCardJogo(jogo, false)));
         }
 
         searchInput?.addEventListener("input", (e) => {
@@ -189,17 +245,3 @@
 
                 todosOsJogos = Array.isArray(jogos) ? jogos : [];
                 renderizarJogos(todosOsJogos);
-
-                if (countDisplay) {
-                    countDisplay.textContent = `${todosOsJogos.length} JOGOS DISPONÍVEIS`;
-                }
-            } catch (error) {
-                console.error("Erro ao carregar o feed:", error);
-                container.innerHTML = `<p class="col-span-full text-center font-mono text-red-500 text-xs">Erro ao carregar os jogos do feed.</p>`;
-            }
-        }
-
-        carregarJogosDoFeed();
-    </script>
-</body>
-</html>
